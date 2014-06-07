@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Deploy CNECT site" default="main" phingVersion="2.5">
+
+  <!--  does a complete build of the project by verifying code consistency and and
+  performing static analysis of the code. -->
+  <target name="main" depends="site-install, load-properties, setup-phing-drush, fetch-core-contrib-code, fetch-custom-code">
+  </target>
+  
+  <!-- loads a set of project specific properties from a `.properties` file -->
+  <target name="load-properties">
+    <property file="./build.properties" />
+    <property file="./build.default.properties" />
+  </target>
+
+  <target name="delete-dir">
+    <delete dir="${item}"/>
+  </target>
+
+  <target name="delete-file">
+    <delete file="${item}" verbose="true" />
+  </target>
+
+  <!-- fetches drupal core and contrib code -->
+  <target name="fetch-core-contrib-code" depends="setup-phing-drush, load-properties, fetch-multisite-patches">
+    <if>
+      <or>
+        <istrue value="${build.force}" />
+      </or>
+      <then>
+        <echo msg="test" />
+        <delete includeemptydirs="true" dir="${environment.root}" />
+      </then>
+    </if>
+
+    <!-- downloads the appropriate version of Drupal -->
+    <drush command="dl" assume="yes">
+      <param>drupal-${drupal.version}</param>
+      <option name="drupal-project-rename">${environment.root}</option>
+    </drush>
+
+    <!-- downloads the contributed modules -->
+    <drush command="make" assume="yes">
+      <param>${contrib.make}</param>
+      <option name="contrib-destination">${environment.root}/${contrib.modules.destination}</option>
+      <option name="no-core"/>
+    </drush>
+                
+    <!-- applies patches 
+    <foreach param="filename" absparam="absfilename" target="apply-patch">
+      <fileset dir="${environment.patches.dir}">
+        <include name="*.patch" />
+      </fileset>
+    </foreach>
+    -->
+  </target>
+        
+  <target name="site-install" depends="load-properties, setup-phing-drush">
+        
+        <property name="db.url" value="mysqli://${build.db.user}:${build.db.password}@${build.db.host}:${build.db.port}/${projects.${project}.db.name}" />
+        <drush command="site-install" assume="yes" uri="${environment.root}">
+          <option name="db-url">${db.url}</option>
+          <option name="account-name">${drupal.account.name}</option>
+          <option name="account-pass">${drupal.account.pass}</option>
+          <option name="account-mail">${drupal.account.mail}</option>
+          <option name="site-name">${project.name}</option>
+          <option name="site-mail">${drupal.site.mail}</option>
+          <option name="sites-subdir">${project.name}</option>
+          <option name="clean-url">1</option>
+          <param>${multisite.install_profile}</param>
+        </drush>
+                
+ </target>
+        
+  <target name="setup-phing-drush" depends="load-properties">
+        
+    <!-- Clone the project -->
+    <phingcall target="setup-git-repo">
+      <property name="repo.dir" value="${environment.tools.dir}/phingdrushtask"/>
+      <property name="repo.url" value="${phing.drush.repository.url}" />
+      <property name="repo.revision" value="${phing.drush.repository.revision}" />
+    </phingcall>
+
+    <!-- Register as custom Phing task -->
+    <taskdef name="drush" classname="DrushTask" classpath="${environment.tools.dir}/phingdrushtask" />
+    <!-- Run drush from the project Drupal directory -->
+    <property name="drush.root" value="${environment.root}"/>
+    <property name="drush.uri" value="${environment.root}"/>
+    <!-- Use Drush installed by composer -->
+    <if>
+      <equals arg1="${phing.drush.system}" arg2="true"/>
+      <then>
+      </then>
+      <else>
+        <property name="drush.bin" value="${phing.drush.bin}"/>
+      </else>
+    </if>
+    <!-- Assume yes by default -->
+    <property name="drush.assume" value="yes"/>
+  </target>
+  <!-- GIT -->
+  <target name="setup-git-repo">
+    <if>
+      <not>
+        <available file="${repo.dir}" />
+      </not>
+      <then>
+        <property name="repo.revision" value="HEAD" override="false"/>
+        <echo>Cloning ${repo.url} ${repo.revision} into ${repo.dir}</echo>
+        <append destFile="${environment.logs.dir}/log.txt" text="Cloning ${repo.url} ${repo.revision} into ${repo.dir}${line.separator}" />
+				
+        <exec command="git clone ${repo.url} ${repo.dir}" />
+        <exec command="git checkout ${repo.revision}" dir="${repo.dir}"/>
+      </then>
+    </if>
+  </target>
+
+  <!-- fetch all custom code from cnect & multisite svn repo -->
+  <target name="fetch-custom-code" depends="load-properties">
+    <!-- delete folder if needed -->
+    <if>
+      <or>
+        <istrue value="${build.force}" />
+      </or>
+      <then>
+        <echo msg="test" />
+
+        <delete includeemptydirs="true">
+          <fileset dir="${environment.root}/${project.modules.destination}" includes="/*"/>
+          <fileset dir="${environment.root}/${project.themes.destination}" includes="/*"/>
+          <fileset dir="${environment.root}/${multisite.modules.destination}" includes="/*"/>
+          <fileset dir="${environment.root}/${multisite.themes.destination}" includes="/*"/>
+        </delete>
+      </then>
+    </if>
+    <foreach list="${project.modules}" param="module" target="fetch-cnect-module" />
+    <foreach list="${project.themes}" param="theme" target="fetch-cnect-theme" />
+    <foreach list="${multisite.modules}" param="module" target="fetch-multisite-module" />
+    <foreach list="${multisite.themes}" param="theme" target="fetch-multisite-theme" />
+  </target>
+  
+  <!-- fetch one custom modules from cnect svn repo -->
+  <target name="fetch-cnect-module">
+    <exec command="svn checkout ${svn.user} --password ${svn.pass} ${project.repo}/${project.modules.source}/${module} ${environment.root}/${project.modules.destination}/${module}" />
+  </target>
+
+  <!-- fetch one custom theme from cnect svn repo -->
+  <target name="fetch-cnect-theme">
+    <exec command="svn checkout ${svn.user} --password ${svn.pass} ${project.repo}/${project.themes.source}/${theme} ${environment.root}/${project.themes.destination}/${theme}" />
+  </target>
+  
+  <!-- fetch one custom modules from multisite svn repo -->
+  <target name="fetch-multisite-module">
+    <exec command="svn export --username ${svn.user} --password ${svn.pass} ${multisite.repo}${multisite.version}/source/${multisite.modules.source}/${module} ${environment.root}/${multisite.modules.destination}/${module} --force" />
+  </target>
+
+  <!-- fetch one custom modules from multisite svn repo -->
+  <target name="fetch-multisite-theme">
+    <exec command="svn export --username ${svn.user} --password ${svn.pass} ${multisite.repo}${multisite.version}/source/${multisite.themes.source}/${theme} ${environment.root}/${multisite.themes.destination}/${theme} --force" />
+  </target>
+
+  <!-- fetch patches from multisite svn repo -->
+  <target name="fetch-multisite-patches">
+    <exec command="svn export --username ${svn.user} --password ${svn.pass} ${multisite.repo}${multisite.version}/source/${multisite.patches.source} patches --force" />
+  </target>
+  
+  <!-- apply patches to contrib code -->
+  <target name="apply-patch" >
+    <exec command="patch --directory=${environment.root} --batch -p0 --backup --input=${absfilename}" passthru="true" />
+  </target>
+  
+</project>

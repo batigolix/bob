@@ -1,0 +1,93 @@
+; cnect make file for local development
+core = "7.x"
+api = "2"
+
+projects[drupal][version] = "7.x"
+; include the d.o. profile base
+includes[] = "drupal-org.make"
+
+; +++++ Libraries +++++
+
+; Twitter Bootstrap
+libraries[bootstrap][directory_name] = "bootstrap"
+libraries[bootstrap][type] = "library"
+libraries[bootstrap][destination] = "themes/contrib/bootstrap"
+libraries[bootstrap][download][type] = "get"
+libraries[bootstrap][download][url] = "http://twitter.github.com/bootstrap/assets/bootstrap.zip"
+
+; chosen
+libraries[chosen][directory_name] = "chosen"
+libraries[chosen][type] = "library"
+libraries[chosen][destination] = "libraries"
+libraries[chosen][download][type] = "get"
+libraries[chosen][download][url] = "" ; TODO add download URI
+
+; fancybox
+libraries[fancybox][directory_name] = "fancybox"
+libraries[fancybox][type] = "library"
+libraries[fancybox][destination] = "libraries"
+libraries[fancybox][download][type] = "get"
+libraries[fancybox][download][url] = "" ; TODO add download URI
+
+; fullcalendar
+libraries[fullcalendar][directory_name] = "fullcalendar"
+libraries[fullcalendar][type] = "library"
+libraries[fullcalendar][destination] = "libraries"
+libraries[fullcalendar][download][type] = "get"
+libraries[fullcalendar][download][url] = "" ; TODO add download URI
+
+; FusionCharts
+libraries[FusionCharts][directory_name] = "FusionCharts"
+libraries[FusionCharts][type] = "library"
+libraries[FusionCharts][destination] = "libraries"
+libraries[FusionCharts][download][type] = "get"
+libraries[FusionCharts][download][url] = "" ; TODO add download URI
+
+; FusionMaps XT
+libraries[FusionMaps XT][directory_name] = "FusionMaps XT"
+libraries[FusionMaps XT][type] = "library"
+libraries[FusionMaps XT][destination] = "libraries"
+libraries[FusionMaps XT][download][type] = "get"
+libraries[FusionMaps XT][download][url] = "" ; TODO add download URI
+
+; jquery
+libraries[jquery][directory_name] = "jquery"
+libraries[jquery][type] = "library"
+libraries[jquery][destination] = "libraries"
+libraries[jquery][download][type] = "get"
+libraries[jquery][download][url] = "" ; TODO add download URI
+
+; jquery.cycle
+libraries[jquery.cycle][directory_name] = "jquery.cycle"
+libraries[jquery.cycle][type] = "library"
+libraries[jquery.cycle][destination] = "libraries"
+libraries[jquery.cycle][download][type] = "get"
+libraries[jquery.cycle][download][url] = "" ; TODO add download URI
+
+; jquery.imgareaselect
+libraries[jquery.imgareaselect][directory_name] = "jquery.imgareaselect"
+libraries[jquery.imgareaselect][type] = "library"
+libraries[jquery.imgareaselect][destination] = "libraries"
+libraries[jquery.imgareaselect][download][type] = "get"
+libraries[jquery.imgareaselect][download][url] = "" ; TODO add download URI
+
+; jstree
+libraries[jstree][directory_name] = "jstree"
+libraries[jstree][type] = "library"
+libraries[jstree][destination] = "libraries"
+libraries[jstree][download][type] = "get"
+libraries[jstree][download][url] = "" ; TODO add download URI
+
+; tcpdf
+libraries[tcpdf][directory_name] = "tcpdf"
+libraries[tcpdf][type] = "library"
+libraries[tcpdf][destination] = "libraries"
+libraries[tcpdf][download][type] = "get"
+libraries[tcpdf][download][url] = "" ; TODO add download URI
+
+; +++++ Patches +++++
+
+projects[apachesolr_attachments][patch][] = "solrconfig.tika.patch" ; TODO add path to patch
+
+projects[apachesolr_attachments][patch][] = "solrconfig.tika.patch" ; TODO add path to patch
+

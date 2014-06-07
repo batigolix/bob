@@ -1,0 +1,15 @@
+# Your local properties file, to be adapted and renamed to `build.properties`
+
+drupal.db.url = mysql://USER:PASS@localhost/DATABASE
+
+# Local properties, need to be adapted for each environment
+
+# Database
+build.db.user = root
+build.db.password = root
+build.db.host = localhost
+build.db.port = 3306
+
+# SVN
+svn.pass = john.smith
+svn.user = letmein
