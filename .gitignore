@@ -5,6 +5,7 @@ docroot/
 patches/
 nbproject
 tools/*
+*~
 
 # Ignore paths that contain generated content #
 ###############################################
