@@ -10,12 +10,6 @@ projects[ctools][subdir] = "contrib"
 projects[context][version] = "3.0-beta6"
 projects[context][subdir] = "contrib"
 
-projects[menu_extended_settings][version] = "1.0"
-projects[menu_extended_settings][subdir] = "contrib"
-
-projects[multisite_newsroom][version] = "1.0"
-projects[multisite_newsroom][subdir] = "contrib"
-
 projects[date][version] = "2.6"
 projects[date][subdir] = "contrib"
 
@@ -43,7 +37,7 @@ projects[email][subdir] = "contrib"
 projects[entityreference][version] = "1.1"
 projects[entityreference][subdir] = "contrib"
 
-projects[field_group][version] = "11660d97d72b2ebae1b3f9c958fa7623de82e73c"
+projects[field_group][version] = "1.1"
 projects[field_group][subdir] = "contrib"
 
 projects[filefield_sources][version] = "1.8"
@@ -219,9 +213,6 @@ projects[workbench][subdir] = "contrib"
 
 projects[workbench_moderation][version] = "1.3"
 projects[workbench_moderation][subdir] = "contrib"
-
-projects[taxonomy_browser][version] = "2.0"
-projects[taxonomy_browser][subdir] = "contrib"
 
 ; +++++ Libraries +++++
 
