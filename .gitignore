@@ -4,6 +4,7 @@ docroot/sites/*/settings*.php
 docroot/
 patches/
 nbproject
+tools/*
 
 # Ignore paths that contain generated content #
 ###############################################
