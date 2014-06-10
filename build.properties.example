@@ -10,8 +10,8 @@ build.db.host = localhost
 build.db.port = 3306
 
 # SVN
-svn.pass = john.smith
-svn.user = letmein
+svn.user = john.smith
+svn.pass = letmein
 
 drupal.user = admin
 drupal.pass = dontletthesungodownonmeyeah
@@ -28,6 +28,7 @@ project.root = /var/www/dgs
 
 # Project modules
 project.make = dgs/drupal-org.make
+project.themes = cnect
 project.modules = dgs_draft_review,date_value_field
 project.features = cnect_management_dashboard
 project.modules.source = trunk/sites/cnect/modules/custom
