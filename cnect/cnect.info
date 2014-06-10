@@ -9,7 +9,7 @@ core = "7.x"
 ; Access control
 dependencies[] = content_access
 ; Administration
-dependencies[] = admin_menu
+;dependencies[] = admin_menu
 ; Caching
 dependencies[] = varnish
 ; Chaos tool suite
@@ -91,7 +91,6 @@ dependencies[] = diff
 dependencies[] = easy_breadcrumb
 dependencies[] = entity
 dependencies[] = entity_token
-dependencies[] = environment_indicator
 dependencies[] = jqmulti
 dependencies[] = libraries
 dependencies[] = linkchecker
@@ -100,7 +99,6 @@ dependencies[] = menu_token
 dependencies[] = pathauto
 dependencies[] = quicktabs
 dependencies[] = realname
-dependencies[] = stage_file_proxy
 dependencies[] = strongarm
 dependencies[] = token
 ; Printer, email and PDF versions

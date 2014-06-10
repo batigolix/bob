@@ -1,6 +1,8 @@
 # Ignore configuration files that may contain sensitive information. #
 ######################################################################
-sites/*/settings*.php
+docroot/sites/*/settings*.php
+docroot/
+patches/
 
 # Ignore paths that contain generated content #
 ###############################################

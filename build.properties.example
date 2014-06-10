@@ -13,3 +13,6 @@ build.db.port = 3306
 # SVN
 svn.pass = john.smith
 svn.user = letmein
+
+drupal.user = admin
+drupal.pass = dontletthesungodownonmeyeah

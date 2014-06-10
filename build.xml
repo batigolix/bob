@@ -20,6 +20,7 @@
     <delete file="${item}" verbose="true" />
   </target>
 
+
   <!-- fetches drupal core and contrib code -->
   <target name="fetch-core-contrib-code" depends="setup-phing-drush, load-properties, fetch-multisite-patches">
     <if>
@@ -43,6 +44,7 @@
       <param>${contrib.make}</param>
       <option name="contrib-destination">${environment.root}/${contrib.modules.destination}</option>
       <option name="no-core"/>
+      <option name="verbose"/>
     </drush>
                 
     <!-- applies patches 
@@ -52,24 +54,29 @@
       </fileset>
     </foreach>
     -->
+    
   </target>
         
+  <!-- installs the website using a custom profile -->      
   <target name="site-install" depends="load-properties, setup-phing-drush">
-        
-        <property name="db.url" value="mysqli://${build.db.user}:${build.db.password}@${build.db.host}:${build.db.port}/${projects.${project}.db.name}" />
-        <drush command="site-install" assume="yes" uri="${environment.root}">
-          <option name="db-url">${db.url}</option>
-          <option name="account-name">${drupal.account.name}</option>
-          <option name="account-pass">${drupal.account.pass}</option>
-          <option name="account-mail">${drupal.account.mail}</option>
-          <option name="site-name">${project.name}</option>
-          <option name="site-mail">${drupal.site.mail}</option>
-          <option name="sites-subdir">${project.name}</option>
-          <option name="clean-url">1</option>
-          <param>${multisite.install_profile}</param>
-        </drush>
-                
- </target>
+
+    <!-- copies the install profile bundled with the make file to the appropriate directory. -->
+    <copy todir="${environment.root}/profiles/${project.name.short}/">
+      <fileset dir="${project.name.short}">
+        <include name="*.*" />
+      </fileset>
+    </copy>
+
+    <drush command="site-install" assume="yes">
+      <option name="db-url">mysqli://${db.user}:${db.pass}@${db.host}:${db.port}/${db.name}</option>
+      <option name="account-name">${drupal.user}</option>
+      <option name="account-pass">${drupal.pass}</option>
+      <option name="uri">${project.uri}</option>
+      <option name="root">${project.root}/${environment.root}</option>
+      <option name="site-name">${project.name.pretty}</option>
+      <param>${project.profile}</param>
+    </drush>
+  </target>
         
   <target name="setup-phing-drush" depends="load-properties">
         
@@ -83,8 +90,8 @@
     <!-- Register as custom Phing task -->
     <taskdef name="drush" classname="DrushTask" classpath="${environment.tools.dir}/phingdrushtask" />
     <!-- Run drush from the project Drupal directory -->
-    <property name="drush.root" value="${environment.root}"/>
-    <property name="drush.uri" value="${environment.root}"/>
+    <!--    <property name="drush.root" value="${environment.root}"/>
+    <property name="drush.uri" value="${environment.root}"/> -->
     <!-- Use Drush installed by composer -->
     <if>
       <equals arg1="${phing.drush.system}" arg2="true"/>
@@ -116,6 +123,7 @@
 
   <!-- fetch all custom code from cnect & multisite svn repo -->
   <target name="fetch-custom-code" depends="load-properties">
+
     <!-- delete folder if needed -->
     <if>
       <or>
@@ -123,34 +131,44 @@
       </or>
       <then>
         <echo msg="test" />
-
-        <delete includeemptydirs="true">
-          <fileset dir="${environment.root}/${project.modules.destination}" includes="/*"/>
-          <fileset dir="${environment.root}/${project.themes.destination}" includes="/*"/>
-          <fileset dir="${environment.root}/${multisite.modules.destination}" includes="/*"/>
-          <fileset dir="${environment.root}/${multisite.themes.destination}" includes="/*"/>
-        </delete>
+        <delete includeemptydirs="true"  dir="${environment.root}/${project.modules.destination}"/>
+        <delete includeemptydirs="true"  dir="${environment.root}/${project.themes.destination}"/>
+        <delete includeemptydirs="true"  dir="${environment.root}/${multisite.modules.destination}"/>
+        <delete includeemptydirs="true"  dir="${environment.root}/${multisite.themes.destination}"/>
       </then>
     </if>
+
     <foreach list="${project.modules}" param="module" target="fetch-cnect-module" />
+    <foreach list="${project.features}" param="feature" target="fetch-cnect-feature" />
     <foreach list="${project.themes}" param="theme" target="fetch-cnect-theme" />
     <foreach list="${multisite.modules}" param="module" target="fetch-multisite-module" />
+    <foreach list="${multisite.features}" param="feature" target="fetch-multisite-feature" />
     <foreach list="${multisite.themes}" param="theme" target="fetch-multisite-theme" />
   </target>
   
   <!-- fetch one custom modules from cnect svn repo -->
   <target name="fetch-cnect-module">
-    <exec command="svn checkout ${svn.user} --password ${svn.pass} ${project.repo}/${project.modules.source}/${module} ${environment.root}/${project.modules.destination}/${module}" />
+    <exec command="svn checkout --username ${svn.user} --password ${svn.pass} ${project.repo}/${project.modules.source}/${module} ${environment.root}/${project.modules.destination}/${module}" />
+  </target>
+
+  <!-- fetch one custom feature from cnect svn repo -->
+  <target name="fetch-cnect-feature">
+    <exec command="svn checkout --username ${svn.user} --password ${svn.pass} ${project.repo}/${project.features.source}/${feature} ${environment.root}/${project.modules.destination}/${feature}" />
   </target>
 
   <!-- fetch one custom theme from cnect svn repo -->
   <target name="fetch-cnect-theme">
-    <exec command="svn checkout ${svn.user} --password ${svn.pass} ${project.repo}/${project.themes.source}/${theme} ${environment.root}/${project.themes.destination}/${theme}" />
+    <exec command="svn checkout --username ${svn.user} --password ${svn.pass} ${project.repo}/${project.themes.source}/${theme} ${environment.root}/${project.themes.destination}/${theme}" />
   </target>
   
   <!-- fetch one custom modules from multisite svn repo -->
   <target name="fetch-multisite-module">
     <exec command="svn export --username ${svn.user} --password ${svn.pass} ${multisite.repo}${multisite.version}/source/${multisite.modules.source}/${module} ${environment.root}/${multisite.modules.destination}/${module} --force" />
+  </target>
+
+  <!-- fetch one custom feature from multisite svn repo -->
+  <target name="fetch-multisite-feature">
+    <exec command="svn export --username ${svn.user} --password ${svn.pass} ${multisite.repo}${multisite.version}/source/${multisite.features.source}/${feature} ${environment.root}/${multisite.modules.destination}/${feature} --force" />
   </target>
 
   <!-- fetch one custom modules from multisite svn repo -->
