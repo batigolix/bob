@@ -13,65 +13,14 @@ projects[context][subdir] = "contrib"
 projects[menu_extended_settings][version] = "1.0"
 projects[menu_extended_settings][subdir] = "contrib"
 
-projects[text_collapse][version] = "1.1-beta"
-projects[text_collapse][subdir] = "contrib"
-
-projects[toc][version] = "1.3"
-projects[toc][subdir] = "contrib"
-
-projects[connect_blog][version] = "2.1"
-projects[connect_blog][subdir] = "contrib"
-
-projects[connect_chapters_taxonomy][version] = "2.1"
-projects[connect_chapters_taxonomy][subdir] = "contrib"
-
-projects[connect_country][version] = "2.2"
-projects[connect_country][subdir] = "contrib"
-
-projects[connect_homepage][version] = "1.1"
-projects[connect_homepage][subdir] = "contrib"
-
-projects[connect_media][version] = "2.0"
-projects[connect_media][subdir] = "contrib"
-
-projects[connect_menus][version] = "2.0"
-projects[connect_menus][subdir] = "contrib"
-
-projects[connect_pillars_and_actions][version] = "2.0"
-projects[connect_pillars_and_actions][subdir] = "contrib"
-
-projects[cordis_feature][version] = "2.0"
-projects[cordis_feature][subdir] = "contrib"
-
 projects[multisite_newsroom][version] = "1.0"
 projects[multisite_newsroom][subdir] = "contrib"
 
 projects[date][version] = "2.6"
 projects[date][subdir] = "contrib"
 
-projects[devel][version] = "1.3"
-projects[devel][subdir] = "contrib"
-
 projects[migrate][version] = "2.5"
 projects[migrate][subdir] = "contrib"
-
-projects[profiler_builder][version] = "1.0"
-projects[profiler_builder][subdir] = "contrib"
-
-projects[dae_tools][version] = "1.1"
-projects[dae_tools][subdir] = "contrib"
-
-projects[ecas][version] = "1.2"
-projects[ecas][subdir] = "contrib"
-
-projects[ecas_extra][version] = "1.0"
-projects[ecas_extra][subdir] = "contrib"
-
-projects[ecas_import_users][version] = "1.0"
-projects[ecas_import_users][subdir] = "contrib"
-
-projects[content_examples][version] = "1.0"
-projects[content_examples][subdir] = "contrib"
 
 projects[features][version] = "2.0-beta1"
 projects[features][subdir] = "contrib"
@@ -135,42 +84,6 @@ projects[i18n][subdir] = "contrib"
 
 projects[language_cookie][version] = "1.6"
 projects[language_cookie][subdir] = "contrib"
-
-projects[newsroom][version] = "1.1"
-projects[newsroom][subdir] = "contrib"
-
-projects[ECAS_env][version] = "1.1"
-projects[ECAS_env][subdir] = "contrib"
-
-projects[cce_basic_config][version] = "1.93"
-projects[cce_basic_config][subdir] = "contrib"
-
-projects[multisite_drupal_toolbox][version] = "1.x-dev"
-projects[multisite_drupal_toolbox][subdir] = "contrib"
-
-projects[multisite_notifications_core][version] = "1.0"
-projects[multisite_notifications_core][subdir] = "contrib"
-
-projects[multisite_rules_configuration][version] = "1.2"
-projects[multisite_rules_configuration][subdir] = "contrib"
-
-projects[multisite_settings_core][version] = "1.2"
-projects[multisite_settings_core][subdir] = "contrib"
-
-projects[solr_config][version] = "1.2"
-projects[solr_config][subdir] = "contrib"
-
-projects[f_a_q][version] = "1.2"
-projects[f_a_q][subdir] = "contrib"
-
-projects[multi_user_blog][version] = "1.0"
-projects[multi_user_blog][subdir] = "contrib"
-
-projects[social_bookmark][version] = "2.0"
-projects[social_bookmark][subdir] = "contrib"
-
-projects[feature_set][version] = "1.1"
-projects[feature_set][subdir] = "contrib"
 
 projects[node_export][version] = "3.0"
 projects[node_export][subdir] = "contrib"
