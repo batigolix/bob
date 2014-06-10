@@ -6,6 +6,7 @@ patches/
 nbproject
 tools/*
 *~
+build.properties
 
 # Ignore paths that contain generated content #
 ###############################################
