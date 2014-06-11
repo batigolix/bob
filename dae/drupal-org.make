@@ -237,21 +237,5 @@ libraries[flexslider][destination] = "libraries"
 libraries[flexslider][download][type] = "get"
 libraries[flexslider][download][url] = "https://github.com/woothemes/FlexSlider/archive/flexslider1.zip"
 
-; Plupload
-libraries[plupload][directory_name] = "plupload"
-libraries[plupload][type] = "library"
-libraries[plupload][destination] = "libraries"
-libraries[plupload][patch][] = "http://drupal.org/files/plupload-1_5_6-rm_examples-1903850-5.patch"
-libraries[plupload][download][type] = "file"
-libraries[plupload][download][url] = "http://plupload.com/downloads/plupload_1_5_6.zip"
 
-; +++++ Patches +++++
-
-projects[wysiwyg][patch][] = "http://drupal.org/files/wysiwyg-ckeditor-4.1853550.136.patch"
-
-projects[wysiwyg][patch][] = "http://drupal.org/files/wysiwyg-support_v4_ckeditor-1853550-73.patch"
-
-projects[wysiwyg][patch][] = "http://drupal.org/files/wysiwyg-ckeditor-4.1853550.136.patch"
-
-projects[wysiwyg][patch][] = "http://drupal.org/files/wysiwyg-support_v4_ckeditor-1853550-73.patch"
 
