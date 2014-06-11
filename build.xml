@@ -3,41 +3,45 @@
 
   <!--  does a complete build of the project by verifying code consistency and and
   performing static analysis of the code. -->
-  <target name="main" depends="site-install, load-properties, setup-phing-drush, fetch-core-contrib-code, fetch-custom-code">
+  <target name="main" depends="site-install, load-project-properties, setup-phing-drush, fetch-core-contrib-code, fetch-custom-code">
   </target>
   
   <!-- loads a set of project specific properties from a `.properties` file -->
   <target name="load-properties">
-    <property file="./build.properties" />
-    <property file="./build.default.properties" />
+    <property file="build.properties" />
+    <property file="build.default.properties" />
   </target>
 
-  <target name="delete-dir">
-    <delete dir="${item}"/>
+  <!-- loads a set of project specific properties from a `.properties` file -->
+  <target name="load-project-properties" depends="load-properties">
+    <property file="${project.name.short}/${project.name.short}.build.properties" />
   </target>
-
-  <target name="delete-file">
-    <delete file="${item}" verbose="true" />
-  </target>
-
 
   <!-- fetches drupal core and contrib code -->
-  <target name="fetch-core-contrib-code" depends="setup-phing-drush, load-properties, fetch-multisite-patches">
+  <target name="fetch-core-contrib-code" depends="setup-phing-drush, load-project-properties, fetch-multisite-patches">
     <if>
       <or>
         <istrue value="${build.force}" />
       </or>
       <then>
-        <echo msg="test" />
         <delete includeemptydirs="true" dir="${environment.root}" />
       </then>
     </if>
 
-    <!-- downloads the appropriate version of Drupal -->
+    <!--downloads the appropriate version of Drupal -->
     <drush command="dl" assume="yes">
       <param>drupal-${drupal.version}</param>
       <option name="drupal-project-rename">${environment.root}</option>
     </drush>
+
+    <if>
+      <not>
+        <available file="${environment.root}/${contrib.modules.destination}" type="dir"/>
+      </not>
+      <then>
+        <mkdir dir="${environment.root}/${contrib.modules.destination}" />
+      </then>
+    </if>
 
     <!-- downloads the contributed modules -->
     <drush command="make" assume="yes">
@@ -56,70 +60,9 @@
     -->
     
   </target>
-        
-  <!-- installs the website using a custom profile -->      
-  <target name="site-install" depends="load-properties, setup-phing-drush">
-
-    <!-- copies the install profile bundled with the make file to the appropriate directory. -->
-    <copy todir="${environment.root}/profiles/${project.name.short}/">
-      <fileset dir="${project.name.short}">
-        <include name="*.*" />
-      </fileset>
-    </copy>
-
-    <drush command="site-install" assume="yes">
-      <option name="db-url">mysqli://${db.user}:${db.pass}@${db.host}:${db.port}/${db.name}</option>
-      <option name="account-name">${drupal.user}</option>
-      <option name="account-pass">${drupal.pass}</option>
-      <option name="uri">${project.uri}</option>
-      <option name="root">${project.root}/${environment.root}</option>
-      <option name="site-name">${project.name.pretty}</option>
-      <param>${project.profile}</param>
-    </drush>
-  </target>
-        
-  <target name="setup-phing-drush" depends="load-properties">
-        
-    <!-- Clone the project -->
-    <phingcall target="setup-git-repo">
-      <property name="repo.dir" value="${environment.tools.dir}/phingdrushtask"/>
-      <property name="repo.url" value="${phing.drush.repository.url}" />
-      <property name="repo.revision" value="${phing.drush.repository.revision}" />
-    </phingcall>
-
-    <!-- Register as custom Phing task -->
-    <taskdef name="drush" classname="DrushTask" classpath="${environment.tools.dir}/phingdrushtask" />
-    <!-- Run drush from the project Drupal directory -->
-    <!--    <property name="drush.root" value="${environment.root}"/>
-    <property name="drush.uri" value="${environment.root}"/> -->
-    <!-- Use Drush installed by composer -->
-    <if>
-      <equals arg1="${phing.drush.system}" arg2="true"/>
-      <then>
-      </then>
-      <else>
-        <property name="drush.bin" value="${phing.drush.bin}"/>
-      </else>
-    </if>
-    <!-- Assume yes by default -->
-    <property name="drush.assume" value="yes"/>
-  </target>
-  <!-- GIT -->
-  <target name="setup-git-repo">
-    <if>
-      <not>
-        <available file="${repo.dir}" />
-      </not>
-      <then>
-        <property name="repo.revision" value="HEAD" override="false"/>
-        <exec command="git clone ${repo.url} ${repo.dir}" />
-        <exec command="git checkout ${repo.revision}" dir="${repo.dir}"/>
-      </then>
-    </if>
-  </target>
-
+  
   <!-- fetch all custom code from cnect & multisite svn repo -->
-  <target name="fetch-custom-code" depends="load-properties">
+  <target name="fetch-custom-code" depends="load-project-properties">
 
     <!-- delete folder if needed -->
     <if>
@@ -138,24 +81,57 @@
     <foreach list="${project.modules}" param="module" target="fetch-cnect-module" />
     <foreach list="${project.features}" param="feature" target="fetch-cnect-feature" />
     <foreach list="${project.themes}" param="theme" target="fetch-cnect-theme" />
+    <foreach list="${project.modules2}" param="module" target="fetch-cnect-module" />
+    <foreach list="${project.modules3}" param="module" target="fetch-cnect-module" />
     <foreach list="${multisite.modules}" param="module" target="fetch-multisite-module" />
     <foreach list="${multisite.features}" param="feature" target="fetch-multisite-feature" />
     <foreach list="${multisite.themes}" param="theme" target="fetch-multisite-theme" />
   </target>
-  
+        
+  <!-- installs the website using a custom profile -->      
+  <target name="site-install" depends="load-project-properties, setup-phing-drush">
+
+    <!-- copies the install profile bundled with the make file to the appropriate directory. -->
+    <copy todir="${environment.root}/profiles/${project.name.short}/">
+      <fileset dir="${project.name.short}">
+        <include name="*.*" />
+      </fileset>
+    </copy>
+
+    <drush command="site-install" assume="yes">
+      <option name="db-url">mysqli://${db.user}:${db.pass}@${db.host}:${db.port}/${db.name}</option>
+      <option name="account-name">${drupal.user}</option>
+      <option name="account-pass">${drupal.pass}</option>
+      <option name="uri">${project.uri}</option>
+      <option name="root">${project.root}/${environment.root}</option>
+      <option name="site-name">${project.name.pretty}</option>
+      <param>${project.profile}</param>
+    </drush>
+  </target>
+ 
   <!-- fetch one custom modules from cnect svn repo -->
-  <target name="fetch-cnect-module">
+  <target name="fetch-project-module">
     <exec command="svn checkout --username ${svn.user} --password ${svn.pass} ${project.repo}/${project.modules.source}/${module} ${environment.root}/${project.modules.destination}/${module}" />
   </target>
 
   <!-- fetch one custom feature from cnect svn repo -->
-  <target name="fetch-cnect-feature">
+  <target name="fetch-project-feature">
     <exec command="svn checkout --username ${svn.user} --password ${svn.pass} ${project.repo}/${project.features.source}/${feature} ${environment.root}/${project.modules.destination}/${feature}" />
   </target>
 
   <!-- fetch one custom theme from cnect svn repo -->
-  <target name="fetch-cnect-theme">
+  <target name="fetch-project-theme">
     <exec command="svn checkout --username ${svn.user} --password ${svn.pass} ${project.repo}/${project.themes.source}/${theme} ${environment.root}/${project.themes.destination}/${theme}" />
+  </target>
+
+    <!-- fetch one custom modules from cnect svn repo -->
+  <target name="fetch-project-module2">
+    <exec command="svn checkout --username ${svn.user} --password ${svn.pass} ${project.repo}/${project.modules2.source}/${module} ${environment.root}/${project.modules.destination}/${module}" />
+  </target>
+
+      <!-- fetch one custom modules from cnect svn repo -->
+  <target name="fetch-project-module3">
+    <exec command="svn checkout --username ${svn.user} --password ${svn.pass} ${project.repo}/${project.modules3.source}/${module} ${environment.root}/${project.modules.destination}/${module}" />
   </target>
   
   <!-- fetch one custom modules from multisite svn repo -->
@@ -182,5 +158,47 @@
   <target name="apply-patch" >
     <exec command="patch --directory=${environment.root} --batch -p0 --backup --input=${absfilename}" passthru="true" />
   </target>
+         
+  <target name="setup-phing-drush" depends="load-project-properties">
+        
+    <!-- Clone the project -->
+    <phingcall target="setup-git-repo">
+      <property name="repo.dir" value="${environment.tools.dir}/phingdrushtask"/>
+      <property name="repo.url" value="${phing.drush.repository.url}" />
+      <property name="repo.revision" value="${phing.drush.repository.revision}" />
+    </phingcall>
+
+    <!-- Register as custom Phing task -->
+    <taskdef name="drush" classname="DrushTask" classpath="${environment.tools.dir}/phingdrushtask" />
+    <!-- Run drush from the project Drupal directory -->
+    <!--    <property name="drush.root" value="${environment.root}"/>
+    <property name="drush.uri" value="${environment.root}"/> -->
+    <!-- Use Drush installed by composer -->
+    <if>
+      <equals arg1="${phing.drush.system}" arg2="true"/>
+      <then>
+      </then>
+      <else>
+        <property name="drush.bin" value="${phing.drush.bin}"/>
+      </else>
+    </if>
+    <!-- Assume yes by default -->
+    <property name="drush.assume" value="yes"/>
+  </target>
+
+  <!-- GIT -->
+  <target name="setup-git-repo">
+    <if>
+      <not>
+        <available file="${repo.dir}" />
+      </not>
+      <then>
+        <property name="repo.revision" value="HEAD" override="false"/>
+        <exec command="git clone ${repo.url} ${repo.dir}" />
+        <exec command="git checkout ${repo.revision}" dir="${repo.dir}"/>
+      </then>
+    </if>
+  </target>
+
   
 </project>
