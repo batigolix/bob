@@ -1,10 +1,18 @@
-; cnect make file for local development
+; digital_agenda_for_europe make file for local development
 core = "7.x"
 api = "2"
 
 projects[drupal][version] = "7.x"
 ; include the d.o. profile base
 includes[] = "drupal-org.make"
+
+; +++++ TODO modules without versions +++++
+
+projects[jtweetsanywhere][version] = "" ; TODO add version
+projects[jtweetsanywhere][subdir] = "custom"
+
+projects[cordis][version] = "" ; TODO add version
+projects[cordis][subdir] = "custom"
 
 ; +++++ Libraries +++++
 
@@ -84,6 +92,13 @@ libraries[tcpdf][type] = "library"
 libraries[tcpdf][destination] = "libraries"
 libraries[tcpdf][download][type] = "get"
 libraries[tcpdf][download][url] = "" ; TODO add download URI
+
+; jtweetsanywhere
+libraries[jtweetsanywhere][directory_name] = "jtweetsanywhere"
+libraries[jtweetsanywhere][type] = "library"
+libraries[jtweetsanywhere][destination] = "libraries"
+libraries[jtweetsanywhere][download][type] = "get"
+libraries[jtweetsanywhere][download][url] = "" ; TODO add download URI
 
 ; +++++ Patches +++++
 

@@ -3,12 +3,16 @@
 docroot/sites/*/settings*.php
 docroot/
 patches/
+nbproject
+tools/*
+*~
+build.properties
 
 # Ignore paths that contain generated content #
 ###############################################
-sites/*/files
-sites/*/private
-files/*
+docroot/sites/*/files
+docroot/sites/*/private
+docroot/files/*
 /cache
 
 # Packages #
@@ -53,3 +57,4 @@ build.properties
 ################
 user.anonymous.json
 
+/nbproject/private/
