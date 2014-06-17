@@ -214,5 +214,13 @@
     <append destFile="${settings.file}" text="$conf['stage_file_proxy_origin_dir'] = '${sfp.origin.dir';${line.separator}" />
     <chmod file="${settings.file}" mode="755" failonerror="true"/>
   </target>
+  
+  <target name="set-file-folders" depends="load-properties">
+    
+    <chmod file="${environment.root}/sites/default/files" mode="777" failonerror="true"/>
+    
+    
+    </target>
+  
 
 </project>
