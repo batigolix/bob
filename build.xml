@@ -3,7 +3,7 @@
 
   <!--  does a complete build of the project by verifying code consistency and and
   performing static analysis of the code. -->
-  <target name="main" depends="site-install, load-project-properties, setup-phing-drush, fetch-core-contrib-code, fetch-custom-code">
+  <target name="main" depends="load-project-properties, setup-phing-drush, fetch-core-contrib-code, fetch-custom-code, site-install">
   </target>
   
   <!-- loads a set of project specific properties from a `.properties` file -->
@@ -71,18 +71,20 @@
       </or>
       <then>
         <echo msg="test" />
-        <delete includeemptydirs="true"  dir="${environment.root}/${project.modules.destination}"/>
-        <delete includeemptydirs="true"  dir="${environment.root}/${project.themes.destination}"/>
-        <delete includeemptydirs="true"  dir="${environment.root}/${multisite.modules.destination}"/>
-        <delete includeemptydirs="true"  dir="${environment.root}/${multisite.themes.destination}"/>
+        <delete includeemptydirs="true" dir="${environment.root}/${project.modules.destination}"/>
+        <delete includeemptydirs="true" dir="${environment.root}/${project.themes.destination}"/>
+        <delete includeemptydirs="true" dir="${environment.root}/${multisite.modules.destination}"/>
+        <mkdir dir="${environment.root}/${project.modules.destination}"/>
+        <mkdir dir="${environment.root}/${project.themes.destination}"/>
+        <mkdir dir="${environment.root}/${multisite.modules.destination}"/>
       </then>
     </if>
 
-    <foreach list="${project.modules}" param="module" target="fetch-cnect-module" />
-    <foreach list="${project.features}" param="feature" target="fetch-cnect-feature" />
-    <foreach list="${project.themes}" param="theme" target="fetch-cnect-theme" />
-    <foreach list="${project.modules2}" param="module" target="fetch-cnect-module" />
-    <foreach list="${project.modules3}" param="module" target="fetch-cnect-module" />
+    <foreach list="${project.modules}" param="module" target="fetch-project-module" />
+    <foreach list="${project.features}" param="feature" target="fetch-project-feature" />
+    <foreach list="${project.themes}" param="theme" target="fetch-project-theme" />
+    <foreach list="${project.modules2}" param="module" target="fetch-project-module2" />
+    <foreach list="${project.modules3}" param="module" target="fetch-project-module3" />
     <foreach list="${multisite.modules}" param="module" target="fetch-multisite-module" />
     <foreach list="${multisite.features}" param="feature" target="fetch-multisite-feature" />
     <foreach list="${multisite.themes}" param="theme" target="fetch-multisite-theme" />
@@ -124,12 +126,12 @@
     <exec command="svn checkout --username ${svn.user} --password ${svn.pass} ${project.repo}/${project.themes.source}/${theme} ${environment.root}/${project.themes.destination}/${theme}" />
   </target>
 
-    <!-- fetch one custom modules from cnect svn repo -->
+  <!-- fetch one custom modules from cnect svn repo -->
   <target name="fetch-project-module2">
     <exec command="svn checkout --username ${svn.user} --password ${svn.pass} ${project.repo}/${project.modules2.source}/${module} ${environment.root}/${project.modules.destination}/${module}" />
   </target>
 
-      <!-- fetch one custom modules from cnect svn repo -->
+  <!-- fetch one custom modules from cnect svn repo -->
   <target name="fetch-project-module3">
     <exec command="svn checkout --username ${svn.user} --password ${svn.pass} ${project.repo}/${project.modules3.source}/${module} ${environment.root}/${project.modules.destination}/${module}" />
   </target>
@@ -200,5 +202,17 @@
     </if>
   </target>
 
-  
+  <target name="environment-indicator" depends="load-properties">
+    <property name="settings.file" value="${environment.root}/sites/default/settings.php" />
+    <chmod file="${settings.file}" mode="755" failonerror="true"/>
+    <append destFile="${settings.file}" text="$conf['environment_indicator_overwrite'] = TRUE;${line.separator}" />
+    <append destFile="${settings.file}" text="$conf['environment_indicator_overwritten_name'] = 'Local. Freeeeeeeeeedom!!!';${line.separator}" />
+    <append destFile="${settings.file}" text="$conf['environment_indicator_overwritten_color'] = '#009900';${line.separator}" />
+    <append destFile="${settings.file}" text="$conf['environment_indicator_overwritten_position'] = 'top';${line.separator}" />
+    <append destFile="${settings.file}" text="$conf['environment_indicator_overwritten_fixed'] = FALSE;${line.separator}" />
+    <append destFile="${settings.file}" text="$conf['stage_file_proxy_origin'] = '${sfp.origin}';${line.separator}" />
+    <append destFile="${settings.file}" text="$conf['stage_file_proxy_origin_dir'] = '${sfp.origin.dir';${line.separator}" />
+    <chmod file="${settings.file}" mode="755" failonerror="true"/>
+  </target>
+
 </project>
