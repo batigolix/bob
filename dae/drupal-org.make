@@ -13,8 +13,8 @@ projects[context][subdir] = "contrib"
 projects[date][version] = "2.6"
 projects[date][subdir] = "contrib"
 
-projects[migrate][version] = "2.5"
-projects[migrate][subdir] = "contrib"
+;projects[migrate][version] = "2.5"
+;projects[migrate][subdir] = "contrib"
 
 projects[features][version] = "2.0-beta1"
 projects[features][subdir] = "contrib"
@@ -216,12 +216,13 @@ projects[workbench_moderation][subdir] = "contrib"
 
 ; +++++ Libraries +++++
 
-; CKEditor
+;ckeditor 4.3.2
+libraries[ckeditor][download][type]= "file"
+libraries[ckeditor][download][request_type]= "get"
+libraries[ckeditor][download][file_type] = "zip"
+libraries[ckeditor][download][url] = "http://download.cksource.com/CKEditor/CKEditor/CKEditor%204.3.2/ckeditor_4.3.2_full.zip"
+libraries[ckeditor][download][sha1] = "6cffa0b543f71618507b5b6b3998ba5740142196"
 libraries[ckeditor][directory_name] = "ckeditor"
-libraries[ckeditor][type] = "library"
-libraries[ckeditor][destination] = "libraries"
-libraries[ckeditor][download][type] = "get"
-libraries[ckeditor][download][url] = "http://download.cksource.com/CKEditor/CKEditor/CKEditor%203.6.6.1/ckeditor_3.6.6.1.tar.gz"
 
 ; ColorBox
 libraries[colorbox][directory_name] = "colorbox"

@@ -80,14 +80,23 @@
       </then>
     </if>
 
-    <foreach list="${project.modules}" param="module" target="fetch-project-module" />
-    <foreach list="${project.features}" param="feature" target="fetch-project-feature" />
-    <foreach list="${project.themes}" param="theme" target="fetch-project-theme" />
-    <foreach list="${project.modules2}" param="module" target="fetch-project-module2" />
-    <foreach list="${project.modules3}" param="module" target="fetch-project-module3" />
+    <phingcall target="fetch-multisite-code" />
+    <phingcall target="fetch-project-code"/>
+    
+  </target>
+        
+  <target name="fetch-multisite-code" depends="load-project-properties">
     <foreach list="${multisite.modules}" param="module" target="fetch-multisite-module" />
     <foreach list="${multisite.features}" param="feature" target="fetch-multisite-feature" />
     <foreach list="${multisite.themes}" param="theme" target="fetch-multisite-theme" />
+  </target>
+
+  <target name="fetch-project-code" depends="load-project-properties">
+    <foreach list="${project.modules}" param="module" target="fetch-project-module" />
+    <foreach list="${project.modules2}" param="module" target="fetch-project-module2" />
+    <foreach list="${project.modules3}" param="module" target="fetch-project-module3" />
+    <foreach list="${project.features}" param="feature" target="fetch-project-feature" />
+    <foreach list="${project.themes}" param="theme" target="fetch-project-theme" />
   </target>
         
   <!-- installs the website using a custom profile -->      
@@ -96,7 +105,9 @@
     <!-- copies the install profile bundled with the make file to the appropriate directory. -->
     <copy todir="${environment.root}/profiles/${project.name.short}/">
       <fileset dir="${project.name.short}">
-        <include name="*.*" />
+        <include name="*.profile" />
+        <include name="*.info" />
+        <include name="*.install" />
       </fileset>
     </copy>
 
@@ -220,7 +231,7 @@
     <chmod file="${environment.root}/sites/default/files" mode="777" failonerror="true"/>
     
     
-    </target>
+  </target>
   
 
 </project>
