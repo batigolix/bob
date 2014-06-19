@@ -233,9 +233,6 @@
   <!-- update all code from svn -->
   
   <target name="svn-update-code" depends="load-project-properties">
-    <foreach list="${multisite.modules}" param="package" target="svn-update-multisite" />
-    <foreach list="${multisite.features}" param="package" target="svn-update-multisite" />
-    <foreach list="${multisite.themes}" param="package" target="svn-update-theme" />
     <foreach list="${project.modules}" param="package" target="svn-update-custom" />
     <foreach list="${project.modules2}" param="package" target="svn-update-custom" />
     <foreach list="${project.modules3}" param="package" target="svn-update-custom" />
@@ -246,10 +243,6 @@
   <!-- update individual package from svn repo -->
   <target name="svn-update-custom" depends="load-properties">
     <exec command="svn update ${environment.root}/${project.modules.destination}/${package}" />
-  </target>
-  <!-- update one package from svn repo -->
-  <target name="svn-update-multisite">
-    <exec command="svn update ${environment.root}/${multisite.modules.destination}/${package}" />
   </target>
   <!-- update one package from svn repo -->
   <target name="svn-update-theme">
