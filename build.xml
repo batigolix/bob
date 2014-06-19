@@ -43,13 +43,9 @@
       </then>
     </if>
 
-    <!-- downloads the contributed modules -->
-    <drush command="make" assume="yes">
-      <param>${contrib.make}</param>
-      <option name="contrib-destination">${environment.root}/${contrib.modules.destination}</option>
-      <option name="no-core"/>
-      <option name="verbose"/>
-    </drush>
+    <phingcall target="fetch-contrib-code"/>
+
+
                 
     <!-- applies patches 
     <foreach param="filename" absparam="absfilename" target="apply-patch">
@@ -59,6 +55,16 @@
     </foreach>
     -->
     
+  </target>
+  
+  <target name="fetch-contrib-code" depends="load-project-properties, setup-phing-drush">
+    <!-- downloads the contributed modules -->
+    <drush command="make" assume="yes">
+      <param>${contrib.make}</param>
+      <option name="contrib-destination">${environment.root}/${contrib.modules.destination}</option>
+      <option name="no-core"/>
+      <option name="verbose"/>
+    </drush>
   </target>
   
   <!-- fetch all custom code from cnect & multisite svn repo -->

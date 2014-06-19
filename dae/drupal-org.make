@@ -4,23 +4,20 @@ api = "2"
 
 ; +++++ Modules +++++
 
-projects[ctools][version] = "1.3"
+projects[ctools][version] = "1.4"
 projects[ctools][subdir] = "contrib"
 
-projects[context][version] = "3.0-beta6"
+projects[context][version] = "3.2"
 projects[context][subdir] = "contrib"
 
-projects[date][version] = "2.6"
+projects[date][version] = "2.7"
 projects[date][subdir] = "contrib"
-
-;projects[migrate][version] = "2.5"
-;projects[migrate][subdir] = "contrib"
 
 projects[features][version] = "2.0-beta1"
 projects[features][subdir] = "contrib"
 
-projects[features_extra][version] = "1.0-beta1"
-projects[features_extra][subdir] = "contrib"
+;projects[features_extra][version] = "1.0-beta1"
+;projects[features_extra][subdir] = "contrib"
 
 projects[feeds][version] = "2.0-alpha8"
 projects[feeds][subdir] = "contrib"
@@ -37,16 +34,16 @@ projects[email][subdir] = "contrib"
 projects[entityreference][version] = "1.1"
 projects[entityreference][subdir] = "contrib"
 
-projects[field_group][version] = "1.1"
+projects[field_group][version] = "1.3"
 projects[field_group][subdir] = "contrib"
 
-projects[filefield_sources][version] = "1.8"
+projects[filefield_sources][version] = "1.9"
 projects[filefield_sources][subdir] = "contrib"
 
 projects[filefield_sources_plupload][version] = "1.1"
 projects[filefield_sources_plupload][subdir] = "contrib"
 
-projects[link][version] = "1.1"
+projects[link][version] = "1.2"
 projects[link][subdir] = "contrib"
 
 projects[maxlength][version] = "3.0-beta1"
@@ -73,7 +70,7 @@ projects[plupload][subdir] = "contrib"
 projects[video][version] = "2.9"
 projects[video][subdir] = "contrib"
 
-projects[i18n][version] = "1.9"
+projects[i18n][version] = "1.11"
 projects[i18n][subdir] = "contrib"
 
 projects[language_cookie][version] = "1.6"
@@ -106,7 +103,7 @@ projects[diff][subdir] = "contrib"
 projects[easy_breadcrumb][version] = "2.9"
 projects[easy_breadcrumb][subdir] = "contrib"
 
-projects[entity][version] = "1.2"
+projects[entity][version] = "1.5"
 projects[entity][subdir] = "contrib"
 
 projects[job_scheduler][version] = "2.0-alpha3"
@@ -133,7 +130,7 @@ projects[menu_token][subdir] = "contrib"
 projects[pathauto][version] = "1.2"
 projects[pathauto][subdir] = "contrib"
 
-projects[quicktabs][version] = "3.4"
+projects[quicktabs][version] = "3.6"
 projects[quicktabs][subdir] = "contrib"
 
 projects[strongarm][version] = "2.0"
@@ -145,7 +142,7 @@ projects[token][subdir] = "contrib"
 projects[print][version] = "1.2"
 projects[print][subdir] = "contrib"
 
-projects[rules][version] = "2.3"
+projects[rules][version] = "2.6"
 projects[rules][subdir] = "contrib"
 
 projects[apachesolr][version] = "1.6"
@@ -187,7 +184,7 @@ projects[ckeditor_link][subdir] = "contrib"
 projects[wysiwyg][version] = "2.2"
 projects[wysiwyg][subdir] = "contrib"
 
-projects[variable][version] = "2.2"
+projects[variable][version] = "2.5"
 projects[variable][subdir] = "contrib"
 
 projects[views][version] = "3.7"
@@ -214,6 +211,9 @@ projects[workbench][subdir] = "contrib"
 projects[workbench_moderation][version] = "1.3"
 projects[workbench_moderation][subdir] = "contrib"
 
+projects[features_extra][subdir] = "contrib"
+projects[features_extra][version] = "1.0-beta1"
+
 ; +++++ Libraries +++++
 
 ;ckeditor 4.3.2
@@ -238,5 +238,9 @@ libraries[flexslider][destination] = "libraries"
 libraries[flexslider][download][type] = "get"
 libraries[flexslider][download][url] = "https://github.com/woothemes/FlexSlider/archive/flexslider1.zip"
 
+
+; Themes
+; --------
+projects[] = shiny
 
 
