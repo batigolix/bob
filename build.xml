@@ -213,28 +213,26 @@
     </if>
   </target>
 
-  <target name="environment-indicator" depends="load-properties">
+  <target name="environment-indicator" depends="load-project-properties">
     <property name="settings.file" value="${environment.root}/sites/default/settings.php" />
     <chmod file="${settings.file}" mode="755" failonerror="true"/>
     <append destFile="${settings.file}" text="$conf['environment_indicator_overwrite'] = TRUE;${line.separator}" />
-    <append destFile="${settings.file}" text="$conf['environment_indicator_overwritten_name'] = 'Local. Freeeeeeeeeedom!!!';${line.separator}" />
-    <append destFile="${settings.file}" text="$conf['environment_indicator_overwritten_color'] = '#009900';${line.separator}" />
+    <append destFile="${settings.file}" text="$conf['environment_indicator_overwritten_name'] = '${ei.name}';${line.separator}" />
+    <append destFile="${settings.file}" text="$conf['environment_indicator_overwritten_color'] = '${ei.color}';${line.separator}" />
     <append destFile="${settings.file}" text="$conf['environment_indicator_overwritten_position'] = 'top';${line.separator}" />
     <append destFile="${settings.file}" text="$conf['environment_indicator_overwritten_fixed'] = FALSE;${line.separator}" />
     <append destFile="${settings.file}" text="$conf['stage_file_proxy_origin'] = '${sfp.origin}';${line.separator}" />
-    <append destFile="${settings.file}" text="$conf['stage_file_proxy_origin_dir'] = '${sfp.origin.dir';${line.separator}" />
+    <append destFile="${settings.file}" text="$conf['stage_file_proxy_origin_dir'] = '${sfp.origin.dir}';${line.separator}" />
     <chmod file="${settings.file}" mode="755" failonerror="true"/>
   </target>
-  
+
   <target name="set-file-folders" depends="load-properties">
     <chmod file="${environment.root}/sites/default/files" mode="777" failonerror="true"/>
   </target>
 
+  <!-- update all code from svn -->
   
-  
-  <!-- update code from svn -->
-  
-    <target name="svn-update-code" depends="load-project-properties">
+  <target name="svn-update-code" depends="load-project-properties">
     <foreach list="${multisite.modules}" param="package" target="svn-update-multisite" />
     <foreach list="${multisite.features}" param="package" target="svn-update-multisite" />
     <foreach list="${multisite.themes}" param="package" target="svn-update-theme" />
@@ -245,8 +243,7 @@
     <foreach list="${project.themes}" param="package" target="svn-update-theme" />
   </target>
 
-  
-  <!-- update one package from svn repo -->
+  <!-- update individual package from svn repo -->
   <target name="svn-update-custom" depends="load-properties">
     <exec command="svn update ${environment.root}/${project.modules.destination}/${package}" />
   </target>
@@ -258,7 +255,5 @@
   <target name="svn-update-theme">
     <exec command="svn update ${environment.root}/${project.themes.destination}/${package}" />
   </target>
-
-        
 
 </project>
