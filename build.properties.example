@@ -18,3 +18,10 @@ svn.pass = letmein
 project.name.short = dae
 project.uri = http://dae.bob.val
 project.root = /Users/boris/Sites/dae2
+
+#Drupal
+drupal.private.path = /Users/boris/drupal-private
+
+#Environment indicator
+ei.color = green
+ei.name = Local Dev Go Crazy

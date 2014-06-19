@@ -238,9 +238,3 @@ libraries[flexslider][destination] = "libraries"
 libraries[flexslider][download][type] = "get"
 libraries[flexslider][download][url] = "https://github.com/woothemes/FlexSlider/archive/flexslider1.zip"
 
-
-; Themes
-; --------
-projects[] = shiny
-
-
