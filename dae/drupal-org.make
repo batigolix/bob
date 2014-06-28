@@ -220,8 +220,7 @@ projects[features_extra][version] = "1.0-beta1"
 libraries[ckeditor][download][type]= "file"
 libraries[ckeditor][download][request_type]= "get"
 libraries[ckeditor][download][file_type] = "zip"
-libraries[ckeditor][download][url] = "http://download.cksource.com/CKEditor/CKEditor/CKEditor%204.3.2/ckeditor_4.3.2_full.zip"
-libraries[ckeditor][download][sha1] = "6cffa0b543f71618507b5b6b3998ba5740142196"
+libraries[ckeditor][download][url] = "http://download.cksource.com/CKEditor/CKEditor/CKEditor%204.4.2/ckeditor_4.4.2_standard.zip"
 libraries[ckeditor][directory_name] = "ckeditor"
 
 ; ColorBox
