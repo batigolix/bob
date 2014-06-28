@@ -1,0 +1,5 @@
+name = this is custom
+description = custom stuffz
+core = 7.x
+dependencies[] = node
+dependencies[] = block

@@ -1,0 +1,1325 @@
+; Packaging information for cnect
+name = "Cnect"
+description = "European Commission Directorate General"
+exclusive = "1"
+core = "7.x"
+; ----------
+; Dependencies
+; ----------
+; Access control
+dependencies[] = content_access
+; Administration
+;dependencies[] = admin_menu
+; Caching
+dependencies[] = varnish
+; Chaos tool suite
+dependencies[] = ctools
+; Context
+dependencies[] = context
+dependencies[] = context_layouts
+dependencies[] = context_ui
+; Core
+dependencies[] = block
+dependencies[] = comment
+dependencies[] = contact
+dependencies[] = contextual
+dependencies[] = dblog
+dependencies[] = field
+dependencies[] = field_sql_storage
+dependencies[] = field_ui
+dependencies[] = file
+dependencies[] = filter
+dependencies[] = help
+dependencies[] = image
+dependencies[] = list
+dependencies[] = locale
+dependencies[] = menu
+dependencies[] = node
+dependencies[] = number
+dependencies[] = options
+dependencies[] = path
+dependencies[] = rdf
+dependencies[] = search
+dependencies[] = syslog
+dependencies[] = system
+dependencies[] = taxonomy
+dependencies[] = text
+dependencies[] = toolbar
+dependencies[] = translation
+dependencies[] = user
+; DGS
+dependencies[] = date_value_field
+dependencies[] = dgs_draft_review
+; Date/Time
+dependencies[] = date
+dependencies[] = date_api
+dependencies[] = date_popup
+; ECAS
+dependencies[] = ecas
+dependencies[] = ecas_extra
+dependencies[] = ecas_import_users
+; Fields
+dependencies[] = entityreference
+dependencies[] = entityreference_prepopulate
+dependencies[] = field_group
+dependencies[] = link
+; Media
+dependencies[] = file_entity
+dependencies[] = media
+dependencies[] = media_node
+dependencies[] = mediafield
+dependencies[] = video
+dependencies[] = video_ui
+; Multilingual - Internationalization
+dependencies[] = i18n
+dependencies[] = i18n_block
+dependencies[] = i18n_field
+dependencies[] = i18n_menu
+dependencies[] = i18n_node
+dependencies[] = i18n_select
+dependencies[] = i18n_string
+dependencies[] = i18n_sync
+dependencies[] = i18n_taxonomy
+dependencies[] = i18n_translation
+dependencies[] = i18n_variable
+dependencies[] = language_cookie
+; Node export
+dependencies[] = node_export
+; Other
+dependencies[] = better_formats
+dependencies[] = diff
+dependencies[] = easy_breadcrumb
+dependencies[] = entity
+dependencies[] = entity_token
+dependencies[] = jqmulti
+dependencies[] = libraries
+dependencies[] = linkchecker
+dependencies[] = menu_block
+dependencies[] = menu_token
+dependencies[] = pathauto
+dependencies[] = quicktabs
+dependencies[] = realname
+dependencies[] = strongarm
+dependencies[] = token
+; Printer, email and PDF versions
+dependencies[] = print
+dependencies[] = print_mail
+dependencies[] = print_pdf
+; Rules
+dependencies[] = rules
+dependencies[] = rules_admin
+dependencies[] = rules_scheduler
+; Search Toolkit
+dependencies[] = apachesolr
+dependencies[] = apachesolr_attachments
+dependencies[] = apachesolr_multisitesearch
+dependencies[] = apachesolr_search
+dependencies[] = current_search
+dependencies[] = facetapi
+; Security
+dependencies[] = password_policy
+; Spam control
+dependencies[] = captcha
+dependencies[] = hidden_captcha
+dependencies[] = image_captcha
+; Taxonomy
+dependencies[] = tagadelic
+dependencies[] = taxonomy_manager
+dependencies[] = term_merge
+; Translation Management
+dependencies[] = tmgmt
+; UUID
+dependencies[] = uuid
+; User interface
+dependencies[] = ckeditor_link
+dependencies[] = wysiwyg
+; Variable
+dependencies[] = variable
+dependencies[] = variable_realm
+dependencies[] = variable_store
+; Views
+dependencies[] = views
+dependencies[] = views_bulk_operations
+dependencies[] = views_ui
+; Voting
+dependencies[] = rate
+dependencies[] = votingapi
+; Workbench
+dependencies[] = workbench
+dependencies[] = workbench_moderation
+; multisite drupal toolbox
+dependencies[] = multisite_drupal_features_set_standard
+dependencies[] = multisite_drupal_toolbox
+; Features
+dependencies[] = features
+dependencies[] = cce_basic_config
+dependencies[] = cnect_management_dashboard
+dependencies[] = contact_form
+dependencies[] = content_examples
+dependencies[] = ecas_env
+dependencies[] = feature_set
+dependencies[] = multisite_metatags
+dependencies[] = multisite_rules_configuration
+dependencies[] = multisite_settings_core
+dependencies[] = social_bookmark
+dependencies[] = solr_config
+
+; ----------
+; Variables
+; ----------
+variables[additional_settings__active_tab_briefing] = 'edit-submission'
+variables[additional_settings__active_tab_fiche] = 'edit-print'
+variables[additional_settings__active_tab_indicator] = 'edit-submission'
+variables[additional_settings__active_tab_output] = 'edit-menu'
+variables[additional_settings__active_tab_page] = 'edit-workflow'
+variables[additional_settings__active_tab_pillar] = 'edit-submission'
+variables[additional_settings__active_tab_pillar_indicator] = 'edit-workflow'
+variables[admin_theme] = 'seven'
+variables[alert_message_enable] = true
+variables[anonymous] = 'Anonymous'
+variables[apachesolr_attachments_excluded_mime][audio/x-aiff] = 1
+variables[apachesolr_attachments_excluded_mime][image/x-jg] = 1
+variables[apachesolr_attachments_excluded_mime][video/x-msvideo] = 1
+variables[apachesolr_attachments_excluded_mime][image/x-ms-bmp] = 1
+variables[apachesolr_attachments_excluded_mime][image/gif] = 1
+variables[apachesolr_attachments_excluded_mime][image/vnd.microsoft.icon] = 1
+variables[apachesolr_attachments_excluded_mime][image/jpeg] = 1
+variables[apachesolr_attachments_excluded_mime][video/quicktime] = 1
+variables[apachesolr_attachments_excluded_mime][audio/mpeg] = 1
+variables[apachesolr_attachments_excluded_mime][video/mp4] = 1
+variables[apachesolr_attachments_excluded_mime][video/mpeg] = 1
+variables[apachesolr_attachments_excluded_mime][audio/ogg] = 1
+variables[apachesolr_attachments_excluded_mime][video/ogg] = 1
+variables[apachesolr_attachments_excluded_mime][image/png] = 1
+variables[apachesolr_attachments_excluded_mime][image/x-photoshop] = 1
+variables[apachesolr_attachments_excluded_mime][audio/x-realaudio] = 1
+variables[apachesolr_attachments_excluded_mime][audio/x-pn-realaudio] = 1
+variables[apachesolr_attachments_excluded_mime][image/x-rgb] = 1
+variables[apachesolr_attachments_excluded_mime][image/tiff] = 1
+variables[apachesolr_attachments_excluded_mime][video/x-ms-wmv] = 1
+variables[apachesolr_multisitesearch_last_metadata_update] = 1400147516
+variables[apachesolr_multisitesearch_metadata][bpl09t][id] = 'bpl09t/multisite.metadata/1'
+variables[apachesolr_multisitesearch_metadata][bpl09t][site] = 'https://webgate.ec.europa.eu/playground-multisite/eurostat-portal/en'
+variables[apachesolr_multisitesearch_metadata][bpl09t][hash] = 'bpl09t'
+variables[apachesolr_multisitesearch_metadata][bpl09t][entity_id] = 1
+variables[apachesolr_multisitesearch_metadata][bpl09t][entity_type] = 'multisite.meta'
+variables[apachesolr_multisitesearch_metadata][bpl09t][ss_multisite_meta_sitename] = 'eurostat-portal'
+variables[apachesolr_multisitesearch_metadata][bpl09t][timestamp] = '2014-01-17T14:05:46.811Z'
+variables[apachesolr_multisitesearch_metadata][bpl09t][sm_multisite_meta_taxonomy][0] = 'classification'
+variables[apachesolr_multisitesearch_metadata][bpl09t][sm_multisite_meta_taxonomy][1] = 'Tags'
+variables[apachesolr_multisitesearch_metadata][bpl09t][sm_multisite_meta_bundles][0] = 'Article'
+variables[apachesolr_multisitesearch_metadata][bpl09t][sm_multisite_meta_bundles][1] = 'Basic page'
+variables[apachesolr_multisitesearch_metadata][bpl09t][sm_multisite_meta_bundles][2] = 'Audio'
+variables[apachesolr_multisitesearch_metadata][bpl09t][sm_multisite_meta_bundles][3] = 'Document'
+variables[apachesolr_multisitesearch_metadata][bpl09t][sm_multisite_meta_bundles][4] = 'Image'
+variables[apachesolr_multisitesearch_metadata][bpl09t][sm_multisite_meta_bundles][5] = 'Video'
+variables[apachesolr_multisitesearch_metadata][mirk99][id] = 'mirk99/multisite.metadata/1'
+variables[apachesolr_multisitesearch_metadata][mirk99][site] = 'https://webgate.ec.europa.eu/playground-multisite/eaci/en'
+variables[apachesolr_multisitesearch_metadata][mirk99][hash] = 'mirk99'
+variables[apachesolr_multisitesearch_metadata][mirk99][entity_id] = 1
+variables[apachesolr_multisitesearch_metadata][mirk99][entity_type] = 'multisite.meta'
+variables[apachesolr_multisitesearch_metadata][mirk99][ss_multisite_meta_sitename] = 'eaci'
+variables[apachesolr_multisitesearch_metadata][mirk99][timestamp] = '2014-02-06T14:41:12.145Z'
+variables[apachesolr_multisitesearch_metadata][mirk99][sm_multisite_meta_taxonomy][0] = 'classification'
+variables[apachesolr_multisitesearch_metadata][mirk99][sm_multisite_meta_taxonomy][1] = 'Tags'
+variables[apachesolr_multisitesearch_metadata][mirk99][sm_multisite_meta_bundles][0] = 'Article'
+variables[apachesolr_multisitesearch_metadata][mirk99][sm_multisite_meta_bundles][1] = 'Basic page'
+variables[apachesolr_multisitesearch_metadata][mirk99][sm_multisite_meta_bundles][2] = 'Projects'
+variables[apachesolr_multisitesearch_metadata][mirk99][sm_multisite_meta_bundles][3] = 'Image'
+variables[apachesolr_multisitesearch_metadata][mirk99][sm_multisite_meta_bundles][4] = 'Video'
+variables[apachesolr_multisitesearch_metadata][mirk99][sm_multisite_meta_bundles][5] = 'Audio'
+variables[apachesolr_multisitesearch_metadata][mirk99][sm_multisite_meta_bundles][6] = 'Document'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][id] = 'qsxbhg/multisite.metadata/1'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][site] = 'https://webgate.ec.europa.eu/playground-multisite/digital-agenda/en'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][hash] = 'qsxbhg'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][entity_id] = 1
+variables[apachesolr_multisitesearch_metadata][qsxbhg][entity_type] = 'multisite.meta'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][ss_multisite_meta_sitename] = 'Digital Agenda for Europe'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][timestamp] = '2014-04-04T13:59:54.376Z'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][sm_multisite_meta_taxonomy][0] = 'Categories'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][sm_multisite_meta_taxonomy][1] = 'Chapters'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][sm_multisite_meta_taxonomy][2] = 'classification'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][sm_multisite_meta_taxonomy][3] = 'Communities'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][sm_multisite_meta_taxonomy][4] = 'Copyright_Management'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][sm_multisite_meta_taxonomy][5] = 'Country'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][sm_multisite_meta_taxonomy][6] = 'Discussion_Categories'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][sm_multisite_meta_taxonomy][7] = 'FAQ_categories'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][sm_multisite_meta_taxonomy][8] = 'Futurium_Hexagon'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][sm_multisite_meta_taxonomy][9] = 'Metrics_Survey_Category'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][sm_multisite_meta_taxonomy][10] = 'NewsRoom_Item_Type'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][sm_multisite_meta_taxonomy][11] = 'Pillars___Actions'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][sm_multisite_meta_taxonomy][12] = 'SIC_code'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][sm_multisite_meta_taxonomy][13] = 'Tags'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][sm_multisite_meta_bundles][0] = 'About Pages'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][sm_multisite_meta_bundles][1] = 'Article'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][sm_multisite_meta_bundles][2] = 'Basic page'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][sm_multisite_meta_bundles][3] = 'Blog entry'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][sm_multisite_meta_bundles][4] = 'Blog post'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][sm_multisite_meta_bundles][5] = 'CORDIS Project'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][sm_multisite_meta_bundles][6] = 'CORDIS Project Selection'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][sm_multisite_meta_bundles][7] = 'DA in your country'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][sm_multisite_meta_bundles][8] = 'Digital Champion'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][sm_multisite_meta_bundles][9] = 'Discussion'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][sm_multisite_meta_bundles][10] = 'F.A.Q'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][sm_multisite_meta_bundles][11] = 'Geographical Menus'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][sm_multisite_meta_bundles][12] = 'Going Local'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][sm_multisite_meta_bundles][13] = 'Map'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][sm_multisite_meta_bundles][14] = 'NewsRoom Item'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][sm_multisite_meta_bundles][15] = 'Newsroom Selection'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][sm_multisite_meta_bundles][16] = 'Score Board'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][sm_multisite_meta_bundles][17] = 'Webform'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][sm_multisite_meta_bundles][18] = 'Audio'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][sm_multisite_meta_bundles][19] = 'Document'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][sm_multisite_meta_bundles][20] = 'Image'
+variables[apachesolr_multisitesearch_metadata][qsxbhg][sm_multisite_meta_bundles][21] = 'Video'
+variables[apachesolr_multisitesearch_metadata][qjco56][id] = 'qjco56/multisite.metadata/1'
+variables[apachesolr_multisitesearch_metadata][qjco56][site] = 'https://webgate.ec.europa.eu/playground-multisite/service-catalogue/en'
+variables[apachesolr_multisitesearch_metadata][qjco56][hash] = 'qjco56'
+variables[apachesolr_multisitesearch_metadata][qjco56][entity_id] = 1
+variables[apachesolr_multisitesearch_metadata][qjco56][entity_type] = 'multisite.meta'
+variables[apachesolr_multisitesearch_metadata][qjco56][ss_multisite_meta_sitename] = 'service-catalogue'
+variables[apachesolr_multisitesearch_metadata][qjco56][timestamp] = '2014-04-09T07:06:30.373Z'
+variables[apachesolr_multisitesearch_metadata][qjco56][sm_multisite_meta_taxonomy][0] = 'Category'
+variables[apachesolr_multisitesearch_metadata][qjco56][sm_multisite_meta_taxonomy][1] = 'classification'
+variables[apachesolr_multisitesearch_metadata][qjco56][sm_multisite_meta_taxonomy][2] = 'Service_criticality'
+variables[apachesolr_multisitesearch_metadata][qjco56][sm_multisite_meta_taxonomy][3] = 'Status'
+variables[apachesolr_multisitesearch_metadata][qjco56][sm_multisite_meta_taxonomy][4] = 'Tags'
+variables[apachesolr_multisitesearch_metadata][qjco56][sm_multisite_meta_taxonomy][5] = 'Target_Customer'
+variables[apachesolr_multisitesearch_metadata][qjco56][sm_multisite_meta_bundles][0] = 'Article'
+variables[apachesolr_multisitesearch_metadata][qjco56][sm_multisite_meta_bundles][1] = 'Basic page'
+variables[apachesolr_multisitesearch_metadata][qjco56][sm_multisite_meta_bundles][2] = 'Links'
+variables[apachesolr_multisitesearch_metadata][qjco56][sm_multisite_meta_bundles][3] = 'Service'
+variables[apachesolr_multisitesearch_metadata][qjco56][sm_multisite_meta_bundles][4] = 'Image'
+variables[apachesolr_multisitesearch_metadata][qjco56][sm_multisite_meta_bundles][5] = 'Video'
+variables[apachesolr_multisitesearch_metadata][qjco56][sm_multisite_meta_bundles][6] = 'Audio'
+variables[apachesolr_multisitesearch_metadata][qjco56][sm_multisite_meta_bundles][7] = 'Document'
+variables[apachesolr_multisitesearch_metadata][ttnaz4][id] = 'ttnaz4/multisite.metadata/1'
+variables[apachesolr_multisitesearch_metadata][ttnaz4][site] = 'https://webgate.ec.europa.eu/playground-multisite/eco-innovation-projects/en'
+variables[apachesolr_multisitesearch_metadata][ttnaz4][hash] = 'ttnaz4'
+variables[apachesolr_multisitesearch_metadata][ttnaz4][entity_id] = 1
+variables[apachesolr_multisitesearch_metadata][ttnaz4][entity_type] = 'multisite.meta'
+variables[apachesolr_multisitesearch_metadata][ttnaz4][ss_multisite_meta_sitename] = 'Eco-Innovation'
+variables[apachesolr_multisitesearch_metadata][ttnaz4][timestamp] = '2014-04-28T12:27:22.957Z'
+variables[apachesolr_multisitesearch_metadata][ttnaz4][sm_multisite_meta_taxonomy][0] = 'Call_years'
+variables[apachesolr_multisitesearch_metadata][ttnaz4][sm_multisite_meta_taxonomy][1] = 'classification'
+variables[apachesolr_multisitesearch_metadata][ttnaz4][sm_multisite_meta_taxonomy][2] = 'File_categories'
+variables[apachesolr_multisitesearch_metadata][ttnaz4][sm_multisite_meta_taxonomy][3] = 'Languages'
+variables[apachesolr_multisitesearch_metadata][ttnaz4][sm_multisite_meta_taxonomy][4] = 'Project_keywords'
+variables[apachesolr_multisitesearch_metadata][ttnaz4][sm_multisite_meta_taxonomy][5] = 'Sectors'
+variables[apachesolr_multisitesearch_metadata][ttnaz4][sm_multisite_meta_taxonomy][6] = 'Tags'
+variables[apachesolr_multisitesearch_metadata][ttnaz4][sm_multisite_meta_bundles][0] = 'Article'
+variables[apachesolr_multisitesearch_metadata][ttnaz4][sm_multisite_meta_bundles][1] = 'Basic page'
+variables[apachesolr_multisitesearch_metadata][ttnaz4][sm_multisite_meta_bundles][2] = 'Press article'
+variables[apachesolr_multisitesearch_metadata][ttnaz4][sm_multisite_meta_bundles][3] = 'Project'
+variables[apachesolr_multisitesearch_metadata][ttnaz4][sm_multisite_meta_bundles][4] = 'Image'
+variables[apachesolr_multisitesearch_metadata][ttnaz4][sm_multisite_meta_bundles][5] = 'Video'
+variables[apachesolr_multisitesearch_metadata][ttnaz4][sm_multisite_meta_bundles][6] = 'Audio'
+variables[apachesolr_multisitesearch_metadata][ttnaz4][sm_multisite_meta_bundles][7] = 'Document'
+variables[apachesolr_multisitesearch_metadata][mn69wt][id] = 'mn69wt/multisite.metadata/1'
+variables[apachesolr_multisitesearch_metadata][mn69wt][site] = 'https://webgate.ec.europa.eu/playground-multisite/easme-site/en'
+variables[apachesolr_multisitesearch_metadata][mn69wt][hash] = 'mn69wt'
+variables[apachesolr_multisitesearch_metadata][mn69wt][entity_id] = 1
+variables[apachesolr_multisitesearch_metadata][mn69wt][entity_type] = 'multisite.meta'
+variables[apachesolr_multisitesearch_metadata][mn69wt][ss_multisite_meta_sitename] = 'easme-site'
+variables[apachesolr_multisitesearch_metadata][mn69wt][timestamp] = '2014-05-05T12:29:16.579Z'
+variables[apachesolr_multisitesearch_metadata][mn69wt][sm_multisite_meta_taxonomy][0] = 'classification'
+variables[apachesolr_multisitesearch_metadata][mn69wt][sm_multisite_meta_taxonomy][1] = 'EC_World_Countries'
+variables[apachesolr_multisitesearch_metadata][mn69wt][sm_multisite_meta_taxonomy][2] = 'FAQ_categories'
+variables[apachesolr_multisitesearch_metadata][mn69wt][sm_multisite_meta_taxonomy][3] = 'Tags'
+variables[apachesolr_multisitesearch_metadata][mn69wt][sm_multisite_meta_bundles][0] = 'Article'
+variables[apachesolr_multisitesearch_metadata][mn69wt][sm_multisite_meta_bundles][1] = 'Basic page'
+variables[apachesolr_multisitesearch_metadata][mn69wt][sm_multisite_meta_bundles][2] = 'F.A.Q'
+variables[apachesolr_multisitesearch_metadata][mn69wt][sm_multisite_meta_bundles][3] = 'Image'
+variables[apachesolr_multisitesearch_metadata][mn69wt][sm_multisite_meta_bundles][4] = 'Video'
+variables[apachesolr_multisitesearch_metadata][mn69wt][sm_multisite_meta_bundles][5] = 'Audio'
+variables[apachesolr_multisitesearch_metadata][mn69wt][sm_multisite_meta_bundles][6] = 'Document'
+variables[apachesolr_multisitesearch_metadata][ctsxds][id] = 'ctsxds/multisite.metadata/1'
+variables[apachesolr_multisitesearch_metadata][ctsxds][site] = 'https://webgate.ec.europa.eu/playground-multisite/cleanvehicle/en'
+variables[apachesolr_multisitesearch_metadata][ctsxds][hash] = 'ctsxds'
+variables[apachesolr_multisitesearch_metadata][ctsxds][entity_id] = 1
+variables[apachesolr_multisitesearch_metadata][ctsxds][entity_type] = 'multisite.meta'
+variables[apachesolr_multisitesearch_metadata][ctsxds][ss_multisite_meta_sitename] = 'cleanvehicle'
+variables[apachesolr_multisitesearch_metadata][ctsxds][timestamp] = '2014-05-05T13:41:44.183Z'
+variables[apachesolr_multisitesearch_metadata][ctsxds][sm_multisite_meta_taxonomy][0] = 'classification'
+variables[apachesolr_multisitesearch_metadata][ctsxds][sm_multisite_meta_taxonomy][1] = 'Tags'
+variables[apachesolr_multisitesearch_metadata][ctsxds][sm_multisite_meta_bundles][0] = 'Article'
+variables[apachesolr_multisitesearch_metadata][ctsxds][sm_multisite_meta_bundles][1] = 'Basic page'
+variables[apachesolr_multisitesearch_metadata][ctsxds][sm_multisite_meta_bundles][2] = 'News'
+variables[apachesolr_multisitesearch_metadata][ctsxds][sm_multisite_meta_bundles][3] = 'Image'
+variables[apachesolr_multisitesearch_metadata][ctsxds][sm_multisite_meta_bundles][4] = 'Video'
+variables[apachesolr_multisitesearch_metadata][ctsxds][sm_multisite_meta_bundles][5] = 'Audio'
+variables[apachesolr_multisitesearch_metadata][ctsxds][sm_multisite_meta_bundles][6] = 'Document'
+variables[apachesolr_multisitesearch_metadata][g3jxrd][id] = 'g3jxrd/multisite.metadata/1'
+variables[apachesolr_multisitesearch_metadata][g3jxrd][site] = 'https://webgate.ec.europa.eu/playground-multisite/iee-projects/en'
+variables[apachesolr_multisitesearch_metadata][g3jxrd][hash] = 'g3jxrd'
+variables[apachesolr_multisitesearch_metadata][g3jxrd][entity_id] = 1
+variables[apachesolr_multisitesearch_metadata][g3jxrd][entity_type] = 'multisite.meta'
+variables[apachesolr_multisitesearch_metadata][g3jxrd][ss_multisite_meta_sitename] = 'iee-projects'
+variables[apachesolr_multisitesearch_metadata][g3jxrd][timestamp] = '2014-05-05T13:45:55.696Z'
+variables[apachesolr_multisitesearch_metadata][g3jxrd][sm_multisite_meta_taxonomy][0] = 'classification'
+variables[apachesolr_multisitesearch_metadata][g3jxrd][sm_multisite_meta_taxonomy][1] = 'Tags'
+variables[apachesolr_multisitesearch_metadata][g3jxrd][sm_multisite_meta_bundles][0] = 'Article'
+variables[apachesolr_multisitesearch_metadata][g3jxrd][sm_multisite_meta_bundles][1] = 'Basic page'
+variables[apachesolr_multisitesearch_metadata][g3jxrd][sm_multisite_meta_bundles][2] = 'Image'
+variables[apachesolr_multisitesearch_metadata][g3jxrd][sm_multisite_meta_bundles][3] = 'Video'
+variables[apachesolr_multisitesearch_metadata][g3jxrd][sm_multisite_meta_bundles][4] = 'Audio'
+variables[apachesolr_multisitesearch_metadata][g3jxrd][sm_multisite_meta_bundles][5] = 'Document'
+variables[apachesolr_multisitesearch_metadata][ri5s1p][id] = 'ri5s1p/multisite.metadata/1'
+variables[apachesolr_multisitesearch_metadata][ri5s1p][site] = 'https://webgate.ec.europa.eu/playground-multisite/etc/en'
+variables[apachesolr_multisitesearch_metadata][ri5s1p][hash] = 'ri5s1p'
+variables[apachesolr_multisitesearch_metadata][ri5s1p][entity_id] = 1
+variables[apachesolr_multisitesearch_metadata][ri5s1p][entity_type] = 'multisite.meta'
+variables[apachesolr_multisitesearch_metadata][ri5s1p][ss_multisite_meta_sitename] = 'etc'
+variables[apachesolr_multisitesearch_metadata][ri5s1p][timestamp] = '2014-05-05T13:56:27.814Z'
+variables[apachesolr_multisitesearch_metadata][ri5s1p][sm_multisite_meta_taxonomy][0] = 'classification'
+variables[apachesolr_multisitesearch_metadata][ri5s1p][sm_multisite_meta_taxonomy][1] = 'Tags'
+variables[apachesolr_multisitesearch_metadata][ri5s1p][sm_multisite_meta_bundles][0] = 'Article'
+variables[apachesolr_multisitesearch_metadata][ri5s1p][sm_multisite_meta_bundles][1] = 'Basic page'
+variables[apachesolr_multisitesearch_metadata][ri5s1p][sm_multisite_meta_bundles][2] = 'Image'
+variables[apachesolr_multisitesearch_metadata][ri5s1p][sm_multisite_meta_bundles][3] = 'Video'
+variables[apachesolr_multisitesearch_metadata][ri5s1p][sm_multisite_meta_bundles][4] = 'Audio'
+variables[apachesolr_multisitesearch_metadata][ri5s1p][sm_multisite_meta_bundles][5] = 'Document'
+variables[apachesolr_multisitesearch_metadata][7tuqt7][id] = '7tuqt7/multisite.metadata/1'
+variables[apachesolr_multisitesearch_metadata][7tuqt7][site] = 'https://webgate.ec.europa.eu/playground-multisite/hr2-contact/en'
+variables[apachesolr_multisitesearch_metadata][7tuqt7][hash] = '7tuqt7'
+variables[apachesolr_multisitesearch_metadata][7tuqt7][entity_id] = 1
+variables[apachesolr_multisitesearch_metadata][7tuqt7][entity_type] = 'multisite.meta'
+variables[apachesolr_multisitesearch_metadata][7tuqt7][ss_multisite_meta_sitename] = 'hr-contact'
+variables[apachesolr_multisitesearch_metadata][7tuqt7][timestamp] = '2014-05-06T08:25:20.038Z'
+variables[apachesolr_multisitesearch_metadata][7tuqt7][sm_multisite_meta_taxonomy][0] = 'Categories'
+variables[apachesolr_multisitesearch_metadata][7tuqt7][sm_multisite_meta_taxonomy][1] = 'classification'
+variables[apachesolr_multisitesearch_metadata][7tuqt7][sm_multisite_meta_taxonomy][2] = 'FAQs_subcategorization'
+variables[apachesolr_multisitesearch_metadata][7tuqt7][sm_multisite_meta_taxonomy][3] = 'Tags'
+variables[apachesolr_multisitesearch_metadata][7tuqt7][sm_multisite_meta_bundles][0] = 'Article'
+variables[apachesolr_multisitesearch_metadata][7tuqt7][sm_multisite_meta_bundles][1] = 'Basic page'
+variables[apachesolr_multisitesearch_metadata][7tuqt7][sm_multisite_meta_bundles][2] = 'Question'
+variables[apachesolr_multisitesearch_metadata][7tuqt7][sm_multisite_meta_bundles][3] = 'Image'
+variables[apachesolr_multisitesearch_metadata][7tuqt7][sm_multisite_meta_bundles][4] = 'Video'
+variables[apachesolr_multisitesearch_metadata][7tuqt7][sm_multisite_meta_bundles][5] = 'Audio'
+variables[apachesolr_multisitesearch_metadata][7tuqt7][sm_multisite_meta_bundles][6] = 'Document'
+variables[apachesolr_search_mlt_blocks][mlt-001][name] = 'More like this'
+variables[apachesolr_search_mlt_blocks][mlt-001][num_results] = '5'
+variables[apachesolr_search_mlt_blocks][mlt-001][mlt_fl][label] = 'label'
+variables[apachesolr_search_mlt_blocks][mlt-001][mlt_fl][taxonomy_names] = 'taxonomy_names'
+variables[apachesolr_search_mlt_blocks][mlt-001][mlt_env_id] = 'solr'
+variables[apachesolr_search_mlt_blocks][mlt-001][mlt_mintf] = '1'
+variables[apachesolr_search_mlt_blocks][mlt-001][mlt_mindf] = '1'
+variables[apachesolr_search_mlt_blocks][mlt-001][mlt_minwl] = '3'
+variables[apachesolr_search_mlt_blocks][mlt-001][mlt_maxwl] = '15'
+variables[apachesolr_search_mlt_blocks][mlt-001][mlt_maxqt] = '20'
+variables[apachesolr_search_mlt_blocks][mlt-001][mlt_custom_filters] = ''
+variables[apachesolr_search_mlt_blocks][mlt-001][delta] = 'mlt-001'
+variables[apachesolr_site_hash] = 'q9e908'
+variables[array_filter] = true
+variables[cache_flush_varnish_cache_page] = 1400147517
+variables[captcha_default_challenge] = 'image_captcha/Image'
+variables[classification] = '16000'
+variables[comment_anonymous_article] = '0'
+variables[comment_anonymous_briefing] = '0'
+variables[comment_anonymous_fiche] = '0'
+variables[comment_anonymous_indicator] = '0'
+variables[comment_anonymous_output] = '0'
+variables[comment_anonymous_page] = '0'
+variables[comment_anonymous_pillar] = '0'
+variables[comment_anonymous_pillar_indicator] = '0'
+variables[comment_article] = '2'
+variables[comment_briefing] = '0'
+variables[comment_default_mode_article] = 1
+variables[comment_default_mode_fiche] = 1
+variables[comment_default_mode_indicator] = 1
+variables[comment_default_mode_output] = 1
+variables[comment_default_mode_page] = 1
+variables[comment_default_mode_pillar] = 1
+variables[comment_default_mode_pillar_indicator] = 1
+variables[comment_default_per_page_article] = '50'
+variables[comment_default_per_page_briefing] = '50'
+variables[comment_default_per_page_fiche] = '50'
+variables[comment_default_per_page_indicator] = '50'
+variables[comment_default_per_page_output] = '50'
+variables[comment_default_per_page_page] = '50'
+variables[comment_default_per_page_pillar] = '50'
+variables[comment_default_per_page_pillar_indicator] = '50'
+variables[comment_fiche] = '0'
+variables[comment_form_location_article] = 1
+variables[comment_form_location_briefing] = 1
+variables[comment_form_location_fiche] = 1
+variables[comment_form_location_indicator] = 1
+variables[comment_form_location_output] = 1
+variables[comment_form_location_page] = 1
+variables[comment_form_location_pillar] = 1
+variables[comment_form_location_pillar_indicator] = 1
+variables[comment_indicator] = '0'
+variables[comment_output] = '0'
+variables[comment_pillar] = '2'
+variables[comment_pillar_indicator] = '0'
+variables[comment_preview_article] = '1'
+variables[comment_preview_briefing] = '1'
+variables[comment_preview_fiche] = '1'
+variables[comment_preview_indicator] = '1'
+variables[comment_preview_output] = '1'
+variables[comment_preview_page] = '1'
+variables[comment_preview_pillar] = '1'
+variables[comment_preview_pillar_indicator] = '0'
+variables[comment_subject_field_article] = 1
+variables[comment_subject_field_briefing] = 1
+variables[comment_subject_field_fiche] = 1
+variables[comment_subject_field_indicator] = 1
+variables[comment_subject_field_output] = 1
+variables[comment_subject_field_page] = 1
+variables[comment_subject_field_pillar] = 1
+variables[comment_subject_field_pillar_indicator] = 1
+variables[contact_default_status] = 1
+variables[content_access_briefing][view_own][0] = 13
+variables[content_access_briefing][view_own][1] = 14
+variables[content_access_briefing][view_own][2] = 3
+variables[content_access_briefing][view][0] = 13
+variables[content_access_briefing][view][1] = 14
+variables[content_access_briefing][view][2] = 15
+variables[content_access_briefing][view][3] = 3
+variables[content_access_briefing][update][0] = 3
+variables[content_access_briefing][update][1] = 13
+variables[content_access_briefing][update][2] = 14
+variables[content_access_briefing][update_own][0] = 3
+variables[content_access_briefing][update_own][1] = 13
+variables[content_access_briefing][update_own][2] = 14
+variables[content_access_briefing][delete][0] = 3
+variables[content_access_briefing][delete][1] = 12
+variables[content_access_briefing][delete_own][0] = 3
+variables[content_access_pillar][view_own][0] = 4
+variables[content_access_pillar][view_own][1] = 5
+variables[content_access_pillar][view_own][2] = 8
+variables[content_access_pillar][view_own][3] = 7
+variables[content_access_pillar][view_own][4] = 9
+variables[content_access_pillar][view_own][5] = 6
+variables[content_access_pillar][view_own][6] = 10
+variables[content_access_pillar][view_own][7] = 3
+variables[content_access_pillar][view][0] = 4
+variables[content_access_pillar][view][1] = 5
+variables[content_access_pillar][view][2] = 8
+variables[content_access_pillar][view][3] = 7
+variables[content_access_pillar][view][4] = 9
+variables[content_access_pillar][view][5] = 6
+variables[content_access_pillar][view][6] = 10
+variables[content_access_pillar][view][7] = 3
+variables[content_access_pillar_indicator][view_own][0] = 4
+variables[content_access_pillar_indicator][view_own][1] = 5
+variables[content_access_pillar_indicator][view_own][2] = 8
+variables[content_access_pillar_indicator][view_own][3] = 7
+variables[content_access_pillar_indicator][view_own][4] = 9
+variables[content_access_pillar_indicator][view_own][5] = 6
+variables[content_access_pillar_indicator][view_own][6] = 10
+variables[content_access_pillar_indicator][view_own][7] = 3
+variables[content_access_pillar_indicator][view][0] = 4
+variables[content_access_pillar_indicator][view][1] = 5
+variables[content_access_pillar_indicator][view][2] = 8
+variables[content_access_pillar_indicator][view][3] = 7
+variables[content_access_pillar_indicator][view][4] = 9
+variables[content_access_pillar_indicator][view][5] = 6
+variables[content_access_pillar_indicator][view][6] = 10
+variables[content_access_pillar_indicator][view][7] = 3
+variables[context_block_rebuild_needed] = true
+variables[context_status][cnect_site_wide] = true
+variables[context_status][fiche_admin] = true
+variables[creator] = 'COMM/CNECT/D3'
+variables[dashboard_stashed_blocks][0][module] = 'node'
+variables[dashboard_stashed_blocks][0][delta] = 'recent'
+variables[dashboard_stashed_blocks][0][region] = 'dashboard_inactive'
+variables[date_api_version] = '7.2'
+variables[date_default_timezone] = 'Europe/Luxembourg'
+variables[date_first_day] = '0'
+variables[date_format_long] = 'l, j F, Y - H:i'
+variables[date_format_medium] = 'D, d/m/Y - H:i'
+variables[date_format_short] = 'd/m/Y - H:i'
+variables[dblog_row_limit] = '1000'
+variables[default_field_group][group_mandate|node|priority|form] = true
+variables[default_field_group][group_situation|node|priority|form] = false
+variables[default_field_group][group_results_impact|node|priority|form] = true
+variables[default_field_group][group_input_output|node|priority|form] = true
+variables[default_field_group][group_input|node|priority|form] = false
+variables[default_field_group][group_output|node|fiche|form] = true
+variables[default_field_group][group_mandate|node|fiche|default] = false
+variables[default_field_group][group_situation|node|fiche|default] = false
+variables[default_field_group][group_results_impact|node|fiche|default] = true
+variables[default_field_group][group_input_output|node|fiche|default] = true
+variables[default_field_group][group_input|node|fiche|default] = false
+variables[default_field_group][group_output|node|fiche|default] = true
+variables[default_field_group][group_top_level|node|fiche|form] = false
+variables[default_field_group][group_baseline|node|indicator|form] = false
+variables[default_field_group][group_current|node|indicator|form] = false
+variables[default_field_group][group_action|node|fiche|default] = false
+variables[default_field_group][group_goal|node|fiche|default] = false
+variables[default_file_type][application] = true
+variables[default_nodes_main] = '10'
+variables[diff_enable_revisions_page_node_briefing] = 1
+variables[diff_enable_revisions_page_node_fiche] = 1
+variables[diff_enable_revisions_page_node_indicator] = 1
+variables[diff_enable_revisions_page_node_output] = 1
+variables[diff_enable_revisions_page_node_page] = 1
+variables[diff_enable_revisions_page_node_pillar] = 1
+variables[diff_enable_revisions_page_node_pillar_indicator] = 1
+variables[diff_show_preview_changes_node_briefing] = 1
+variables[diff_show_preview_changes_node_fiche] = 1
+variables[diff_show_preview_changes_node_indicator] = 1
+variables[diff_show_preview_changes_node_output] = 1
+variables[diff_show_preview_changes_node_page] = 1
+variables[diff_show_preview_changes_node_pillar] = 1
+variables[diff_show_preview_changes_node_pillar_indicator] = 1
+variables[diff_view_mode_preview_node_briefing] = 'full'
+variables[diff_view_mode_preview_node_fiche] = 'full'
+variables[diff_view_mode_preview_node_indicator] = 'full'
+variables[diff_view_mode_preview_node_output] = 'full'
+variables[diff_view_mode_preview_node_page] = 'full'
+variables[diff_view_mode_preview_node_pillar] = 'full'
+variables[diff_view_mode_preview_node_pillar_indicator] = 'full'
+variables[drupal_css_cache_files][823ba1006db72809515d2221cd02ec1075d7b49b0c07f49307b3a7930bfdd9e4] = 'public://css/css_pbm0lsQQJ7A7WCCIMgxLho6mI_kBNgznNUWmTWcnfoE.css'
+variables[drupal_css_cache_files][1c36101f305446b1b88af3ae50209ee3c713f1f7ffbbb30629a37d65198330fa] = 'public://css/css_1FuaQyNpeoGilFLg6GsDTprte9QHfko-0ntzSWCraiQ.css'
+variables[drupal_css_cache_files][e24178d09fe41e620d5494f8e0ace78120e63298d17a8830e6d8d1b075b4c9ee] = 'public://css/css_NOToEw3Z0xB0fa2nTfzrmNijYtaXX4IRenqOVbCGZb0.css'
+variables[drupal_css_cache_files][35e81ef1205991b7a9e2b8b8faef8a4ea827f3b203de57068c2874920f058cc5] = 'public://css/css_RjqebMtnct4t7rZMo5VzrtaVTqz8eHAVzcwozGaEvrU.css'
+variables[drupal_css_cache_files][ebb3f433ad4107b1ac31e9d7de0f9a5d399040e9f82b6364211dcfaadea158c0] = 'public://css/css_oqN5CdV437xfdYmgt8bEIViSuyXm8o4LLIbW5x0q7XY.css'
+variables[drupal_css_cache_files][e914ff5f2f5f90d650eaf6f19041425a58e1f3eac0ba75fa77a9f5a6b0fb8059] = 'public://css/css_MlSiRh9qO6kKQDZOdejk3ISmg1fSlZpTvjYEYBcn9Lo.css'
+variables[drupal_css_cache_files][066641fb2c83d1bebd2c9482710e1a453f0bb8d08e8ae310eb398de949d0c651] = 'public://css/css_3yTmwvUkAXnnsd27C8bFuFrk5OLVkcMnxcn5Q6yaSjo.css'
+variables[drupal_css_cache_files][9c269eec1ba885f34293114f2d17a1b9f034edfe3e0911197a2982b489335f4c] = 'public://css/css_sqd5GMx7cg_6fkc6-jWMB0Y5ExVmo17diKxqo_jBNE4.css'
+variables[drupal_http_request_function] = 'curl_http_request'
+variables[easy_breadcrumb-capitalizator_mode] = 'ucfirst'
+variables[easy_breadcrumb-segments_separator] = '>'
+variables[ecas_extra_deny_action_mail] = 'Dear <b>!lastname</b>,
+  <br /><br />
+  The activation request of the account <b>!name</b> for the site <a href="!site_url"><b>!site_name</b><a> has been denied.
+  <br /><br />'
+variables[ecas_extra_deny_action_subject] = 'Account activation denied'
+variables[ecas_pages_method] = 1
+variables[ecas_profile_core_enabled] = true
+variables[ecas_warning_message] = 'Your account is not yet approved'
+variables[empty_gallery_default] = 'public://default_images/empty_gallery.png'
+variables[entityreference:base-tables][comment][0] = 'comment'
+variables[entityreference:base-tables][comment][1] = 'cid'
+variables[entityreference:base-tables][i18n_translation][0] = 'i18n_translation_set'
+variables[entityreference:base-tables][i18n_translation][1] = 'tsid'
+variables[entityreference:base-tables][node][0] = 'node'
+variables[entityreference:base-tables][node][1] = 'nid'
+variables[entityreference:base-tables][file][0] = 'file_managed'
+variables[entityreference:base-tables][file][1] = 'fid'
+variables[entityreference:base-tables][taxonomy_term][0] = 'taxonomy_term_data'
+variables[entityreference:base-tables][taxonomy_term][1] = 'tid'
+variables[entityreference:base-tables][taxonomy_vocabulary][0] = 'taxonomy_vocabulary'
+variables[entityreference:base-tables][taxonomy_vocabulary][1] = 'vid'
+variables[entityreference:base-tables][tmgmt_job][0] = 'tmgmt_job'
+variables[entityreference:base-tables][tmgmt_job][1] = 'tjid'
+variables[entityreference:base-tables][tmgmt_job_item][0] = 'tmgmt_job_item'
+variables[entityreference:base-tables][tmgmt_job_item][1] = 'tjiid'
+variables[entityreference:base-tables][tmgmt_message][0] = 'tmgmt_message'
+variables[entityreference:base-tables][tmgmt_message][1] = 'mid'
+variables[entityreference:base-tables][tmgmt_translator][0] = 'tmgmt_translator'
+variables[entityreference:base-tables][tmgmt_translator][1] = 'tid'
+variables[entityreference:base-tables][tmgmt_remote][0] = 'tmgmt_remote'
+variables[entityreference:base-tables][tmgmt_remote][1] = 'trid'
+variables[entityreference:base-tables][user][0] = 'users'
+variables[entityreference:base-tables][user][1] = 'uid'
+variables[entityreference:base-tables][wysiwyg_profile][0] = 'wysiwyg'
+variables[entityreference:base-tables][wysiwyg_profile][1] = 'format'
+variables[entityreference:base-tables][rules_config][0] = 'rules_config'
+variables[entityreference:base-tables][rules_config][1] = 'id'
+variables[error_level] = '2'
+variables[features_ignored_orphans][block] = 'block'
+variables[features_ignored_orphans][cce_basic_config] = 'cce_basic_config'
+variables[features_ignored_orphans][content_access] = 'content_access'
+variables[features_ignored_orphans][date_value_field] = 'date_value_field'
+variables[features_ignored_orphans][dgs_draft_review] = 'dgs_draft_review'
+variables[features_ignored_orphans][entityreference] = 'entityreference'
+variables[features_ignored_orphans][field_group] = 'field_group'
+variables[features_ignored_orphans][link] = 'link'
+variables[features_ignored_orphans][list] = 'list'
+variables[features_ignored_orphans][mediafield] = 'mediafield'
+variables[features_ignored_orphans][number] = 'number'
+variables[features_ignored_orphans][apachesolr] = 'apachesolr'
+variables[features_ignored_orphans][entityreference_prepopulate] = 'entityreference_prepopulate'
+variables[features_ignored_orphans][multisite_drupal_toolbox] = 'multisite_drupal_toolbox'
+variables[features_ignored_orphans][translation] = 'translation'
+variables[features_ignored_orphans][views_ui] = 'views_ui'
+variables[features_ignored_orphans][token] = 'token'
+variables[features_ignored_orphans][menu] = 'menu'
+variables[features_ignored_orphans][rate] = 'rate'
+variables[features_ignored_orphans][votingapi] = 'votingapi'
+variables[features_ignored_orphans][tmgmt] = 'tmgmt'
+variables[features_ignored_orphans][multisite_rules_configuration] = 'multisite_rules_configuration'
+variables[features_ignored_orphans][language_cookie] = 'language_cookie'
+variables[features_ignored_orphans][diff] = 'diff'
+variables[field_bundle_settings_file__audio][extra_fields][display][file][media_small] = array (
+  'weight' => 0,
+  'visible' => false,
+)
+variables[field_bundle_settings_file__default][extra_fields][display][file][media_small] = array (
+  'weight' => 0,
+  'visible' => false,
+)
+variables[field_bundle_settings_file__image][extra_fields][display][file][media_small] = array (
+  'weight' => 0,
+  'visible' => false,
+)
+variables[field_bundle_settings_file__video][extra_fields][display][file][media_small] = array (
+  'weight' => 0,
+  'visible' => false,
+)
+variables[field_bundle_settings_node__fiche][view_modes][teaser][custom_settings] = true
+variables[field_bundle_settings_node__fiche][view_modes][full][custom_settings] = false
+variables[field_bundle_settings_node__fiche][view_modes][rss][custom_settings] = false
+variables[field_bundle_settings_node__fiche][view_modes][search_index][custom_settings] = false
+variables[field_bundle_settings_node__fiche][view_modes][search_result][custom_settings] = false
+variables[field_bundle_settings_node__fiche][view_modes][diff_standard][custom_settings] = false
+variables[field_bundle_settings_node__fiche][view_modes][print][custom_settings] = false
+variables[field_bundle_settings_node__fiche][view_modes][token][custom_settings] = false
+variables[field_bundle_settings_node__fiche][extra_fields][form][title][weight] = '0'
+variables[field_bundle_settings_node__fiche][extra_fields][form][path][weight] = '12'
+variables[field_bundle_settings_node__indicator][view_modes][teaser][custom_settings] = true
+variables[field_bundle_settings_node__indicator][view_modes][full][custom_settings] = false
+variables[field_bundle_settings_node__indicator][view_modes][rss][custom_settings] = false
+variables[field_bundle_settings_node__indicator][view_modes][search_index][custom_settings] = false
+variables[field_bundle_settings_node__indicator][view_modes][search_result][custom_settings] = false
+variables[field_bundle_settings_node__indicator][view_modes][diff_standard][custom_settings] = false
+variables[field_bundle_settings_node__indicator][view_modes][print][custom_settings] = false
+variables[field_bundle_settings_node__indicator][view_modes][token][custom_settings] = false
+variables[field_bundle_settings_node__indicator][extra_fields][form][title][weight] = '2'
+variables[field_bundle_settings_node__indicator][extra_fields][form][path][weight] = '10'
+variables[field_bundle_settings_node__output][view_modes][teaser][custom_settings] = true
+variables[field_bundle_settings_node__output][view_modes][full][custom_settings] = false
+variables[field_bundle_settings_node__output][view_modes][rss][custom_settings] = false
+variables[field_bundle_settings_node__output][view_modes][search_index][custom_settings] = false
+variables[field_bundle_settings_node__output][view_modes][search_result][custom_settings] = false
+variables[field_bundle_settings_node__output][view_modes][diff_standard][custom_settings] = false
+variables[field_bundle_settings_node__output][view_modes][print][custom_settings] = false
+variables[field_bundle_settings_node__output][view_modes][token][custom_settings] = false
+variables[field_bundle_settings_node__output][extra_fields][form][title][weight] = '0'
+variables[field_bundle_settings_node__output][extra_fields][form][path][weight] = '6'
+variables[field_bundle_settings_node__pillar][extra_fields][form][title][weight] = '-5'
+variables[field_bundle_settings_node__pillar][extra_fields][form][path][weight] = '30'
+variables[field_bundle_settings_node__pillar_indicator][view_modes][teaser][custom_settings] = true
+variables[field_bundle_settings_node__pillar_indicator][view_modes][full][custom_settings] = false
+variables[field_bundle_settings_node__pillar_indicator][view_modes][rss][custom_settings] = false
+variables[field_bundle_settings_node__pillar_indicator][view_modes][search_index][custom_settings] = false
+variables[field_bundle_settings_node__pillar_indicator][view_modes][search_result][custom_settings] = false
+variables[field_bundle_settings_node__pillar_indicator][view_modes][diff_standard][custom_settings] = false
+variables[field_bundle_settings_node__pillar_indicator][view_modes][print][custom_settings] = false
+variables[field_bundle_settings_node__pillar_indicator][view_modes][token][custom_settings] = false
+variables[field_bundle_settings_node__pillar_indicator][extra_fields][form][title][weight] = '0'
+variables[field_bundle_settings_node__pillar_indicator][extra_fields][form][path][weight] = '4'
+variables[field_bundle_settings_taxonomy_term__organigramme][view_modes][full][custom_settings] = false
+variables[field_bundle_settings_taxonomy_term__organigramme][view_modes][diff_standard][custom_settings] = false
+variables[field_bundle_settings_taxonomy_term__organigramme][view_modes][token][custom_settings] = false
+variables[field_bundle_settings_taxonomy_term__organigramme][extra_fields][form][path][weight] = '5'
+variables[field_bundle_settings_taxonomy_term__organigramme][extra_fields][form][name][weight] = '0'
+variables[field_bundle_settings_taxonomy_term__organigramme][extra_fields][form][description][weight] = '4'
+variables[field_bundle_settings_taxonomy_term__organigramme][extra_fields][display][description][default] = array (
+  'weight' => '2',
+  'visible' => false,
+)
+variables[field_bundle_settings_taxonomy_term__top_level_goals][extra_fields][form][path][weight] = '3'
+variables[field_bundle_settings_taxonomy_term__top_level_goals][extra_fields][form][name][weight] = '0'
+variables[field_bundle_settings_taxonomy_term__top_level_goals][extra_fields][form][description][weight] = '2'
+variables[file_entity_default_allowed_extensions] = 'jpg jpeg gif png txt doc docx xls xlsx pdf ppt pptx pps ppsx odt ods odp mp3 mov mp4 m4a m4v mpeg avi ogg oga ogv weba webp webm wmv ico'
+variables[file_private_path] = 'sites/default/files/private_files'
+variables[filter_fallback_format] = 'plain_text'
+variables[has_right_sidebar] = 1
+variables[i18n_string_allowed_formats][full_html] = 'full_html'
+variables[i18n_string_allowed_formats][plain_text] = 'plain_text'
+variables[i18n_string_allowed_formats][filtered_html] = 0
+variables[i18n_string_allowed_formats][basic_html] = 0
+variables[image_captcha_bilinear_interpolation] = 1
+variables[image_captcha_distortion_amplitude] = '5'
+variables[image_captcha_fonts][sites/all/modules/contributed/captcha/image_captcha/fonts/Tuffy/Tuffy_Bold.ttf] = 'sites/all/modules/contributed/captcha/image_captcha/fonts/Tuffy/Tuffy_Bold.ttf'
+variables[image_captcha_fonts][sites/all/modules/contributed/captcha/image_captcha/fonts/Tuffy/Tuffy.ttf] = 'sites/all/modules/contributed/captcha/image_captcha/fonts/Tuffy/Tuffy.ttf'
+variables[image_toolkit] = 'gd'
+variables[javascript_parsed][0] = 'misc/drupal.js'
+variables[javascript_parsed][1] = 'misc/jquery.js'
+variables[javascript_parsed][2] = 'misc/jquery.once.js'
+variables[javascript_parsed][3] = 'sites/all/modules/contrib/environment_indicator/tinycon.min.js'
+variables[javascript_parsed][4] = 'sites/all/modules/contrib/environment_indicator/environment_indicator.js'
+variables[javascript_parsed][5] = 'sites/all/modules/contrib/environment_indicator/color.js'
+variables[javascript_parsed][6] = 'sites/all/modules/contrib/video/js/video.js'
+variables[javascript_parsed][7] = 'sites/all/modules/contrib/devel/devel_krumo_path.js'
+variables[javascript_parsed][8] = 'misc/ui/jquery.ui.core.min.js'
+variables[javascript_parsed][9] = 'misc/ui/jquery.ui.widget.min.js'
+variables[javascript_parsed][10] = 'misc/ui/jquery.ui.mouse.min.js'
+variables[javascript_parsed][11] = 'misc/ui/jquery.ui.draggable.min.js'
+variables[javascript_parsed][12] = 'misc/ui/jquery.ui.droppable.min.js'
+variables[javascript_parsed][13] = 'misc/ui/jquery.ui.sortable.min.js'
+variables[javascript_parsed][14] = 'sites/all/modules/contrib/context/plugins/context_reaction_block.js'
+variables[javascript_parsed][15] = 'sites/all/modules/modified/feature_set/feature_set.js'
+variables[javascript_parsed][16] = 'sites/all/libraries/fancybox/jquery.fancybox.pack.js'
+variables[javascript_parsed][17] = 'sites/all/libraries/fancybox/helpers/jquery.fancybox-buttons.js'
+variables[javascript_parsed][18] = 'sites/all/libraries/fancybox/helpers/jquery.fancybox-media.js'
+variables[javascript_parsed][19] = 'sites/all/libraries/fancybox/helpers/jquery.fancybox-thumbs.js'
+variables[javascript_parsed][20] = 'misc/jquery.cookie.js'
+variables[javascript_parsed][21] = 'modules/toolbar/toolbar.js'
+variables[javascript_parsed][22] = 'sites/all/libraries/jquery/jquery-1.7.1.min.js'
+variables[javascript_parsed][23] = 'sites/all/libraries/bootstrap/bootstrap.min.js'
+variables[javascript_parsed][24] = 'sites/all/modules/contrib/jqmulti/js/switch.js'
+variables[javascript_parsed][25] = 'sites/cnect/themes/cnect/scripts/cnect.js'
+variables[javascript_parsed][26] = 'sites/all/themes/ec_resp/scripts/respond.min.js'
+variables[javascript_parsed][27] = 'sites/all/themes/ec_resp/scripts/ec.js'
+variables[javascript_parsed][28] = 'sites/all/themes/ec_resp/scripts/jquery.mousewheel-3.0.6.pack.js'
+variables[javascript_parsed][29] = 'sites/all/themes/ec_resp/scripts/scripts.js'
+variables[javascript_parsed][30] = 'sites/all/themes/ec_resp/scripts/hack.js'
+variables[javascript_parsed][31] = 'http://cnect.val/sites/cnect/files/js/wysiwyg/wysiwyg_ckeditor_uWMoMQ7qlhtyf-cFJlMTazsAxhCeS88weKBiAtXujAQ.js'
+variables[javascript_parsed][32] = 'sites/all/libraries/ckeditor/ckeditor.js'
+variables[javascript_parsed][33] = 'sites/all/modules/contrib/wysiwyg/editors/js/ckeditor-3.0.js'
+variables[javascript_parsed][34] = 'sites/all/modules/contrib/wysiwyg/wysiwyg.init.js'
+variables[javascript_parsed][35] = 'sites/all/modules/contrib/wysiwyg/editors/js/none.js'
+variables[javascript_parsed][36] = 'sites/all/modules/contrib/wysiwyg/wysiwyg.js'
+variables[javascript_parsed][37] = 'misc/tableheader.js'
+variables[javascript_parsed][38] = 'misc/form.js'
+variables[javascript_parsed][39] = 'misc/collapse.js'
+variables[javascript_parsed][40] = 'sites/all/modules/contrib/profiler_builder/js/profiler_builder.js'
+variables[javascript_parsed][41] = 'misc/states.js'
+variables[jqmulti_libraries][bootstrap] = 'bootstrap'
+variables[jqmulti_libraries][tcpdf] = 0
+variables[jqmulti_libraries][colorbox] = 0
+variables[jqmulti_libraries][jstree] = 0
+variables[jqmulti_load_always] = 1
+variables[jqmulti_load_files_always] = 1
+variables[language_content_type_article] = '2'
+variables[language_content_type_briefing] = '0'
+variables[language_content_type_fiche] = '0'
+variables[language_content_type_indicator] = '0'
+variables[language_content_type_output] = '0'
+variables[language_content_type_page] = '2'
+variables[language_content_type_pillar] = '0'
+variables[language_content_type_pillar_indicator] = '0'
+variables[language_cookie_param] = 'language'
+variables[language_cookie_path] = '/'
+variables[language_cookie_time] = '31536000'
+variables[language_count] = 2
+variables[language_negociation_views] = 1
+variables[language_negotiation_language][locale-url][callbacks][language] = 'locale_language_from_url'
+variables[language_negotiation_language][locale-url][callbacks][switcher] = 'locale_language_switcher_url'
+variables[language_negotiation_language][locale-url][callbacks][url_rewrite] = 'locale_language_url_rewrite_url'
+variables[language_negotiation_language][locale-url][file] = 'includes/locale.inc'
+variables[language_negotiation_language][language_cookie][callbacks][language] = 'language_cookie_language'
+variables[language_negotiation_language][language_cookie][callbacks][switcher] = 'language_cookie_language_switcher'
+variables[language_negotiation_language][language_cookie][callbacks][url_rewrite] = 'language_cookie_language_rewrite'
+variables[language_negotiation_language][language_cookie][file] = 'sites/all/modules/contrib/language_cookie/language_cookie.module'
+variables[language_negotiation_language][language_cookie][cache] = 0
+variables[language_negotiation_language][language-default][callbacks][language] = 'language_from_default'
+variables[language_negotiation_language_content][locale-interface][callbacks][language] = 'locale_language_from_interface'
+variables[language_negotiation_language_content][locale-interface][file] = 'includes/locale.inc'
+variables[language_negotiation_language_url][locale-url][callbacks][language] = 'locale_language_from_url'
+variables[language_negotiation_language_url][locale-url][callbacks][switcher] = 'locale_language_switcher_url'
+variables[language_negotiation_language_url][locale-url][callbacks][url_rewrite] = 'locale_language_url_rewrite_url'
+variables[language_negotiation_language_url][locale-url][file] = 'includes/locale.inc'
+variables[language_negotiation_language_url][locale-url-fallback][callbacks][language] = 'locale_language_url_fallback'
+variables[language_negotiation_language_url][locale-url-fallback][file] = 'includes/locale.inc'
+variables[language_types][language] = true
+variables[language_types][language_content] = false
+variables[language_types][language_url] = false
+variables[linkchecker_check_links_interval] = '259200'
+variables[linkchecker_check_links_types] = '0'
+variables[linkchecker_cleanup_links_last] = 1402081619
+variables[linkchecker_disable_link_check_for_urls] = 'example.com
+example.net
+example.org'
+variables[linkchecker_extract_from_a] = 1
+variables[linkchecker_extract_from_img] = 1
+variables[linkchecker_ignore_response_codes] = '200
+206
+302
+304
+401
+301
+403'
+variables[linkchecker_impersonate_user] = 'placeholder-for-uid-1'
+variables[linkchecker_scan_nodetypes][article] = 'article'
+variables[linkchecker_scan_nodetypes][page] = 'page'
+variables[locale_language_providers_weight_language][locale-url] = '-8'
+variables[locale_language_providers_weight_language][locale-session] = '-6'
+variables[locale_language_providers_weight_language][language_cookie] = '-5'
+variables[locale_language_providers_weight_language][locale-user] = '-4'
+variables[locale_language_providers_weight_language][locale-browser] = '-2'
+variables[locale_language_providers_weight_language][language-default] = '10'
+variables[media__file_extensions] = 'jpg jpeg gif png txt doc docx xls xlsx pdf ppt pptx pps ppsx odt ods odp mp3 mov mp4 m4a m4v mpeg avi ogg oga ogv wmv ico'
+variables[media__wysiwyg_allowed_types][0] = 'image'
+variables[media__wysiwyg_allowed_types][1] = 'video'
+variables[media__wysiwyg_allowed_types][2] = 'audio'
+variables[media__wysiwyg_allowed_types][3] = 'document'
+variables[media__wysiwyg_browser_plugins][0] = 'upload'
+variables[media__wysiwyg_browser_plugins][1] = 'media_default--media_browser_my_files'
+variables[media__wysiwyg_browser_plugins][2] = 'elibrary_browser_tab--media_browser_1'
+variables[media__wysiwyg_browser_plugins][3] = 'media_default--media_browser_1'
+variables[menu_block_menu_order][main-menu] = ''
+variables[menu_block_menu_order][user-menu] = ''
+variables[menu_expanded][0] = 'menu-breadcrumb-menu'
+variables[menu_expanded][1] = 'menu-service-tools'
+variables[menu_expanded][2] = 'user-menu'
+variables[menu_options_article][0] = 'main-menu'
+variables[menu_options_briefing][0] = 'main-menu'
+variables[menu_options_page][0] = 'main-menu'
+variables[menu_options_pillar][0] = 'main-menu'
+variables[menu_options_pillar_indicator][0] = 'main-menu'
+variables[menu_parent_article] = 'main-menu:0'
+variables[menu_parent_briefing] = 'main-menu:0'
+variables[menu_parent_fiche] = 'main-menu:0'
+variables[menu_parent_indicator] = 'main-menu:0'
+variables[menu_parent_output] = 'main-menu:0'
+variables[menu_parent_page] = 'main-menu:0'
+variables[menu_parent_pillar] = 'main-menu:0'
+variables[menu_parent_pillar_indicator] = 'main-menu:0'
+variables[meta_configuration] = '16000'
+variables[meta_creator] = 'COMM/CNECT/D3'
+variables[meta_reference] = 'CNECT'
+variables[multisite_version] = '1.6'
+variables[node_admin_theme] = '1'
+variables[node_content_enabled] = true
+variables[node_options_article][0] = 'promote'
+variables[node_options_article][1] = 'moderation'
+variables[node_options_article][2] = 'revision'
+variables[node_options_briefing][0] = 'revision'
+variables[node_options_fiche][0] = 'moderation'
+variables[node_options_fiche][1] = 'revision'
+variables[node_options_indicator][0] = 'promote'
+variables[node_options_indicator][1] = 'moderation'
+variables[node_options_indicator][2] = 'revision'
+variables[node_options_output][0] = 'moderation'
+variables[node_options_output][1] = 'revision'
+variables[node_options_page][0] = 'status'
+variables[node_options_pillar][0] = 'moderation'
+variables[node_options_pillar][1] = 'revision'
+variables[node_options_pillar_indicator][0] = 'moderation'
+variables[node_options_pillar_indicator][1] = 'revision'
+variables[node_preview_article] = '1'
+variables[node_preview_briefing] = '1'
+variables[node_preview_fiche] = '1'
+variables[node_preview_indicator] = '1'
+variables[node_preview_output] = '1'
+variables[node_preview_page] = '1'
+variables[node_preview_pillar] = '1'
+variables[node_preview_pillar_indicator] = '1'
+variables[node_submitted_article] = 1
+variables[node_submitted_pillar] = 1
+variables[node_submitted_pillar_indicator] = 1
+variables[password_policy_install_time] = 1371201950
+variables[pathauto_blog_pattern] = 'blogs/[user:name]'
+variables[pathauto_file_pattern] = 'file/[file:name]'
+variables[pathauto_forum_pattern] = '[term:vocabulary]/[term:name]'
+variables[pathauto_node_community_pattern] = 'community/[node:title]'
+variables[pathauto_node_pattern] = 'content/[node:title]'
+variables[pathauto_punctuation_hyphen] = 1
+variables[pathauto_taxonomy_term_pattern] = '[term:vocabulary]/[term:name]'
+variables[pathauto_user_pattern] = 'users/[user:name]'
+variables[path_alias_whitelist][file] = true
+variables[path_alias_whitelist][node] = true
+variables[path_alias_whitelist][taxonomy] = true
+variables[path_alias_whitelist][user] = true
+variables[path_alias_whitelist][what-we-do] = true
+variables[path_alias_whitelist][who-we-are] = true
+variables[preprocess_css] = 1
+variables[print_display_briefing] = 1
+variables[print_display_page] = 1
+variables[print_display_pillar] = 1
+variables[print_display_pillar_indicator] = 1
+variables[print_display_urllist_briefing] = 1
+variables[print_display_urllist_page] = 1
+variables[print_display_urllist_pillar] = 1
+variables[print_display_urllist_pillar_indicator] = 1
+variables[print_html_link_class] = 'print-page'
+variables[print_html_link_pos][block] = 'block'
+variables[print_html_link_pos][link] = 0
+variables[print_html_link_pos][corner] = 0
+variables[print_html_link_pos][help] = 0
+variables[print_html_show_link] = '2'
+variables[print_mail_display_briefing] = 1
+variables[print_mail_display_page] = 1
+variables[print_mail_display_pillar] = 1
+variables[print_mail_display_pillar_indicator] = 1
+variables[print_mail_display_urllist_briefing] = 1
+variables[print_mail_display_urllist_page] = 1
+variables[print_mail_display_urllist_pillar] = 1
+variables[print_mail_display_urllist_pillar_indicator] = 1
+variables[print_mail_link_pos][block] = 'block'
+variables[print_mail_link_pos][link] = 0
+variables[print_mail_link_pos][corner] = 0
+variables[print_mail_link_pos][help] = 0
+variables[print_mail_show_link] = '2'
+variables[print_pdf_autoconfig] = 1
+variables[print_pdf_book_link] = '1'
+variables[print_pdf_content_disposition] = '2'
+variables[print_pdf_display_briefing] = 1
+variables[print_pdf_display_page] = 1
+variables[print_pdf_display_pillar] = 1
+variables[print_pdf_display_pillar_indicator] = 1
+variables[print_pdf_display_urllist_briefing] = 1
+variables[print_pdf_display_urllist_page] = 1
+variables[print_pdf_display_urllist_pillar] = 1
+variables[print_pdf_display_urllist_pillar_indicator] = 1
+variables[print_pdf_filename] = '[site:name] - [node:title] - [node:changed:custom:Y-m-d]'
+variables[print_pdf_font_family] = 'dejavusans'
+variables[print_pdf_font_size] = '10'
+variables[print_pdf_link_class] = 'print-pdf'
+variables[print_pdf_link_pos][block] = 'block'
+variables[print_pdf_link_pos][link] = 0
+variables[print_pdf_link_pos][corner] = 0
+variables[print_pdf_link_pos][help] = 0
+variables[print_pdf_node_link_visibility] = '0'
+variables[print_pdf_page_orientation] = 'portrait'
+variables[print_pdf_paper_size] = 'A4'
+variables[print_pdf_pdf_tool] = 'sites/all/libraries/tcpdf/tcpdf.php'
+variables[print_pdf_show_link] = '2'
+variables[print_pdf_sys_link_visibility] = '1'
+variables[print_pdf_wkhtmltopdf_options] = '--footer-font-size 7 --footer-right \'[page]\''
+variables[reference] = 'CNECT'
+variables[responsive_sidebar] = 'left'
+variables[rules_empty_sets][tmgmt_job_insert] = 0
+variables[rules_empty_sets][tmgmt_job_update] = 1
+variables[rules_empty_sets][tmgmt_job_presave] = 2
+variables[rules_empty_sets][tmgmt_job_delete] = 3
+variables[rules_empty_sets][tmgmt_job_item_insert] = 4
+variables[rules_empty_sets][tmgmt_job_item_update] = 5
+variables[rules_empty_sets][tmgmt_job_item_presave] = 6
+variables[rules_empty_sets][tmgmt_job_item_delete] = 7
+variables[rules_empty_sets][tmgmt_message_insert] = 8
+variables[rules_empty_sets][tmgmt_message_update] = 9
+variables[rules_empty_sets][tmgmt_message_presave] = 10
+variables[rules_empty_sets][tmgmt_message_delete] = 11
+variables[rules_empty_sets][tmgmt_remote_insert] = 12
+variables[rules_empty_sets][tmgmt_remote_update] = 13
+variables[rules_empty_sets][tmgmt_remote_presave] = 14
+variables[rules_empty_sets][tmgmt_remote_delete] = 15
+variables[rules_empty_sets][video_success] = 16
+variables[rules_empty_sets][video_failed] = 17
+variables[rules_empty_sets][workbench_moderation_after_unpublishing_live_content] = 18
+variables[rules_empty_sets][node_presave] = 19
+variables[rules_empty_sets][node_view] = 20
+variables[rules_empty_sets][node_delete] = 21
+variables[rules_empty_sets][init] = 22
+variables[rules_empty_sets][cron] = 23
+variables[rules_empty_sets][watchdog] = 24
+variables[rules_empty_sets][user_insert] = 25
+variables[rules_empty_sets][user_update] = 26
+variables[rules_empty_sets][user_presave] = 27
+variables[rules_empty_sets][user_view] = 28
+variables[rules_empty_sets][user_delete] = 29
+variables[rules_empty_sets][user_logout] = 30
+variables[rules_empty_sets][comment_insert] = 31
+variables[rules_empty_sets][comment_update] = 32
+variables[rules_empty_sets][comment_presave] = 33
+variables[rules_empty_sets][comment_view] = 34
+variables[rules_empty_sets][comment_delete] = 35
+variables[rules_empty_sets][taxonomy_term_insert] = 36
+variables[rules_empty_sets][taxonomy_term_update] = 37
+variables[rules_empty_sets][taxonomy_term_presave] = 38
+variables[rules_empty_sets][taxonomy_term_delete] = 39
+variables[rules_empty_sets][taxonomy_vocabulary_insert] = 40
+variables[rules_empty_sets][taxonomy_vocabulary_update] = 41
+variables[rules_empty_sets][taxonomy_vocabulary_presave] = 42
+variables[rules_empty_sets][taxonomy_vocabulary_delete] = 43
+variables[rules_event_whitelist][node_insert] = 0
+variables[rules_event_whitelist][node_update] = 1
+variables[rules_event_whitelist][workbench_moderation_after_moderation_transition] = 2
+variables[rules_event_whitelist][user_login] = 3
+variables[save_continue_hearing] = 'Save and add fields'
+variables[save_continue_indicator] = 'Save and add fields'
+variables[save_continue_output] = 'Save and add fields'
+variables[save_continue_pillar] = 'Save and add fields'
+variables[save_continue_pillar_indicator] = 'Save and add fields'
+variables[save_continue_priority] = 'Save and add fields'
+variables[search_active_modules][apachesolr_search] = 'apachesolr_search'
+variables[search_active_modules][user] = 'user'
+variables[search_active_modules][node] = 0
+variables[search_default_module] = 'apachesolr_search'
+variables[security_allowed_tags] = 'a
+abbr
+area
+audio
+b
+base
+blockquote
+br
+button
+canvas
+caption
+center
+cite
+code
+col
+colgroup
+dd
+div
+dl
+em
+embed
+fieldset
+figcaption
+figure
+font
+form
+h2
+h3
+h4
+h5
+h6
+hr
+i
+iframe
+img
+input
+label
+legend
+li
+map
+mark
+ol
+option
+p
+pre
+q
+rp
+rt
+s
+section
+select
+small
+source
+span
+strike
+strong
+style
+sub
+summary
+sup
+table
+tbody
+td
+textarea
+tfoot
+th
+thead
+time
+tr
+track
+tt
+u
+ul
+'
+variables[site_403] = 'node/1524'
+variables[site_404] = 'node/5'
+variables[site_frontpage] = 'node/5'
+variables[sweaver_classes_exclude] = 'clear
+clearfix
+sweaver
+sweaver-hovered
+sweaver-clicked
+sweaver-clicked-temp'
+variables[sweaver_ctools_allowed_properties] = '-moz-border-radius
+-webkit-border-radius
+border-top-right-radius
+border-bottom-right-radius
+border-bottom-left-radius
+border-top-left-radius
+webkit-border-top-right-radius
+webkit-border-bottom-right-radius
+webkit-border-bottom-left-radius
+webkit-border-top-left-radius
+moz-border-radius-topright
+moz-border-radius-bottomright
+moz-border-radius-bottomleft
+moz-border-radius-topleft
+position
+top
+left
+bottom
+right
+border-collapse
+border-spacing
+list-style-image
+list-style-type
+min-width
+max-width
+min-height
+max-height
+visibility
+text-shadow
+content
+z-index
+filter
+border-radius'
+variables[sweaver_editor_form_configuration][one][title] = 'Font'
+variables[sweaver_editor_form_configuration][one][properties][0] = 'font-family'
+variables[sweaver_editor_form_configuration][one][properties][1] = 'font-properties-wrapper'
+variables[sweaver_editor_form_configuration][one][properties][2] = 'vertical-align'
+variables[sweaver_editor_form_configuration][two][title] = 'Background'
+variables[sweaver_editor_form_configuration][two][properties][0] = 'background-color'
+variables[sweaver_editor_form_configuration][two][properties][1] = 'background-image'
+variables[sweaver_editor_form_configuration][two][properties][2] = 'background-repeat'
+variables[sweaver_editor_form_configuration][two][properties][3] = 'background-attachment'
+variables[sweaver_editor_form_configuration][two][properties][4] = 'background-position'
+variables[sweaver_editor_form_configuration][three][title] = 'Borders & Spacing'
+variables[sweaver_editor_form_configuration][three][properties][0] = 'position-settings'
+variables[sweaver_editor_form_configuration][three][properties][1] = 'border-style'
+variables[sweaver_editor_form_configuration][three][properties][2] = 'border-color'
+variables[sweaver_editor_form_configuration][three][properties][3] = 'border-collapse'
+variables[sweaver_editor_form_configuration][three][properties][4] = 'border-spacing'
+variables[sweaver_editor_form_configuration][four][title] = 'Other'
+variables[sweaver_editor_form_configuration][four][properties][0] = 'height'
+variables[sweaver_editor_form_configuration][four][properties][1] = 'width'
+variables[sweaver_enabled] = 1
+variables[sweaver_paths] = 'admin*
+node/add*
+node/*/edit
+node/*/panel*
+panels/ajax*
+user/*/edit
+batch*
+wysiwyg_imageupload/*
+media/*
+file/*
+taxonomy/*
+imce'
+variables[sweaver_plugins_weight][sweaver_plugin] = -51
+variables[sweaver_plugins_weight][sweaver_plugin_editor] = -49
+variables[sweaver_plugins_weight][sweaver_plugin_styles] = -48
+variables[sweaver_plugins_weight][sweaver_plugin_advanced] = -47
+variables[sweaver_plugins_weight][sweaver_plugin_palettes] = -46
+variables[sweaver_plugins_weight][sweaver_plugin_images] = -45
+variables[sweaver_plugins_weight][sweaver_plugin_themeswitch] = -44
+variables[sweaver_plugins_weight][sweaver_plugin_themesettings] = -43
+variables[sweaver_plugins_weight][sweaver_plugin_themeclasses] = -42
+variables[sweaver_plugins_weight][sweaver_plugin_fontface] = -41
+variables[sweaver_plugins_weight][sweaver_plugin_kb] = -39
+variables[sweaver_plugin_handle_images] = 'sweaver_plugin_images'
+variables[sweaver_plugin_status_sweaver_plugin] = true
+variables[sweaver_plugin_status_sweaver_plugin_advanced] = 1
+variables[sweaver_plugin_status_sweaver_plugin_customcss] = 1
+variables[sweaver_plugin_status_sweaver_plugin_editor] = true
+variables[sweaver_plugin_status_sweaver_plugin_images] = true
+variables[sweaver_plugin_status_sweaver_plugin_styles] = true
+variables[sweaver_plugin_status_sweaver_plugin_themeclasses] = 1
+variables[sweaver_preview_selection] = 1
+variables[sweaver_selectors_exclude] = '#sweaver-frontend
+#admin-menu
+.colorpicker
+#sweaver-messages
+#sweaver-popup
+#follow-link
+#toolbar
+#l10n-client'
+variables[sweaver_selector_order][body] = -100
+variables[sweaver_selector_order][h1] = -99
+variables[sweaver_selector_order][h2] = -98
+variables[sweaver_selector_order][h3] = -97
+variables[sweaver_selector_order][li] = -96
+variables[sweaver_selector_order][link] = -95
+variables[sweaver_selector_order][ol] = -94
+variables[sweaver_selector_order][p] = -93
+variables[sweaver_selector_order][ul] = -92
+variables[sweaver_selector_order][form] = -91
+variables[sweaver_selector_order][label] = -90
+variables[sweaver_selector_order][input] = -89
+variables[sweaver_selector_order][textarea] = -88
+variables[sweaver_selector_order][submit] = -87
+variables[sweaver_selector_order][allids] = -86
+variables[sweaver_selector_order][allclasses] = -85
+variables[sweaver_selector_order][alltags] = -84
+variables[sweaver_selector_order][span] = -83
+variables[sweaver_selector_order][div] = -82
+variables[sweaver_skin] = 'grey'
+variables[sweaver_translate_path] = 1
+variables[syslog_facility] = '128'
+variables[syslog_format] = '!base_url|!timestamp|!type|!ip|!request_uri|!referer|!uid|!link|!message'
+variables[syslog_identity] = 'drupal'
+variables[taxonomy_browser_vocabulary][2] = '2'
+variables[theme_default] = 'cnect'
+variables[user_cancel_method] = 'user_cancel_block'
+variables[user_email_verification] = 1
+variables[user_pictures] = 1
+variables[user_picture_default] = 'public://default_images/user_default.png'
+variables[user_picture_dimensions] = '1024x1024'
+variables[user_picture_file_size] = '800'
+variables[user_picture_path] = 'pictures'
+variables[user_picture_style] = 'thumbnail'
+variables[user_register] = '0'
+variables[variable_module_list][i18n_node][0] = 'i18n_hide_translation_links'
+variables[variable_module_list][i18n_node][1] = 'i18n_node_default_language_none'
+variables[variable_module_list][i18n_node][2] = 'i18n_node_options_article'
+variables[variable_module_list][i18n_node][3] = 'i18n_node_options_page'
+variables[variable_module_list][i18n_node][4] = 'i18n_node_options_briefing'
+variables[variable_module_list][i18n_node][5] = 'i18n_node_options_fiche'
+variables[variable_module_list][i18n_node][6] = 'i18n_node_options_indicator'
+variables[variable_module_list][i18n_node][7] = 'i18n_node_options_output'
+variables[variable_module_list][i18n_node][8] = 'i18n_node_options_pillar'
+variables[variable_module_list][i18n_node][9] = 'i18n_node_options_pillar_indicator'
+variables[variable_module_list][i18n_node][10] = 'i18n_node_extended_article'
+variables[variable_module_list][i18n_node][11] = 'i18n_node_extended_page'
+variables[variable_module_list][i18n_node][12] = 'i18n_node_extended_briefing'
+variables[variable_module_list][i18n_node][13] = 'i18n_node_extended_fiche'
+variables[variable_module_list][i18n_node][14] = 'i18n_node_extended_indicator'
+variables[variable_module_list][i18n_node][15] = 'i18n_node_extended_output'
+variables[variable_module_list][i18n_node][16] = 'i18n_node_extended_pillar'
+variables[variable_module_list][i18n_node][17] = 'i18n_node_extended_pillar_indicator'
+variables[variable_module_list][environment_indicator][0] = 'environment_indicator_overwrite'
+variables[variable_module_list][environment_indicator][1] = 'environment_indicator_overwritten_color'
+variables[variable_module_list][environment_indicator][2] = 'environment_indicator_overwritten_text_color'
+variables[variable_module_list][environment_indicator][3] = 'environment_indicator_overwritten_fixed'
+variables[variable_module_list][environment_indicator][4] = 'environment_indicator_overwritten_position'
+variables[variable_module_list][environment_indicator][5] = 'environment_indicator_overwritten_name'
+variables[variable_module_list][environment_indicator][6] = 'environment_indicator_suppress_pages'
+variables[variable_realm_list_language][0] = 'site_name'
+variables[variable_realm_list_language][1] = 'site_slogan'
+variables[video_autobuffering] = 1
+variables[video_convertor] = 'TranscoderAbstractionFactoryFfmpeg'
+variables[video_convert_on_save] = 1
+variables[video_dimensions] = '320x180
+320x240
+384x216
+384x288
+400x225
+400x300
+432x243
+432x324
+480x200
+480x270
+480x360
+512x288
+560x315
+560x420
+640x360
+640x480
+648x486
+720x405
+720x480
+720x486
+720x540
+720x576
+768x576
+852x480
+864x486
+960x400
+960x540
+960x720
+1024x576
+1280x720
+1280x960
+1280x1080
+1440x1080
+1920x800
+1920x1080'
+variables[video_ffmpeg_instances] = '5'
+variables[video_ffmpeg_path] = '/usr/bin/ffmpeg'
+variables[video_preset][0] = 'default_flash_conversion'
+variables[video_queue_timeout] = '900'
+variables[video_thumbnail_count] = '3'
+variables[video_thumbnail_path] = 'videos/thumbnails'
+variables[video_transcode_timeout] = '10'
+variables[video_use_preset_wxh] = 1
+variables[views_exposed_filter_any_label] = 'new_any'
+variables[views_ui_always_live_preview] = 1
+variables[views_ui_custom_theme] = '_default'
+variables[views_ui_show_advanced_help_warning] = 1
+variables[views_ui_show_preview_information] = 1
+variables[views_ui_show_sql_query] = 1
+variables[views_ui_show_sql_query_where] = 'above'
+variables[workbench_moderation_default_state_article] = 'draft'
+variables[workbench_moderation_default_state_briefing] = 'draft'
+variables[workbench_moderation_default_state_fiche] = 'draft'
+variables[workbench_moderation_default_state_indicator] = 'draft'
+variables[workbench_moderation_default_state_output] = 'draft'
+variables[workbench_moderation_default_state_page] = 'draft'
+variables[workbench_moderation_default_state_pillar] = 'draft'
+variables[workbench_moderation_default_state_pillar_indicator] = 'draft'
+
