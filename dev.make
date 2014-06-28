@@ -34,6 +34,10 @@ projects[coffee][subdir] = "development"
 projects[stage_file_proxy][type] = "module"
 projects[stage_file_proxy][subdir] = "development"
 
+projects[simplehtmldom][type] = "module"
+projects[simplehtmldom][subdir] = "development"
+
+
 ; Themes
 ; --------
 projects[] = shiny
@@ -45,3 +49,17 @@ projects[] = shiny
 ; ---------
 ; No libraries were included
 
+; simplehtmldom
+;libraries[simplehtmldom][download][type]= "file"
+;libraries[simplehtmldom][download][request_type]= "get"
+;libraries[simplehtmldom][download][file_type] = "zip"
+;libraries[simplehtmldom][download][url] = "http://downloads.sourceforge.net/project/simplehtmldom/simplehtmldom/1.5/simplehtmldom_1_5.zip
+;libraries[simplehtmldom][directory_name] = "simplehtmldom"
+
+
+  
+; Libraries
+; ---------
+libraries[simplehtmldom][type] = "libraries"
+libraries[simplehtmldom][download][type] = "file"
+libraries[simplehtmldom][download][url] = "http://internode.dl.sourceforge.net/project/simplehtmldom/simplehtmldom/1.5/simplehtmldom_1_5.zip"
