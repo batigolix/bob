@@ -267,8 +267,10 @@
     <drush command="pm-enable" assume="yes">
       <param>coffee</param>
       <param>devel</param>
+      <param>devel_generate</param>
       <param>environment_indicator</param>
       <param>stage_file_proxy</param>
+      <param>toolbar</param>
       <option name="uri">${project.uri}</option>
       <option name="root">${project.root}/${environment.root}</option>
     </drush>
