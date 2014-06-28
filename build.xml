@@ -14,7 +14,7 @@
 
   <!-- loads a set of project specific properties from a `.properties` file -->
   <target name="load-project-properties" depends="load-properties">
-    <property file="${project.name.short}/${project.name.short}.build.properties" />
+    <property file="projects/${project.name.short}/${project.name.short}.build.properties" />
   </target>
 
   <!-- fetches drupal core and contrib code -->
@@ -110,7 +110,7 @@
 
     <!-- copies the install profile bundled with the make file to the appropriate directory. -->
     <copy todir="${environment.root}/profiles/${project.name.short}/">
-      <fileset dir="${project.name.short}">
+      <fileset dir="projects/${project.name.short}">
         <include name="*.profile" />
         <include name="*.info" />
         <include name="*.install" />
