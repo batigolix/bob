@@ -7,6 +7,7 @@ api = "2"
 projects[ctools][subdir] = "contrib"
 projects[oauth][subdir] = "contrib"
 projects[services][subdir] = "contrib"
+projects[clients][subdir] = "contrib"
 
 ;projects[context][version] = "3.2"
 ;projects[context][subdir] = "contrib"
