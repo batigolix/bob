@@ -23,5 +23,5 @@ project.root = /Users/boris/Sites/dae2
 drupal.private.path = /Users/boris/drupal-private
 
 #Environment indicator
-ei.color = green
+ei.color = #006633
 ei.name = Local Dev Go Crazy
