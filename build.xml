@@ -14,11 +14,11 @@
 
   <!-- loads a set of project specific properties from a `.properties` file -->
   <target name="load-project-properties" depends="load-properties">
-    <property file="${project.name.short}/${project.name.short}.build.properties" />
+    <property file="projects/${project.name.short}/${project.name.short}.build.properties" />
   </target>
 
   <!-- fetches drupal core and contrib code -->
-  <target name="fetch-core-contrib-code" depends="setup-phing-drush, load-project-properties, fetch-multisite-patches">
+  <target name="fetch-core-contrib-code" depends="setup-phing-drush, load-project-properties">
     <if>
       <or>
         <istrue value="${build.force}" />
@@ -44,8 +44,6 @@
     </if>
 
     <phingcall target="fetch-contrib-code"/>
-
-
                 
     <!-- applies patches 
     <foreach param="filename" absparam="absfilename" target="apply-patch">
@@ -110,7 +108,7 @@
 
     <!-- copies the install profile bundled with the make file to the appropriate directory. -->
     <copy todir="${environment.root}/profiles/${project.name.short}/">
-      <fileset dir="${project.name.short}">
+      <fileset dir="projects/${project.name.short}">
         <include name="*.profile" />
         <include name="*.info" />
         <include name="*.install" />
@@ -166,11 +164,6 @@
   <!-- fetch one custom modules from multisite svn repo -->
   <target name="fetch-multisite-theme">
     <exec command="svn export --username ${svn.user} --password ${svn.pass} ${multisite.repo}${multisite.version}/source/${multisite.themes.source}/${theme} ${environment.root}/${multisite.themes.destination}/${theme} --force" />
-  </target>
-
-  <!-- fetch patches from multisite svn repo -->
-  <target name="fetch-multisite-patches">
-    <exec command="svn export --username ${svn.user} --password ${svn.pass} ${multisite.repo}${multisite.version}/source/${multisite.patches.source} patches --force" />
   </target>
   
   <!-- apply patches to contrib code -->
@@ -229,6 +222,8 @@
     <append destFile="${settings.file}" text="$conf['environment_indicator_overwritten_fixed'] = FALSE;${line.separator}" />
     <append destFile="${settings.file}" text="$conf['stage_file_proxy_origin'] = '${sfp.origin}';${line.separator}" />
     <append destFile="${settings.file}" text="$conf['stage_file_proxy_origin_dir'] = '${sfp.origin.dir}';${line.separator}" />
+    <append destFile="${settings.file}" text="error_reporting(-1);${line.separator}$conf['error_level'] = 2;${line.separator}ini_set('display_errors', TRUE);${line.separator}ini_set('display_startup_errors', TRUE);${line.separator}" />
+    
     <chmod file="${settings.file}" mode="755" failonerror="true"/>
   </target>
 
@@ -255,7 +250,7 @@
     <exec command="svn update ${environment.root}/${project.themes.destination}/${package}" />
   </target>
 
-  <target name="fetch-development-packages" depends="load-project-properties, setup-phing-drush">
+  <target name="set-development-environment" depends="load-project-properties, setup-phing-drush">
     <!-- downloads the contributed modules -->
     <drush command="make" assume="yes">
       <param>dev.make</param>
@@ -304,15 +299,43 @@
     </drush>
 
     <phingcall target="dev-settings" />
+    <phingcall target="cc" />
 
+            
+  </target>
+
+  <!-- misc stuff i have no place for yet -->
+  <target name="do-misc-stuff" depends="load-project-properties, setup-phing-drush">
+      
+    <drush command="chosenplugin">
+      <option name="uri">${project.uri}</option>
+      <option name="root">${project.root}/${environment.root}</option>
+    </drush>  
+  
+    <drush command="en" assume="yes">
+      <param>chosen</param>
+      <option name="uri">${project.uri}</option>
+      <option name="root">${project.root}/${environment.root}</option>
+    </drush>  
+    <phingcall target="cc" />
+
+  </target>
+
+
+  <!-- clear cache -->
+  <target name="cc" depends="load-project-properties, setup-phing-drush">
+      
     <drush command="cc">
       <param>all</param>
       <option name="uri">${project.uri}</option>
       <option name="root">${project.root}/${environment.root}</option>
     </drush>
-    
-            
+
   </target>
 
+  <!-- apply patches to contrib code -->
+  <target name="link-project-modules" depends="load-project-properties">"
+    <exec command="ln -s projects/${project-short-name}/modules ${environment.root}/sites/all/modules/project />
+  </target>
 
 </project>

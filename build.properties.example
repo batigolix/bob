@@ -1,0 +1,27 @@
+# Your local properties file, to be adapted and renamed to `build.properties`
+# These properties will be different for each website
+
+# Local properties, need to be adapted for each environment
+
+# Database
+db.user = root
+db.pass = root
+db.host = localhost
+db.port = 3306
+db.name = dae2
+
+# SVN
+svn.user = john
+svn.pass = letmein
+
+# Project
+project.name.short = dae
+project.uri = http://dae.bob.val
+project.root = /Users/boris/Sites/dae2
+
+#Drupal
+drupal.private.path = /Users/boris/drupal-private
+
+#Environment indicator
+ei.color = #006633
+ei.name = Local Dev Go Crazy
