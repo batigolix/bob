@@ -7,6 +7,10 @@ api = "2"
 projects[ctools][subdir] = "contrib"
 projects[oauth][subdir] = "contrib"
 projects[services][subdir] = "contrib"
+;projects[services_views][subdir] = "contrib"
+projects[services_entity][subdir] = "contrib"
+projects[entity][subdir] = "contrib"
+projects[entity_token][subdir] = "contrib"
 
 ;projects[context][version] = "3.2"
 ;projects[context][subdir] = "contrib"
@@ -114,7 +118,7 @@ projects[services][subdir] = "contrib"
 ;projects[jqmulti][subdir] = "contrib"
 
 ;projects[;libraries][version] = "2.1"
-;projects[;libraries][subdir] = "contrib"
+projects[libraries][subdir] = "contrib"
 
 ;projects[linkchecker][version] = "1.1"
 ;projects[linkchecker][subdir] = "contrib"
@@ -189,7 +193,7 @@ projects[services][subdir] = "contrib"
 ;projects[variable][subdir] = "contrib"
 
 ;projects[views][version] = "3.7"
-;projects[views][subdir] = "contrib"
+projects[views][subdir] = "contrib"
 
 ;projects[views_bulk_operations][version] = "3.1"
 ;projects[views_bulk_operations][subdir] = "contrib"

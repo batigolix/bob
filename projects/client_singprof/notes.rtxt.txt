@@ -1,0 +1,3 @@
+- storing password securely
+- remove sensitive data from exposed objects. hook_services_request_postprocess_alter to remove elements from result
+- figure out any restrictions in EC network

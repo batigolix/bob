@@ -1,0 +1,4 @@
+name = Tic
+description = TODO: Description of module
+core = 7.x
+files[] = tests/tic.test

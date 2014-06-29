@@ -14,7 +14,7 @@
 
   <!-- loads a set of project specific properties from a `.properties` file -->
   <target name="load-project-properties" depends="load-properties">
-    <property file="${project.name.short}/${project.name.short}.build.properties" />
+    <property file="projects/${project.name.short}/${project.name.short}.build.properties" />
   </target>
 
   <!-- fetches drupal core and contrib code -->
@@ -108,7 +108,7 @@
 
     <!-- copies the install profile bundled with the make file to the appropriate directory. -->
     <copy todir="${environment.root}/profiles/${project.name.short}/">
-      <fileset dir="${project.name.short}">
+      <fileset dir="projects/${project.name.short}">
         <include name="*.profile" />
         <include name="*.info" />
         <include name="*.install" />
@@ -265,6 +265,7 @@
       <param>devel_generate</param>
       <param>environment_indicator</param>
       <param>stage_file_proxy</param>
+      <param>toolbar</param>
       <option name="uri">${project.uri}</option>
       <option name="root">${project.root}/${environment.root}</option>
     </drush>
@@ -332,5 +333,9 @@
 
   </target>
 
+  <!-- apply patches to contrib code -->
+  <target name="link-project-modules" depends="load-project-properties">"
+    <exec command="ln -s projects/${project-short-name}/modules ${environment.root}/sites/all/modules/project />
+  </target>
 
 </project>
