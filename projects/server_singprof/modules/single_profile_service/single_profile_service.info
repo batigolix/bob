@@ -4,6 +4,9 @@ version = 7.x-1.0
 project = single_profile_service
 dependencies[] = ctools
 dependencies[] = services
+dependencies[] = services_entity
+dependencies[] = services_entityreference
+
 features[ctools][] = services:services:3
 ;features[features_api][] = api:1
 ;TODO FIGURE OUT WHICH FEAT VERSION

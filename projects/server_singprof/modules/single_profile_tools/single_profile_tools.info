@@ -1,6 +1,7 @@
 name = Single profile tools
 description = General single profile functionalities
 core = 7.x
+package = Custom
 dependencies[] = services
 dependencies[] = ctools
 dependencies[] = entity
