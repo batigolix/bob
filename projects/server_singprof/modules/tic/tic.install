@@ -35,134 +35,134 @@ function tic_install() {
     ));
   }
 
-  // Creates field "newsletter subscription".
-  if (!field_info_field('field_newsletter_subscriptions')) {
-    $field = array(
-      'field_name' => 'field_newsletter_subscriptions',
-      'type' => 'taxonomy_term_reference',
-      'cardinality' => FIELD_CARDINALITY_UNLIMITED,
-      'settings' => array(
-        'allowed_values' => array(
-          array(
-            'vocabulary' => 'newsletter_subscriptions',
-            'parent' => 0,
-          ),
-        ),
-      ),
-    );
-    field_create_field($field);
-
-    $instance = array(
-      'field_name' => 'field_newsletter_subscriptions',
-      'entity_type' => 'user',
-      'label' => 'Newsletter subscription',
-      'bundle' => 'user',
-      'widget' => array(
-        'type' => 'options_select',
-        'weight' => -4,
-      ),
-      'display' => array(),
-    );
-    field_create_instance($instance);
-  }
-
-  // Creates field "first name".
-  if (!field_info_field('field_first_name')) {
-    $field = array(
-      'field_name' => 'field_first_name',
-      'type' => 'text',
-    );
-    field_create_field($field);
-    $instance = array(
-      'field_name' => 'field_first_name',
-      'entity_type' => 'user',
-      'label' => 'First name',
-      'bundle' => 'user',
-      'widget' => array(
-        'type' => 'textfield',
-      ),
-    );
-    field_create_instance($instance);
-  }
-
-  // Creates field "last name".
-  if (!field_info_field('field_last_name')) {
-    $field = array(
-      'field_name' => 'field_last_name',
-      'type' => 'text',
-    );
-    field_create_field($field);
-    $instance = array(
-      'field_name' => 'field_last_name',
-      'entity_type' => 'user',
-      'label' => 'Last name',
-      'bundle' => 'user',
-      'widget' => array(
-        'type' => 'textfield',
-      ),
-    );
-    field_create_instance($instance);
-  }
-
-  // Creates field "gender".
-  if (!field_info_field('field_gender')) {
-    $field = array(
-      'field_name' => 'field_gender',
-      'type' => 'list_text',
-      'settings' => array(
-        'allowed_values' => array(
-          'f' => 'Female',
-          'm' => 'Male',
-        ),
-      ),
-    );
-    field_create_field($field);
-    $instance = array(
-      'field_name' => 'field_gender',
-      'entity_type' => 'user',
-      'label' => 'Gender',
-      'bundle' => 'user',
-      'widget' => array(
-        'type' => 'options_select',
-      ),
-      'display' => array(
-      ),
-    );
-    field_create_instance($instance);
-  }
-
-  // Creates field "country".
-  if (module_exists('ec_world_countries')) {
-    if (!field_info_field('field_country')) {
-
-      $field = array(
-        'field_name' => 'field_country',
-        'type' => 'taxonomy_term_reference',
-        'settings' => array(
-          'allowed_values' => array(
-            array(
-              'vocabulary' => 'ec_world_countries',
-              'parent' => 0,
-            ),
-          ),
-        ),
-      );
-      field_create_field($field);
-
-      $instance = array(
-        'field_name' => 'field_country',
-        'entity_type' => 'user',
-        'label' => 'Country',
-        'bundle' => 'user',
-        'widget' => array(
-          'type' => 'options_select',
-          'weight' => -4,
-        ),
-        'display' => array(),
-      );
-      field_create_instance($instance);
-    }
-  }
+//  // Creates field "newsletter subscription".
+//  if (!field_info_field('field_newsletter_subscriptions')) {
+//    $field = array(
+//      'field_name' => 'field_newsletter_subscriptions',
+//      'type' => 'taxonomy_term_reference',
+//      'cardinality' => FIELD_CARDINALITY_UNLIMITED,
+//      'settings' => array(
+//        'allowed_values' => array(
+//          array(
+//            'vocabulary' => 'newsletter_subscriptions',
+//            'parent' => 0,
+//          ),
+//        ),
+//      ),
+//    );
+//    field_create_field($field);
+//
+//    $instance = array(
+//      'field_name' => 'field_newsletter_subscriptions',
+//      'entity_type' => 'user',
+//      'label' => 'Newsletter subscription',
+//      'bundle' => 'user',
+//      'widget' => array(
+//        'type' => 'options_select',
+//        'weight' => -4,
+//      ),
+//      'display' => array(),
+//    );
+//    field_create_instance($instance);
+//  }
+//
+//  // Creates field "first name".
+//  if (!field_info_field('field_first_name')) {
+//    $field = array(
+//      'field_name' => 'field_first_name',
+//      'type' => 'text',
+//    );
+//    field_create_field($field);
+//    $instance = array(
+//      'field_name' => 'field_first_name',
+//      'entity_type' => 'user',
+//      'label' => 'First name',
+//      'bundle' => 'user',
+//      'widget' => array(
+//        'type' => 'textfield',
+//      ),
+//    );
+//    field_create_instance($instance);
+//  }
+//
+//  // Creates field "last name".
+//  if (!field_info_field('field_last_name')) {
+//    $field = array(
+//      'field_name' => 'field_last_name',
+//      'type' => 'text',
+//    );
+//    field_create_field($field);
+//    $instance = array(
+//      'field_name' => 'field_last_name',
+//      'entity_type' => 'user',
+//      'label' => 'Last name',
+//      'bundle' => 'user',
+//      'widget' => array(
+//        'type' => 'textfield',
+//      ),
+//    );
+//    field_create_instance($instance);
+//  }
+//
+//  // Creates field "gender".
+//  if (!field_info_field('field_gender')) {
+//    $field = array(
+//      'field_name' => 'field_gender',
+//      'type' => 'list_text',
+//      'settings' => array(
+//        'allowed_values' => array(
+//          'f' => 'Female',
+//          'm' => 'Male',
+//        ),
+//      ),
+//    );
+//    field_create_field($field);
+//    $instance = array(
+//      'field_name' => 'field_gender',
+//      'entity_type' => 'user',
+//      'label' => 'Gender',
+//      'bundle' => 'user',
+//      'widget' => array(
+//        'type' => 'options_select',
+//      ),
+//      'display' => array(
+//      ),
+//    );
+//    field_create_instance($instance);
+//  }
+//
+//  // Creates field "country".
+//  if (module_exists('ec_world_countries')) {
+//    if (!field_info_field('field_country')) {
+//
+//      $field = array(
+//        'field_name' => 'field_country',
+//        'type' => 'taxonomy_term_reference',
+//        'settings' => array(
+//          'allowed_values' => array(
+//            array(
+//              'vocabulary' => 'ec_world_countries',
+//              'parent' => 0,
+//            ),
+//          ),
+//        ),
+//      );
+//      field_create_field($field);
+//
+//      $instance = array(
+//        'field_name' => 'field_country',
+//        'entity_type' => 'user',
+//        'label' => 'Country',
+//        'bundle' => 'user',
+//        'widget' => array(
+//          'type' => 'options_select',
+//          'weight' => -4,
+//        ),
+//        'display' => array(),
+//      );
+//      field_create_instance($instance);
+//    }
+//  }
 }
 
 /**
