@@ -3,14 +3,6 @@
   
   <!--  does a complete build of the project. -->
   <target name="main" depends="load-project-properties, setup-phing-drush, fetch-core-contrib-code, fetch-custom-code, site-install">
-    <if>
-      <or>
-        <istrue value="${development}" />
-      </or>
-      <then>
-        <phingcall target="set-development-environment" />
-      </then>
-    </if>
   </target>
   
   <!-- loads a set of project specific properties from a `.properties` file -->
@@ -93,7 +85,7 @@
     </if>
 
     <!-- copies the install profile bundled with the make file to the appropriate directory. -->
-    <copy todir="${environment.root}/profiles/${project.name.short}/">
+    <copy todir="${environment.root}/profiles/${project.profile}/">
       <fileset dir="projects/${project.name.short}/profile">
         <include name="*.profile" />
         <include name="*.info" />
@@ -121,7 +113,7 @@
     <foreach list="${project.themes}" param="theme" target="fetch-project-theme" />
   </target>
         
-  <!-- installs the website using a custom profile -->      
+  <!-- installs the website using a custom profile . enable dev settings if it is a dev site-->      
   <target name="site-install" depends="load-project-properties, setup-phing-drush">
 
     <drush command="site-install" assume="yes">
@@ -133,6 +125,16 @@
       <option name="site-name">${project.name.pretty}</option>
       <param>${project.profile}</param>
     </drush>
+    
+    <if>
+      <or>
+        <istrue value="${development}" />
+      </or>
+      <then>
+        <phingcall target="set-development-environment" />
+      </then>
+    </if>
+
   </target>
  
   <!-- fetch one custom modules from cnect svn repo -->

@@ -1,4 +1,4 @@
-; Packaging information for single_profile_server
+; Packaging information for sps
 name = "Single profile server"
 description = ""
 exclusive = "1"

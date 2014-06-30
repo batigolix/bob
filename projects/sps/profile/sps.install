@@ -4,8 +4,8 @@
  *
  * Perform actions to set up the site for this profile.
  */
-function single_profile_server_install() {
-  // Enable some single_profile_server blocks.
+function sps_install() {
+  // Enable some sps blocks.
   $default_theme = 'bartik';
   $admin_theme = 'seven';
   // disable all themes
