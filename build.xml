@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Deploy CNECT site" default="main" phingVersion="2.5">
-
-  <!--  does a complete build of the project by verifying code consistency and and
-  performing static analysis of the code. -->
+  
+  <!--  does a complete build of the project. -->
   <target name="main" depends="load-project-properties, setup-phing-drush, fetch-core-contrib-code, fetch-custom-code, site-install">
   </target>
   
@@ -58,7 +57,7 @@
   <target name="fetch-contrib-code" depends="load-project-properties, setup-phing-drush">
     <!-- downloads the contributed modules -->
     <drush command="make" assume="yes">
-      <param>${contrib.make}</param>
+      <param>${project.make}</param>
       <option name="contrib-destination">${environment.root}/${contrib.modules.destination}</option>
       <option name="no-core"/>
       <option name="verbose"/>
@@ -78,14 +77,25 @@
         <delete includeemptydirs="true" dir="${environment.root}/${project.modules.destination}"/>
         <delete includeemptydirs="true" dir="${environment.root}/${project.themes.destination}"/>
         <delete includeemptydirs="true" dir="${environment.root}/${multisite.modules.destination}"/>
+        <delete includeemptydirs="true" dir="${environment.root}/profiles/${project.name.short}"/>
         <mkdir dir="${environment.root}/${project.modules.destination}"/>
         <mkdir dir="${environment.root}/${project.themes.destination}"/>
         <mkdir dir="${environment.root}/${multisite.modules.destination}"/>
       </then>
     </if>
 
+    <!-- copies the install profile bundled with the make file to the appropriate directory. -->
+    <copy todir="${environment.root}/profiles/${project.profile}/">
+      <fileset dir="projects/${project.name.short}/profile">
+        <include name="*.profile" />
+        <include name="*.info" />
+        <include name="*.install" />
+      </fileset>
+    </copy>
+
     <phingcall target="fetch-multisite-code" />
-    <phingcall target="fetch-project-code"/>
+    <phingcall target="fetch-project-code" />
+    <phingcall target="link-project-modules" />
     
   </target>
         
@@ -103,17 +113,8 @@
     <foreach list="${project.themes}" param="theme" target="fetch-project-theme" />
   </target>
         
-  <!-- installs the website using a custom profile -->      
+  <!-- installs the website using a custom profile . enable dev settings if it is a dev site-->      
   <target name="site-install" depends="load-project-properties, setup-phing-drush">
-
-    <!-- copies the install profile bundled with the make file to the appropriate directory. -->
-    <copy todir="${environment.root}/profiles/${project.name.short}/">
-      <fileset dir="projects/${project.name.short}">
-        <include name="*.profile" />
-        <include name="*.info" />
-        <include name="*.install" />
-      </fileset>
-    </copy>
 
     <drush command="site-install" assume="yes">
       <option name="db-url">mysqli://${db.user}:${db.pass}@${db.host}:${db.port}/${db.name}</option>
@@ -124,6 +125,16 @@
       <option name="site-name">${project.name.pretty}</option>
       <param>${project.profile}</param>
     </drush>
+    
+    <if>
+      <or>
+        <istrue value="${development}" />
+      </or>
+      <then>
+        <phingcall target="set-development-environment" />
+      </then>
+    </if>
+
   </target>
  
   <!-- fetch one custom modules from cnect svn repo -->
@@ -300,7 +311,6 @@
 
     <phingcall target="dev-settings" />
     <phingcall target="cc" />
-
             
   </target>
 
@@ -320,7 +330,6 @@
     <phingcall target="cc" />
 
   </target>
-
 
   <!-- clear cache -->
   <target name="cc" depends="load-project-properties, setup-phing-drush">

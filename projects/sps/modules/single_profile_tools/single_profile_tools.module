@@ -1,0 +1,119 @@
+<?php
+
+/**
+ * @file
+ * Main bootstrap file of the single_profile_tools module.
+ */
+
+/**
+ * Implements hook_menu().
+ *
+ */
+function single_profile_tools_menu() {
+  $menu = array();
+
+  $menu['single_profile_tools/example'] = array(
+    'title' => 'TIC test stuff',
+    'description' => 'Test single_profile_tools stuff and such',
+    'page callback' => 'single_profile_tools_test_stuff',
+    'access arguments' => array('access administration pages'),
+    'file' => 'single_profile_tools.pages.inc',
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 0,
+  );
+
+  return $menu;
+}
+
+/**
+ * Implements of hook_services_resources().
+ */
+function single_profile_tools_services_resources() {
+  $api = array(
+    'blog' => array(
+      'operations' => array(
+        'retrieve' => array(
+          'help' => 'Retrieves posted blogs',
+          'callback' => '_single_profile_tools_blog_retrieve',
+          'access callback' => 'user_access',
+          'access arguments' => array('access content'),
+          'access arguments append' => FALSE,
+          'args' => array(
+            array(
+              'name' => 'fn',
+              'type' => 'string',
+              'description' => 'Function to perform',
+              'source' => array('path' => '0'),
+              'optional' => TRUE,
+              'default' => '0',
+            ),
+            array(
+              'name' => 'nitems',
+              'type' => 'int',
+              'description' => 'Number of latest items to get',
+              'source' => array('param' => 'nitems'),
+              'optional' => TRUE,
+              'default' => '0',
+            ),
+            array(
+              'name' => 'since',
+              'type' => 'int',
+              'description' => 'Posts from the last number of days',
+              'source' => array('param' => 'since'),
+              'optional' => TRUE,
+              'default' => '0',
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+
+  return $api;
+}
+
+/**
+ * Callback function for blog retrieve
+ */
+function _single_profile_tools_blog_retrieve($fn, $nitems, $timestamp) {
+  // Check for mad values
+  $nitems = intval($nitems);
+  $timestamp = intval($timestamp);
+
+  return single_profile_tools_find_blog_items($nitems, $timestamp);
+}
+
+/**
+ * Gets blog posts
+ */
+function single_profile_tools_find_blog_items($nitems, $timestamp) {
+  // Compose query
+  $query = db_select('node', 'n');
+  $query->join('node_revision', 'v', '(n.nid = v.nid) AND (n.vid = v.vid)');
+  $query->join('users', 'u', 'n.uid = u.uid');
+  $query->join('field_data_body', 'b', '((b.entity_type = \'node\') AND (b.entity_id = n.nid) AND (b.revision_id = n.vid))');
+  $query->fields('v', array('timestamp', 'title'));
+  $query->addField('u', 'name', 'author');
+  $query->addField('b', 'body_value', 'content');
+  $query->condition('n.type', 'arsingle_profile_toolsle', '=');
+  // How many days ago?
+  if ($timestamp) {
+    $query->condition('v.timestamp', time() - ($timestamp * 60 * 60 * 24), '>');
+  }
+  $query->orderBy('v.timestamp', 'DESC');
+  // Limited by items?
+  if ($nitems) {
+    $query->range(0, $nitems);
+  }
+  $items = $query->execute()->fetchAll();
+
+  return $items;
+}
+
+function single_profile_tools_services_request_postprocess_alter($controller, $args, &$result) {
+//  dd($controller);
+//      dd($args); 
+//  unset($result['ssingle_profile_toolsky']);
+
+//      dd($result);
+}

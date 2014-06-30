@@ -1,0 +1,14 @@
+name = Single profile tools
+description = General single profile functionalities
+core = 7.x
+package = Custom
+dependencies[] = services
+dependencies[] = ctools
+dependencies[] = entity
+dependencies[] = libraries
+dependencies[] = services_entity
+dependencies[] = field
+dependencies[] = taxonomy
+dependencies[] = options
+dependencies[] = list
+dependencies[] = ec_world_countries
