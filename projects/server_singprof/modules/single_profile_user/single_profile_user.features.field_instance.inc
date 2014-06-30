@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * ssp_user.features.field_instance.inc
+ * single_profile_user.features.field_instance.inc
  */
 
 /**
  * Implements hook_field_default_field_instances().
  */
-function ssp_user_field_default_field_instances() {
+function single_profile_user_field_default_field_instances() {
   $field_instances = array();
 
   // Exported field_instance: 'taxonomy_term-ec_world_countries-field_code'

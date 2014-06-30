@@ -1,5 +1,9 @@
+name = Single profile user
+description = Single profile user, including ec_world_countries official country extension
 core = 7.x
-package = Features
+package = Custom
+version = 7.x-1.0
+project = single_profile_user
 dependencies[] = entityreference
 dependencies[] = features
 dependencies[] = list
