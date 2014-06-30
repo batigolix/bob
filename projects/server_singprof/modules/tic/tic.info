@@ -1,5 +1,8 @@
 name = this is custom
 description = custom stuffz
 core = 7.x
-dependencies[] = node
-dependencies[] = block
+dependencies[] = field
+dependencies[] = taxonomy
+dependencies[] = options
+dependencies[] = list
+dependencies[] = ec_world_countries
