@@ -6,6 +6,7 @@ dependencies[] = ctools
 dependencies[] = services
 dependencies[] = services_entity
 dependencies[] = services_entityreference
+dependencies[] = rest_server
 
 features[ctools][] = services:services:3
 ;features[features_api][] = api:1

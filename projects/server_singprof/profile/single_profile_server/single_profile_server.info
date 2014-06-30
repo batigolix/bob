@@ -1,0 +1,43 @@
+; Packaging information for single_profile_server
+name = "Single profile server"
+description = ""
+exclusive = "1"
+core = "7.x"
+; ----------
+; Dependencies
+; ----------
+; Chaos tool suite
+dependencies[] = ctools
+; Core
+dependencies[] = block
+dependencies[] = dblog
+dependencies[] = field
+dependencies[] = field_sql_storage
+dependencies[] = field_ui
+dependencies[] = filter
+dependencies[] = list
+dependencies[] = menu
+dependencies[] = node
+dependencies[] = options
+dependencies[] = system
+dependencies[] = taxonomy
+dependencies[] = text
+dependencies[] = update
+dependencies[] = user
+; Fields
+dependencies[] = entityreference
+; Other
+dependencies[] = entity
+dependencies[] = libraries
+; Services
+dependencies[] = services
+dependencies[] = services_entity
+dependencies[] = services_entityreference
+; Services - servers
+dependencies[] = rest_server
+; Features
+dependencies[] = features
+dependencies[] = ec_world_countries
+dependencies[] = single_profile_service
+dependencies[] = single_profile_user
+
