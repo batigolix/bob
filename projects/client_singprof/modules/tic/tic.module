@@ -20,193 +20,6 @@ function tic_menu() {
 }
 
 /**
- * Implements hook_cron().
- */
-function tic_cron() {
-  // Short-running operation example, not using a queue:
-  // Delete all expired records since the last cron run.
-  $expires = variable_get('mymodule_cron_last_run', REQUEST_TIME);
-  db_delete('mymodule_table')
-      ->condition('expires', $expires, '>=')
-      ->execute();
-  variable_set('mymodule_cron_last_run', REQUEST_TIME);
-
-  // Long-running operation example, leveraging a queue:
-  // Fetch feeds from other sites.
-  $result = db_query('SELECT * FROM {aggregator_feed} WHERE checked + refresh < :time AND refresh <> :never', array(
-    ':time' => REQUEST_TIME,
-    ':never' => AGGREGATOR_CLEAR_NEVER,
-  ));
-  $queue = DrupalQueue::get('aggregator_feeds');
-  foreach ($result as $feed) {
-    $queue->createItem($feed);
-  }
-}
-
-function xxtic_test1() {
-
-//  
-////   define("EFEED", 'http://mydrupal.utoronto.ca/some_endpoint/some_view');
-//
-////Get consumer key and secret from Drupal
-////- People ➔ [Your OAuth User] ➔ Authorization ➔ Consumers ➔ Edit under your external application's Consumer
-////- Copy the secret and key into PHP
-//$consumer_key = '8NMxrPkxdU8GAaLvsaP5qDKeLdVfRvWr';
-//$consumer_secret = '2G79cLpxsH4tuL2Mtv6G9h9QURGjMb3R';
-//
-////Instantiate new OAuth object
-//$oauth = new OAuth($consumer_key, $consumer_secret, OAUTH_SIG_METHOD_HMACSHA1, OAUTH_AUTH_TYPE_URI);
-//$oauth->enableDebug();
-//
-////Fetch the REST resource
-////$data = $oauth->fetch(EFEED);
-//$data = $oauth->fetch('http://ssp.singprof.val/test/test');
-//
-//
-//$response_info = $oauth->getLastResponse();
-//$array = json_decode($response_info);
-//
-//dpm($array);
-//
-////Parse the JSON array
-//if ($array) {
-//  $object = $array[0]; // The array could contain multiple instances of your content type
-//  $title = $object->title; // title is a field of your content type
-//}
-//  
-//  
-//  
-//
-  $base_url = 'http://server.singprof.val/test';
-  $data = array(
-    'username' => 'admin',
-    'password' => 'letmein',
-  );
-  $data = http_build_query($data, '', '&');
-  $headers = array();
-  $options = array(
-    'headers' => array(
-      'Accept' => 'application/json',
-    ),
-    'method' => 'POST',
-    'data' => $data
-  );
-  $response = drupal_http_request($base_url . '/user/login', $options);
-  $data = json_decode($response->data);
-
-  dpm($data);
-
-// Check if login was successful
-  if ($response->code == 200) {
-    // Now recycle the login cookie we recieved in the first request
-    $options['headers']['Cookie'] = $data->session_name . '=' . $data->sessid;
-
-    // Get info about a user
-//  $data = array();
-//  $options['data'] = http_build_query($data, '', '&');
-//  $options['method'] = 'GET';
-//  $response = drupal_http_request($base_url . '/user/3', $options);
-//  
-//  dpm($response);
-    // Create a user
-    $account = array(
-      'name' => 'test_user',
-      'pass' => 'xyzzy',
-      'mail' => 'test_user@xyzzy.com',
-    );
-    $options['data'] = http_build_query($account = array('account' => $account), '', '&');
-    $options['method'] = 'POST';
-
-    $response = drupal_http_request($base_url . '/user', $options);
-    dpm($response);
-//  
-//  
-  }
-
-
-  /*
-   * Server REST - user.login
-   */
-// REST Server URL
-  $request_url = 'http://server.singprof.val/test/user/login';
-// User data
-  $user_data = array(
-    'username' => 'admin',
-    'password' => 'letmein',
-  );
-  $user_data = http_build_query($user_data);
-// cURL
-  $curl = curl_init($request_url);
-  curl_setopt($curl, CURLOPT_HTTPHEADER, array('Accept: application/json', tic_get_csrf_header())); // Accept JSON response
-  curl_setopt($curl, CURLOPT_POST, 1); // Do a regular HTTP POST
-  curl_setopt($curl, CURLOPT_POSTFIELDS, $user_data); // Set POST data
-  curl_setopt($curl, CURLOPT_HEADER, FALSE);  // Ask to not return Header
-  curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-  curl_setopt($curl, CURLOPT_FAILONERROR, TRUE);
-  $response = curl_exec($curl);
-  $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-// Check if login was successful
-  if ($http_code == 200) {
-    // Convert json response as array
-    $logged_user = json_decode($response);
-
-    dpm($logged_user);
-  }
-  else {
-    // Get error msg
-    $http_message = curl_error($curl);
-    die($http_message);
-  }
-
-
-  /*
-   * Server REST - node.create
-   */
-// REST Server URL
-  $request_url = 'http://server.singprof.val/test/node';
-// Node data
-  $node_data = array(
-    'title' => 'A node created with services 3.x and REST server',
-    'type' => 'article',
-    'body[und][0][value]' => '<p>Body</p>',
-  );
-  $node_data = http_build_query($node_data);
-// Define cookie session
-  $cookie_session = $logged_user->session_name . '=' . $logged_user->sessid;
-
-  dsm($cookie_session);
-
-// cURL
-  $curl = curl_init($request_url);
-  curl_setopt($curl, CURLOPT_HTTPHEADER, array('Accept: application/json', tic_get_csrf_header())); // Accept JSON response
-  curl_setopt($curl, CURLOPT_POST, 1); // Do a regular HTTP POST
-  curl_setopt($curl, CURLOPT_POSTFIELDS, $node_data); // Set POST data
-  curl_setopt($curl, CURLOPT_HEADER, FALSE);  // Ask to not return Header
-  curl_setopt($curl, CURLOPT_COOKIE, "$cookie_session"); // use the previously saved session
-  curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-  curl_setopt($curl, CURLOPT_FAILONERROR, TRUE);
-  $response = curl_exec($curl);
-  dpm($response);
-  $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-  dsm($http_code);
-//// Check if login was successful
-//if ($http_code == 200) {
-//  // Convert json response as array
-//  $node = json_decode($response);
-//}
-//else {
-//  // Get error msg
-//  $http_message = curl_error($curl);
-//  die($http_message);
-//}
-//print_r($node);
-
-  $build = array();
-  $build['test']['#markup'] = 'test';
-  return $build;
-}
-
-/**
  * Create a token for non-safe REST calls.
  * */
 function tic_get_csrf_header() {
@@ -222,91 +35,19 @@ function tic_get_csrf_header() {
 
 function tic_test1() {
 
-//  
-//  $base_url = 'http://server.singprof.val/test';
-//$data = array(
-//  'username' => 'admin',
-//  'password' => 'letmein',
-//);
-//$data = http_build_query($data, '', '&');
-//$headers = array();
-//$options = array(
-//  'headers' => array(
-//    'Accept' => 'application/json',
-//  ),
-//  'method' => 'POST',
-//  'data' => $data
-//);
-//$response = drupal_http_request($base_url . '/user/login', $options);
-//$data = json_decode($response->data);
-//
-//dpm($data);
-//
-//// Check if login was successful
-//if ($response->code == 200) {
-//  // Now recycle the login cookie we recieved in the first request
-//  $options['headers']['Cookie'] = $data->session_name . '=' . $data->sessid;
-//   Get info about a user
-//  $data = array();
-//  $options['data'] = http_build_query($data, '', '&');
-//  $options['method'] = 'GET';
-//  $response = drupal_http_request($base_url . '/user/3', $options);
-//  
-//  dpm($response);
-  // Create a user
-//$account = array(
-//      'name' => 'test_user',
-//      'pass' => 'xyzzy',
-//      'mail' => 'test_user@xyzzy.com',
-//    );
-//  $options['data'] = http_build_query($account=array('account'=>$account), '', '&');
-//  $options['method'] = 'POST';
-//
-//  $response = drupal_http_request($base_url . '/user', $options);
-//  dpm($response);
-//}
-//  
-//  $connection = clients_connection_load('single_profile_server');
-////  try {
-////    $result = $connection->callMethod('node.get', 1, array());
-////  }
-////  catch (Exception $e) {
-////    drupal_set_message("Error calling method.name. {$e}");
-////  }
-//
-//  dpm($connection);
-//
-//  try {
-////    $node = clients_connection_call('single_profile_server', 'GET', '1');
-//     $node = $connection->makeRequest('node/' . '1', 'GET');
-//     // Note that the $node will be an array.
-//  }
-//  catch (Exception $e) {
-//    drupal_set_message("Error loading a remote node. {$e}");
-//  }
-//
-//  // $node = clients_connection_call('single_profile_server', 'node.index', 1);
-//  // Note that the $node will be an array.
-//  // dpm($node);
-//
-////  try {
-////    $result = $connection->callMethod('user.get', 2);
-////  }
-////  catch (Exception $e) {
-////    drupal_set_message("Error calling method.name.");
-////  }
-//  /* GET USER */
-//  $get_user_result = tic_get_user();
-//  dpm($get_user_result);
-//  $data = json_decode($get_user_result->data);
-//  dpm($data);
-
   /* GET USER */
-  $get_user_result = tic_get_user();
+  $get_user_result = tic_get_user(1);
   dpm($get_user_result);
   $data = json_decode($get_user_result->data);
   dpm($data);
 
+  
+  $get_tt_result = tic_get_taxonomy_term(42);
+  dpm($get_tt_result);
+  $data = json_decode($get_tt_result->data);
+  dpm($data);
+  
+  
   /* UPDATE USER */
 //  $get_user_result = tic_update_user();
 //  dpm($get_user_result);
@@ -334,7 +75,6 @@ function tic_test1() {
 //  dpm($get_blogs_result);
 //  $data = json_decode($get_blogs_result->data);
 //  dpm($data);
-
 
   $build = array();
   $build['test']['#markup'] = 'test';
@@ -383,10 +123,22 @@ function tic_get_node() {
   return drupal_http_request($url);
 }
 
+function tic_get_taxonomy_term($tid) {
+  if (isset($tid)) {
+    $url = 'http://server.singprof.val/test/entity_taxonomy_term/' . $tid;
+    // $parameters = '?parameters[nid]=2';
+    // $url .= $parameters;
+    return drupal_http_request($url);
+  }
+  else {
+    
+  }
+}
+
 /* RETRIVE user with http GET method */
 
-function tic_get_user() {
-  $url = 'http://server.singprof.val/test/user/3';
+function tic_get_user($uid) {
+  $url = 'http://server.singprof.val/test/user/'.$uid;
 //  $parameters = '?parameters[uid]=3'; // TODO figure out how/if to use parameters
 //  $url .= $parameters;
 
@@ -508,7 +260,7 @@ function tic_update_node() {
     ),
     'method' => 'PUT',
     //'data' => $node_data,
-          'data' => json_encode($node_data),
+    'data' => json_encode($node_data),
   );
 
 
