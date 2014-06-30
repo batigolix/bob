@@ -27,4 +27,4 @@ ei.color = #006633
 ei.name = Development
 
 # Development
-dev_site = false
+development = false
