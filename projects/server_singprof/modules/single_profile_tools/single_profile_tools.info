@@ -1,5 +1,5 @@
-name = this is custom
-description = custom stuffz
+name = Single profile tools
+description = General single profile functionalities
 core = 7.x
 dependencies[] = services
 dependencies[] = ctools
