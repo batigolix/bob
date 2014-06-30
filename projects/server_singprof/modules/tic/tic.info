@@ -1,6 +1,11 @@
 name = this is custom
 description = custom stuffz
 core = 7.x
+dependencies[] = services
+dependencies[] = ctools
+dependencies[] = entity
+dependencies[] = libraries
+dependencies[] = services_entity
 dependencies[] = field
 dependencies[] = taxonomy
 dependencies[] = options

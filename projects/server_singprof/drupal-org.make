@@ -10,6 +10,8 @@ projects[services][subdir] = "contrib"
 ;projects[services_views][subdir] = "contrib"
 projects[services_entity][subdir] = "contrib"
 projects[entity][subdir] = "contrib"
+projects[libraries][subdir] = "contrib"
+projects[features][subdir] = "contrib"
 projects[entity_token][subdir] = "contrib"
 
 ;projects[context][version] = "3.2"

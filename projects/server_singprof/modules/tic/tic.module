@@ -247,9 +247,8 @@ function tic_services_request_postprocess_alter($controller, $args, &$result) {
   
 //  dd($controller);
 //      dd($args); 
-  
   unset($result['sticky']);
   
-      dd($result);
+//      dd($result);
   
 }

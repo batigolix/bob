@@ -188,3 +188,30 @@ function tic_uninstall() {
   // TODO delete terms
   // TODO delete vocab
 }
+
+/**
+ * TODO get iso code in there
+ */
+
+function tic_update_7016() {
+//  if (module_exists('ec_world_countries')) {
+//    $vocabulary = taxonomy_vocabulary_machine_name_load('ec_world_countries');
+//    
+//      module_load_include('php', 'ec_world_countries', 'includes/countries');
+//
+//      foreach ($country_array as $continent => $countries) {
+//
+//      $term = (object) array( 'vid' => $vid, 'name' => st($continent), );
+//      taxonomy_term_save($term);
+//      $tid = $term->tid;
+//      foreach ($countries as $country => $cy_name) {
+//        $subterm = (object) array(
+//            'vid' => $vid,
+//            'name' => t($cy_name),
+//            'parent' => $tid,
+//            );
+//        taxonomy_term_save($subterm);
+//      }
+//  }
+//  
+}
