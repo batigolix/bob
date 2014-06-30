@@ -9,23 +9,11 @@
  * Implements hook_menu().
  */
 function tic_menu() {
-  $items['example'] = array(
-    'title' => 'Example Page',
-    'page callback' => 'example_page',
-    'access arguments' => array('access content'),
-    'type' => MENU_SUGGESTED_ITEM,
-  );
-  $items['tic/test1'] = array(
-    'title' => 'Example Page',
+  $items['tic/example'] = array(
+    'title' => 'Example interaction with service',
     'page callback' => 'tic_test1',
     'access arguments' => array('access content'),
     'type' => MENU_SUGGESTED_ITEM,
-  );
-  $items['example/feed'] = array(
-    'title' => 'Example RSS feed',
-    'page callback' => 'example_feed',
-    'access arguments' => array('access content'),
-    'type' => MENU_CALLBACK,
   );
 
   return $items;
@@ -314,10 +302,10 @@ function tic_test1() {
 //  dpm($data);
 
   /* GET USER */
-//  $get_user_result = tic_get_user();
-//  dpm($get_user_result);
-//  $data = json_decode($get_user_result->data);
-//  dpm($data);
+  $get_user_result = tic_get_user();
+  dpm($get_user_result);
+  $data = json_decode($get_user_result->data);
+  dpm($data);
 
   /* UPDATE USER */
 //  $get_user_result = tic_update_user();
@@ -325,17 +313,17 @@ function tic_test1() {
 //  $data = json_decode($get_user_result->data);
 //  dpm($data);
   // /* UPDATE NODE */
-  $update_node_result = tic_update_node();
-  dpm($update_node_result);
-  $data = json_decode($update_node_result->data);
-  dpm($data);
-
-
-  /* GET NODE */
-  $get_node_result = tic_get_node();
-  dpm($get_node_result);
-  $data = json_decode($get_node_result->data);
-  dpm($data);
+//  $update_node_result = tic_update_node();
+//  dpm($update_node_result);
+//  $data = json_decode($update_node_result->data);
+//  dpm($data);
+//
+//
+//  /* GET NODE */
+//  $get_node_result = tic_get_node();
+//  dpm($get_node_result);
+//  $data = json_decode($get_node_result->data);
+//  dpm($data);
 //  $wrpuser = entity_metadata_wrapper('user', $data[0]);
 //  
 //  dsm($wrpuser->field_first_name->value());
