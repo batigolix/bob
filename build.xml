@@ -334,8 +334,8 @@
   </target>
 
   <!-- apply patches to contrib code -->
-  <target name="link-project-modules" depends="load-project-properties">"
-    <exec command="ln -s projects/${project-short-name}/modules ${environment.root}/sites/all/modules/project />
+  <target name="link-project-modules" depends="load-project-properties">
+    <symlink target="${project.root}/projects/${project.name.short}/modules/" link="${project.root}/${environment.root}/sites/all/modules/project" overwrite="true" />  
   </target>
 
 </project>
