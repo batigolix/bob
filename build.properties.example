@@ -8,20 +8,23 @@ db.user = root
 db.pass = root
 db.host = localhost
 db.port = 3306
-db.name = dae2
+db.name = example
 
 # SVN
 svn.user = john
 svn.pass = letmein
 
 # Project
-project.name.short = dae
-project.uri = http://dae.bob.val
-project.root = /Users/boris/Sites/dae2
+project.name.short = example
+project.uri = http://dev.example.cnect.eu
+project.root = /var/www/example
 
 #Drupal
-drupal.private.path = /Users/boris/drupal-private
+drupal.private.path = /home/cnector/drupal-private
 
 #Environment indicator
 ei.color = #006633
-ei.name = Local Dev Go Crazy
+ei.name = Development
+
+# Development
+dev_site = false
