@@ -85,13 +85,18 @@
     </if>
 
     <!-- copies the install profile bundled with the make file to the appropriate directory. -->
-    <copy todir="${environment.root}/profiles/${project.profile}/">
-      <fileset dir="projects/${project.name.short}/profile">
-        <include name="*.profile" />
-        <include name="*.info" />
-        <include name="*.install" />
-      </fileset>
-    </copy>
+    <if>
+      <available file="projects/${project.name.short}/profile/*.profile"/>
+      <then>
+        <copy todir="${environment.root}/profiles/${project.profile}/">
+          <fileset dir="projects/${project.name.short}/profile">
+            <include name="*.profile" />
+            <include name="*.info" />
+            <include name="*.install" />
+          </fileset>
+        </copy>
+      </then>
+    </if>
 
     <phingcall target="fetch-multisite-code" />
     <phingcall target="fetch-project-code" />
