@@ -28,4 +28,7 @@ projects[services_entity][subdir] = "contrib"
 projects[services][version] = "3.7"
 projects[services][subdir] = "contrib"
 
+projects[migrate][version] = "2.5"
+projects[migrate][subdir] = "contrib"
+
 ; +++++ Libraries +++++
