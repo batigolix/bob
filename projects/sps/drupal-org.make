@@ -31,4 +31,6 @@ projects[services][subdir] = "contrib"
 projects[migrate][version] = "2.5"
 projects[migrate][subdir] = "contrib"
 
+projects[views][subdir] = "contrib"
+
 ; +++++ Libraries +++++
