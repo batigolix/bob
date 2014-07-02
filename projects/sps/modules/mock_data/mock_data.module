@@ -1,0 +1,29 @@
+<?php
+
+/**
+ * @file
+ * This module provides a field for storing dates and values
+ */
+
+/**
+ * Turns string into a user- and machine-friendly short text.
+ * 
+ * Used among others in a URL to identify and describe a resource.
+ */
+function mock_data_slugify($string) {
+  return strtolower(preg_replace('/[^a-zA-Z0-9-]+/', '-', check_plain($string)));
+}
+
+/**
+ * Generates a random string.
+ * 
+ * Can be used to generate a password during user migration.
+ */
+function mock_data_generate_random_string($length = 10) {
+  $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  $random_string = '';
+  for ($i = 0; $i < $length; $i++) {
+    $random_string .= $characters[rand(0, strlen($characters) - 1)];
+  }
+  return $random_string;
+}
