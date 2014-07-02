@@ -111,9 +111,65 @@ function single_profile_tools_find_blog_items($nitems, $timestamp) {
 }
 
 function single_profile_tools_services_request_postprocess_alter($controller, $args, &$result) {
-//  dd($controller);
-//      dd($args); 
-//  unset($result['ssingle_profile_toolsky']);
+//  unset($result['some_kind_of_field']);
+}
 
-//      dd($result);
+function single_profile_taxonomy_terms_delete($vocab_machine_name) {
+  $vocab = taxonomy_vocabulary_machine_name_load($vocab_machine_name);
+  if ($vocab) {
+    $query = new EntityFieldQuery();
+    $result = $query
+        ->entityCondition('entity_type', 'taxonomy_term')
+        ->propertyCondition('vid', $vocab->vid)
+        ->execute();
+    foreach ($result['taxonomy_term'] as $term) {
+      taxonomy_term_delete($term->tid);
+    }
+  }
+}
+
+/**
+ * Implements hook_migrate_api().
+ */
+function single_profile_tools_migrate_api() {
+  $api = array(
+    'api' => 2,
+    'migrations' => array(
+      'Newsletters' => array('class_name' => 'NewslettersMigration'),
+      'Countries' => array('class_name' => 'CountriesMigration'),
+    ),
+  );
+  return $api;
+}
+
+/**
+ * Returns Drupal entity ID by matching a custom field value.
+ * 
+ * Usefull to fetch drupal ID from entity that was imported from external
+ * source and that carries the external source ID
+ * 
+ * @param string $entity_type
+ * @param string $bundle
+ * @param string $field_name
+ * @param string $value
+ */
+function single_profile_tools_entity_id_from_field_value($entity_type, $bundle, $field_name, $value) {
+  if (isset($entity_type, $bundle, $field_name, $value)) {
+    $query = new EntityFieldQuery();
+    $query->entityCondition('entity_type', $entity_type)
+        ->entityCondition('bundle', $bundle)
+        ->fieldCondition($field_name, 'value', $value); // TODO only works with text fields?
+    $result = $query->execute();
+    if (isset($result[$entity_type])) {
+      $entity_ids = array_keys($result[$entity_type]);
+      $entity_id = reset($entity_ids);   // TODO better way dealing with multiple ids
+      return $entity_id;
+    }
+    else {
+      watchdog('notice', 'no entity found that matches the field value');
+    }
+  }
+  else {
+    watchdog('error', 'cannot look up entity id because of missing parameters');
+  }
 }
