@@ -24,6 +24,10 @@ dependencies[] = taxonomy
 dependencies[] = text
 dependencies[] = update
 dependencies[] = user
+dependencies[] = migrate
+dependencies[] = mock_data
+dependencies[] = single_profile_tools
+
 ; Fields
 dependencies[] = entityreference
 ; Other

@@ -12,6 +12,7 @@ dependencies[] = field
 dependencies[] = taxonomy
 dependencies[] = options
 dependencies[] = list
+dependencies[] = views
 files[] = migrate/newsletters.inc
 files[] = migrate/countries.inc
 
