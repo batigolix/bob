@@ -109,7 +109,6 @@ function sps_install() {
   menu_rebuild();
   // revert features to ensure they are all installed
   $features = array(
-    'ec_world_countries',
     'single_profile_service',
     'single_profile_user'
   );
