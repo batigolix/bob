@@ -3,6 +3,16 @@
   
   <!--  does a complete build of the project. -->
   <target name="main" depends="load-project-properties, setup-phing-drush, fetch-core-contrib-code, fetch-custom-code, site-install">
+    
+    <if>
+      <or>
+        <istrue value="${development}" />
+      </or>
+      <then>
+        <phingcall target="set-development-environment" />
+      </then>
+    </if>
+
   </target>
   
   <!-- loads a set of project specific properties from a `.properties` file -->
@@ -86,13 +96,14 @@
 
     <!-- copies the install profile bundled with the make file to the appropriate directory. -->
     <if>
-      <available file="projects/${project.name.short}/profile/*.profile"/>
+      <available file="projects/${project.name.short}/profile/${project.name.short}.profile"/>
+      
       <then>
         <copy todir="${environment.root}/profiles/${project.profile}/">
           <fileset dir="projects/${project.name.short}/profile">
-            <include name="*.profile" />
-            <include name="*.info" />
-            <include name="*.install" />
+            <include name="${project.name.short}.profile" />
+            <include name="${project.name.short}.info" />
+            <include name="${project.name.short}.install" />
           </fileset>
         </copy>
       </then>
@@ -131,15 +142,6 @@
       <param>${project.profile}</param>
     </drush>
     
-    <if>
-      <or>
-        <istrue value="${development}" />
-      </or>
-      <then>
-        <phingcall target="set-development-environment" />
-      </then>
-    </if>
-
   </target>
  
   <!-- fetch one custom modules from cnect svn repo -->
