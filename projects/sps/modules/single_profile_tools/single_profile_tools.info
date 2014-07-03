@@ -1,6 +1,7 @@
 name = Single profile tools
 description = General single profile functionalities
 core = 7.x
+version = 7.x-1.0
 package = Custom
 dependencies[] = services
 dependencies[] = ctools
@@ -11,4 +12,7 @@ dependencies[] = field
 dependencies[] = taxonomy
 dependencies[] = options
 dependencies[] = list
-dependencies[] = ec_world_countries
+dependencies[] = views
+files[] = migrate/newsletters.inc
+files[] = migrate/countries.inc
+

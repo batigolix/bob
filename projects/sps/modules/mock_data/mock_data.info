@@ -1,0 +1,21 @@
+name = Mock data
+description = Mock data (nodes, users, etc.) for development
+core = 7.x
+version = 7.x-1.0
+php = 5.2.4
+package = Custom
+files[] = tests/mock_data.test
+
+files[] = migrate/base.inc
+files[] = mock_data.migrate.inc
+files[] = migrate/articles.inc
+files[] = migrate/users.inc
+files[] = mock_data.module
+
+dependencies[] = taxonomy
+dependencies[] = image
+dependencies[] = comment
+dependencies[] = migrate
+dependencies[] = list
+dependencies[] = number
+dependencies[] = single_profile_tools

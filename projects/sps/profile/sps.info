@@ -24,6 +24,10 @@ dependencies[] = taxonomy
 dependencies[] = text
 dependencies[] = update
 dependencies[] = user
+dependencies[] = migrate
+dependencies[] = mock_data
+dependencies[] = single_profile_tools
+
 ; Fields
 dependencies[] = entityreference
 ; Other
@@ -37,7 +41,6 @@ dependencies[] = services_entityreference
 dependencies[] = rest_server
 ; Features
 dependencies[] = features
-dependencies[] = ec_world_countries
 dependencies[] = single_profile_service
 dependencies[] = single_profile_user
 

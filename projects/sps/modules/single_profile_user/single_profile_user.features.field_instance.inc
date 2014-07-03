@@ -10,9 +10,9 @@
 function single_profile_user_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'taxonomy_term-ec_world_countries-field_code'
-  $field_instances['taxonomy_term-ec_world_countries-field_code'] = array(
-    'bundle' => 'ec_world_countries',
+  // Exported field_instance: 'taxonomy_term-countries-field_code'
+  $field_instances['taxonomy_term-countries-field_code'] = array(
+    'bundle' => 'countries',
     'default_value' => NULL,
     'deleted' => 0,
     'description' => '',
@@ -40,7 +40,115 @@ function single_profile_user_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 1,
+      'weight' => 2,
+    ),
+  );
+
+  // Exported field_instance: 'taxonomy_term-countries-field_code3'
+  $field_instances['taxonomy_term-countries-field_code3'] = array(
+    'bundle' => 'countries',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 1,
+      ),
+    ),
+    'entity_type' => 'taxonomy_term',
+    'field_name' => 'field_code3',
+    'label' => 'ISO 3166-1 3 Letter Code',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 3,
+    ),
+  );
+
+  // Exported field_instance: 'taxonomy_term-countries-field_number'
+  $field_instances['taxonomy_term-countries-field_number'] = array(
+    'bundle' => 'countries',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'number',
+        'settings' => array(
+          'decimal_separator' => '.',
+          'prefix_suffix' => TRUE,
+          'scale' => 0,
+          'thousand_separator' => ' ',
+        ),
+        'type' => 'number_integer',
+        'weight' => 2,
+      ),
+    ),
+    'entity_type' => 'taxonomy_term',
+    'field_name' => 'field_number',
+    'label' => 'ISO 3166-1 Number',
+    'required' => 0,
+    'settings' => array(
+      'max' => '',
+      'min' => '',
+      'prefix' => '',
+      'suffix' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'number',
+      'settings' => array(),
+      'type' => 'number',
+      'weight' => 4,
+    ),
+  );
+
+  // Exported field_instance: 'taxonomy_term-newsletters-field_id'
+  $field_instances['taxonomy_term-newsletters-field_id'] = array(
+    'bundle' => 'newsletters',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'taxonomy_term',
+    'field_name' => 'field_id',
+    'label' => 'ID',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 2,
     ),
   );
 
@@ -212,6 +320,9 @@ function single_profile_user_field_default_field_instances() {
   t('Country');
   t('First name');
   t('Gender');
+  t('ID');
+  t('ISO 3166-1 3 Letter Code');
+  t('ISO 3166-1 Number');
   t('ISO 3166-1 alpha-2 code');
   t('Last name');
   t('Newsletter subscriptions');

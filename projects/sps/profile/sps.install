@@ -98,6 +98,8 @@ function sps_install() {
   user_role_grant_permissions($admin_role->rid, array_keys(module_invoke_all('permission')));
   // Set this as the administrator role.
   variable_set('user_admin_role', $admin_role->rid);
+  // Set clean service controller
+  variable_set('services_entity_resource_class', 'ServicesEntityResourceControllerClean');
 
   // Assign user 1 the "administrator" role.
   db_insert('users_roles')
@@ -107,7 +109,6 @@ function sps_install() {
   menu_rebuild();
   // revert features to ensure they are all installed
   $features = array(
-    'ec_world_countries',
     'single_profile_service',
     'single_profile_user'
   );

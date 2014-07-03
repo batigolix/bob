@@ -11,85 +11,12 @@
  * Creates vocabulary, terms, fields
  */
 function single_profile_tools_install() {
-
-  // Create newsletter vocabulary
-  $description = $vocabulary = (object) array(
-        'name' => t('Newsletter subscriptions'),
-        'description' => t('Newsletter subscriptions'),
-        'machine_name' => 'newsletter_subscriptions',
-  );
-  taxonomy_vocabulary_save($vocabulary);
-
-  // Populate newsletter taxonomy
-  $vocab = taxonomy_vocabulary_machine_name_load('newsletter_subscriptions');
-  // Todo set real newsletters (or decide it is a UI job).
-  $terms = array(
-    'Newsletter ABC',
-    'Newsletter DEF',
-    'Newsletter XYZ',
-  );
-  foreach ($terms as $term) {
-    taxonomy_term_save((object) array(
-          'name' => $term,
-          'vid' => $vocab->vid,
-    ));
-  }
-
-
 }
 
 /**
  * Implements hook_uninstall().
  * 
- * Deletes fields
+ * Deletes terms.
  */
 function single_profile_tools_uninstall() {
-
-  // TODO delete terms
-  // TODO delete vocab
-}
-
-/**
- * TODO get iso code in there
- */
-function single_profile_tools_update_7024() {
-  if (module_exists('ec_world_countries')) {
-    $vocab = taxonomy_vocabulary_machine_name_load('ec_world_countries');
-    include_once(DRUPAL_ROOT . '/' . drupal_get_path('module', 'ec_world_countries') . '/includes/countries.php');
-    dd($country_array);
-    foreach ($country_array as $continent => $countries) {
-      // TODO get them in
-//      $term = (object) array('vid' => $vocab->vid, 'name' => st($continent),);
-//      taxonomy_term_save($term);
-//      $parent_tid = $term->tid;
-//      foreach ($countries as $country => $cy_name) {
-//        $values = array(
-//          'type' => 'ec_world_countries',
-//          'bundle' => 'ec_world_countries',
-//        );
-//        $entity = entity_create('taxonomy_term', $values);
-//        $ewrapper = entity_metadata_wrapper('taxonomy_term', $entity);
-//        $ewrapper->name->set($cy_name);
-//        $ewrapper->field_code->set($country);
-//        $ewrapper->parent->set($parent_tid);
-//        $ewrapper->vid->set($vocab->vid);
-//        $ewrapper->bundle->set('ec_world_countries');
-//        $ewrapper->save();
-//      }
-    }
-  }
-}
-
-function single_profile_tools_update_7023() {
-  if (module_exists('ec_world_countries')) {
-    $vocab = taxonomy_vocabulary_machine_name_load('ec_world_countries');
-    $query = new EntityFieldQuery();
-    $result = $query
-        ->entityCondition('entity_type', 'taxonomy_term')
-        ->propertyCondition('vid', $vocab->vid)
-        ->execute();
-    foreach ($result['taxonomy_term'] as $term) {
-      taxonomy_term_delete($term->tid);
-    }
-  }
 }

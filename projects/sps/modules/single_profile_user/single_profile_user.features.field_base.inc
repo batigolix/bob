@@ -39,6 +39,35 @@ function single_profile_user_field_default_field_bases() {
     'type' => 'text',
   );
 
+  // Exported field_base: 'field_code3'
+  $field_bases['field_code3'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_code3',
+    'foreign keys' => array(
+      'format' => array(
+        'columns' => array(
+          'format' => 'format',
+        ),
+        'table' => 'filter_format',
+      ),
+    ),
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(
+      'max_length' => 255,
+    ),
+    'translatable' => 0,
+    'type' => 'text',
+  );
+
   // Exported field_base: 'field_country'
   $field_bases['field_country'] = array(
     'active' => 1,
@@ -73,7 +102,7 @@ function single_profile_user_field_default_field_bases() {
           'type' => 'none',
         ),
         'target_bundles' => array(
-          'ec_world_countries' => 'ec_world_countries',
+          'countries' => 'countries',
         ),
       ),
       'target_type' => 'taxonomy_term',
@@ -137,6 +166,35 @@ function single_profile_user_field_default_field_bases() {
     'type' => 'list_text',
   );
 
+  // Exported field_base: 'field_id'
+  $field_bases['field_id'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_id',
+    'foreign keys' => array(
+      'format' => array(
+        'columns' => array(
+          'format' => 'format',
+        ),
+        'table' => 'filter_format',
+      ),
+    ),
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(
+      'max_length' => 255,
+    ),
+    'translatable' => 0,
+    'type' => 'text',
+  );
+
   // Exported field_base: 'field_last_name'
   $field_bases['field_last_name'] = array(
     'active' => 1,
@@ -169,7 +227,7 @@ function single_profile_user_field_default_field_bases() {
   // Exported field_base: 'field_newsletter_subscriptions'
   $field_bases['field_newsletter_subscriptions'] = array(
     'active' => 1,
-    'cardinality' => 1,
+    'cardinality' => -1,
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_newsletter_subscriptions',
@@ -200,13 +258,29 @@ function single_profile_user_field_default_field_bases() {
           'type' => 'none',
         ),
         'target_bundles' => array(
-          'newsletter_subscriptions' => 'newsletter_subscriptions',
+          'newsletters' => 'newsletters',
         ),
       ),
       'target_type' => 'taxonomy_term',
     ),
     'translatable' => 0,
     'type' => 'entityreference',
+  );
+
+  // Exported field_base: 'field_number'
+  $field_bases['field_number'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_number',
+    'foreign keys' => array(),
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'number',
+    'settings' => array(),
+    'translatable' => 0,
+    'type' => 'number_integer',
   );
 
   return $field_bases;
