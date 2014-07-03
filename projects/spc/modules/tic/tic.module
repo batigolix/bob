@@ -40,19 +40,23 @@ function tic_test1() {
   dpm($get_user_result);
   $data = json_decode($get_user_result->data);
   dpm($data);
-
-  
-  $get_tt_result = tic_get_taxonomy_term(42);
-  dpm($get_tt_result);
-  $data = json_decode($get_tt_result->data);
+  /* GET USER */
+  $get_user_result = tic_get_user_by_mail();
+  dpm($get_user_result);
+  $data = json_decode($get_user_result->data);
   dpm($data);
-  
-  
-  /* UPDATE USER */
-//  $get_user_result = tic_update_user();
+//
+//  $get_tt_result = tic_get_taxonomy_term(2);
+//  dpm($get_tt_result);
+//  $data = json_decode($get_tt_result->data);
+//  dpm($data);
+//
+//  /* UPDATE USER */
+//  $get_user_result = tic_update_user(1);
 //  dpm($get_user_result);
 //  $data = json_decode($get_user_result->data);
 //  dpm($data);
+  
   // /* UPDATE NODE */
 //  $update_node_result = tic_update_node();
 //  dpm($update_node_result);
@@ -81,43 +85,10 @@ function tic_test1() {
   return $build;
 }
 
-/**
- * @file
- * Web Services Testing
- */
-function tic_block_info() {
-  $blocks['tic'] = array('info' => t('Web Services Testing'));
-  return $blocks;
-}
-
-function tic_block_view($delta = '') {
-  $block['content'] = '<h1>Web Services Testing</h1>';
-
-  /* GET NODE */
-  $get_node_result = tic_get_node();
-  dpm($get_node_result);
-  $data = json_decode($get_node_result->data);
-  dpm($data);
-
-  // /* CREATE NODE */
-  $create_node_result = tic_create_node();
-  dpm($create_node_result);
-
-  // /* UPDATE NODE */
-  $update_node_result = tic_update_node();
-  dpm($update_node_result);
-
-  /* DELETE NODE */
-  // $delete_node_result = tic_delete_node();
-  // dpm($delete_node_result);
-
-  return $block;
-}
-
 /* RETRIVE node with http GET method */
 
 function tic_get_node() {
-  $url = 'http://server.singprof.val/test/node/2';
+  $url = 'http://dev.sps.cnect.eu/single_profile/node/1';
 //  $parameters = '?parameters[nid]=2';
 //  $url .= $parameters;
   return drupal_http_request($url);
@@ -125,22 +96,53 @@ function tic_get_node() {
 
 function tic_get_taxonomy_term($tid) {
   if (isset($tid)) {
-    $url = 'http://server.singprof.val/test/entity_taxonomy_term/' . $tid;
-    // $parameters = '?parameters[nid]=2';
-    // $url .= $parameters;
-    return drupal_http_request($url);
+    $url = 'http://dev.sps.cnect.eu/single_profile/entity_taxonomy_term/' . $tid;
+    $login_data = tic_login('admin', 'letmein');
+    $taxonomy_term_options = array(
+      'headers' => array(
+        'Content-Type' => 'application/json',
+        'Cookie' => $login_data['cookie'],
+        'X-CSRF-Token' => $login_data['token'],
+      ),
+      'method' => 'GET',
+        // 'data' => $taxonomy_term_data,
+    );
+    return drupal_http_request($url, $taxonomy_term_options);
   }
   else {
-    
+    dsm('needs a tid');
   }
 }
 
 /* RETRIVE user with http GET method */
 
 function tic_get_user($uid) {
-  $url = 'http://server.singprof.val/test/user/'.$uid;
+  $url = 'http://dev.sps.cnect.eu/single_profile/user/' . $uid;
+  //dontletthesungodownonmeyeah
 //  $parameters = '?parameters[uid]=3'; // TODO figure out how/if to use parameters
 //  $url .= $parameters;
+
+  $login_data = tic_login('admin', 'letmein');
+
+  //dpm($login_data);
+
+  $user_options = array(
+    'headers' => array(
+      'Content-Type' => 'application/json',
+      'Cookie' => $login_data['cookie'],
+      'X-CSRF-Token' => $login_data['token'],
+    ),
+    'method' => 'GET',
+//		'data' => $node_data,
+  );
+  return drupal_http_request($url, $user_options);
+}
+
+function tic_get_user_by_mail($mail=NULL) {
+  $url = 'http://dev.sps.cnect.eu/single_profile/user/';
+  //dontletthesungodownonmeyeah
+  $parameters = '?parameters[mail]=admin@cnect.eu'; // TODO figure out how/if to use parameters
+  $url .= $parameters;
 
   $login_data = tic_login('admin', 'letmein');
 
@@ -161,7 +163,7 @@ function tic_get_user($uid) {
 /* RETRIVE user with http GET method */
 
 function tic_get_articles() {
-  $url = 'http://server.singprof.val/test/blogs/retrieve';
+  $url = 'http://dev.sps.cnect.eu/single_profile/blogs/retrieve';
   $parameters = '?nitems=3&since=10';
   $url .= $parameters;
 
@@ -184,7 +186,7 @@ function tic_get_articles() {
 /* CREATE node with http POST method */
 
 function tic_create_node() {
-  $url = 'http://server.singprof.val/test/node';
+  $url = 'http://dev.sps.cnect.eu/single_profile/node';
 
   $node_type = 'article';
   $node_title = 'Node updated: ' . date('c');
@@ -228,7 +230,7 @@ function tic_create_node() {
 function tic_update_node() {
 
   $node_nid = 2;
-  $url = 'http://server.singprof.val/test/node/' . $node_nid;
+  $url = 'http://dev.sps.cnect.eu/single_profile/node/' . $node_nid;
 
   $node_data = array(
     'type' => 'article',
@@ -269,15 +271,14 @@ function tic_update_node() {
 
 /* UPDATE node with http PUT method */
 
-function tic_update_user() {
-
-  $uid = 3;
-  $url = 'http://server.singprof.val/test/user/' . $uid;
+function tic_update_user($uid) {
+if(isset($uid)) {
+  $url = 'http://dev.sps.cnect.eu/single_profile/user/' . $uid;
 
   $user_data = array(
-    'name' => 'john2',
-    'mail' => 'hallo2@hallo.nl',
-    'first_name' => 'Jimboke',
+//    'name' => 'john2',
+    'mail' => 'admin@cnect.eu',
+    'first_name' => 'Jacky',
   );
 
   $login_data = tic_login('admin', 'letmein');
@@ -292,8 +293,11 @@ function tic_update_user() {
     'data' => json_encode($user_data),
   );
 
-
   return drupal_http_request($url, $user_options);
+}
+else {
+  dsm('need uid');
+}
 }
 
 /* DELETE node with http DELETE method */
@@ -301,7 +305,7 @@ function tic_update_user() {
 function tic_delete_node() {
 
   $node_nid = 3;
-  $url = 'http://server.singprof.val/test/node/' . $node_nid;
+  $url = 'http://dev.sps.cnect.eu/single_profile/node/' . $node_nid;
 
   $login_data = tic_login('admin', 'admin');
 
@@ -322,13 +326,19 @@ function tic_delete_node() {
 
 function tic_login($username, $password) {
 
+  if (variable_get('kill_cookie')) {
+    unset($_COOKIE);
+    dsm('cookie kill');
+  }
+
   if (isset($_COOKIE['drupal_session_name']) && isset($_COOKIE['drupal_session_id']) && isset($_COOKIE['drupal_session_token'])) {
     $cookie = '' . $_COOKIE['drupal_session_name'] . '=' . $_COOKIE['drupal_session_id'] . '';
+
     return array('cookie' => $cookie, 'token' => $_COOKIE['drupal_session_token']);
     //return '' . $_COOKIE['drupal_session_name'] . '=' . $_COOKIE['drupal_session_id'] . '';
   }
   else {
-    $login_url = 'http://server.singprof.val/test/user/login';
+    $login_url = 'http://dev.sps.cnect.eu/single_profile/user/login';
 
     $user_data = '{
 			"username" : "' . $username . '",
@@ -344,7 +354,7 @@ function tic_login($username, $password) {
   };
 
   $result = drupal_http_request($login_url, $user_options);
-
+//  dpm($result);
 
   if ($result->code == 200) {
     $user_data = json_decode($result->data);
@@ -361,8 +371,10 @@ function tic_login($username, $password) {
       'method' => 'GET',
     );
 
-    $token = drupal_http_request('http://server.singprof.val/services/session/token', $token_options);
+    $token = drupal_http_request('http://dev.sps.cnect.eu/services/session/token', $token_options);
 
+//    dpm($token);
+    
     setcookie('drupal_session_token', $token->data);
 
     return array('cookie' => $cookie, 'token' => $token->data);
