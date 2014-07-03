@@ -353,5 +353,21 @@
   <target name="link-project-modules" depends="load-project-properties">
     <symlink target="${project.root}/projects/${project.name.short}/modules/" link="${project.root}/${environment.root}/sites/all/modules/project" overwrite="true" />  
   </target>
+  
+  <!-- migrate data -->
+  <target name="migrate-data" depends="load-project-properties">
+        <phingcall target="cc" />
+
+    <foreach list="${project.migrations}" param="migration" target="migrate-import" />
+  </target>
+
+  <target name="migrate-import" depends="load-project-properties, setup-phing-drush">
+    <drush command="migrate-import">
+      <param>${migration}</param>
+      <option name="update"/>
+       <option name="uri">${project.uri}</option>
+      <option name="root">${project.root}/${environment.root}</option>
+   </drush>
+  </target>
 
 </project>
