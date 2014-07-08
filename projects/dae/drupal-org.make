@@ -220,6 +220,9 @@ projects[fullcalendar][version] = "2.0"
 projects[colors][subdir] = "contributed"
 projects[colors][version] = "1.0-beta2"
 
+projects[term_merge][version] = "1.0"
+projects[term_merge][subdir] = "contrib"
+
 ; +++++ Libraries +++++
 
 ;ckeditor 4.3.2
