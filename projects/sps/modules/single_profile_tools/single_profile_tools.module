@@ -121,7 +121,7 @@ function _single_profile_tools_blog_retrieve($timestamp) {
   // Check for mad values
 //  $nitems = intval($nitems);
   $timestamp = intval($timestamp);
-  dd('zxczxczxc');
+//  dd('zxczxczxc');
 
   return single_profile_tools_find_blog_items($timestamp);
 }
@@ -134,7 +134,7 @@ function single_profile_tools_find_blog_items($timestamp) {
 
 
 
-  dd('kkkkkk');
+//  dd('kkkkkk');
 
   $query = new EntityFieldQuery();
   $query->entityCondition('entity_type', 'user');
@@ -144,7 +144,7 @@ function single_profile_tools_find_blog_items($timestamp) {
     $users = entity_load('user', array_keys($result['user']));
     //$uids = user_load_multiple(array_keys($result['user']));
   }
-  dd($users);
+//  dd($users);
 
 //
 //
@@ -253,7 +253,7 @@ function single_profile_tools_entity_id_from_field_value($entity_type, $bundle, 
  */
 function _single_profile_tools_updates_retrieve($timestamp) {
 
-  dd('erwerqwr');
+//  dd('erwerqwr');
   // Check for mad values
   $timestamp = intval($timestamp);
 
@@ -302,16 +302,16 @@ function single_profile_tools_entity_update($entity, $type) {
 }
 
 function single_profile_tools_notify_clients($mail) {
-  dd($mail);
+//  dd($mail);
 
   $clients = variable_get('clients');
-  dd($clients);
+//  dd($clients);
 
   foreach ($clients as $client) {
     if (!empty($client['uri'])) {
       $full_url = url($client['uri'] . '/central-profile-notification/' . $mail);
       $request = drupal_http_request($full_url);
-      dd($request);
+//      dd($request);
       if ($request->code !== '200') {
         watchdog('error', 'Error "!error" occurred while notifying !client about profile !mail', array('!client'=>$client['uri'], '!mail'=>$mail, '!error'=>$request->code . ' ' . $request->error));
       }

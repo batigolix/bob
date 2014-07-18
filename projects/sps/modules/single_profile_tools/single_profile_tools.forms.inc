@@ -20,7 +20,7 @@ function single_profile_tools_settings($form, &$form_state) {
   $form = array();
 
   $values = variable_get('clients');
-  dpm($values);
+  //dpm($values);
   $num_clients = !empty($values['num_clients']) ? $values['num_clients'] : 3;
 
   $form['clients'] = array(
