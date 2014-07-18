@@ -1,0 +1,5 @@
+name = Profile client
+description = TODO: Description of module
+core = 7.x
+
+files[] = includes/profile_server.inc

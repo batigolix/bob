@@ -39,7 +39,16 @@ function single_profile_service_default_services_endpoint() {
     ),
   );
   $endpoint->resources = array(
-    'entity_taxonomy_term' => array(
+    'blog' => array(
+      'alias' => 'blogs',
+      'operations' => array(
+        'retrieve' => array(
+          'enabled' => '1',
+        ),
+      ),
+    ),
+    'entity_node' => array(
+      'alias' => 'node',
       'operations' => array(
         'create' => array(
           'enabled' => '1',
@@ -57,21 +66,30 @@ function single_profile_service_default_services_endpoint() {
           'enabled' => '1',
         ),
       ),
-      'actions' => array(
-        'selectNodes' => array(
+      'relationships' => array(
+        'files' => array(
+          'enabled' => '1',
+        ),
+        'comments' => array(
           'enabled' => '1',
         ),
       ),
-      'relationships' => array(
-        'users_field_newsletter_subscriptions' => array(
+      'targeted_actions' => array(
+        'attach_file' => array(
           'enabled' => '1',
         ),
-        'users_field_country' => array(
+      ),
+    ),
+    'updated_users' => array(
+      'alias' => 'updated_users',
+      'operations' => array(
+        'retrieve' => array(
           'enabled' => '1',
         ),
       ),
     ),
     'entity_user' => array(
+      'alias' => 'user',
       'operations' => array(
         'create' => array(
           'enabled' => '1',
@@ -99,15 +117,12 @@ function single_profile_service_default_services_endpoint() {
         'token' => array(
           'enabled' => '1',
         ),
-        'register' => array(
-          'enabled' => '1',
-        ),
       ),
       'relationships' => array(
-        'entityreference_field_newsletter_subscriptions' => array(
+        'entityreference_field_country' => array(
           'enabled' => '1',
         ),
-        'entityreference_field_country' => array(
+        'entityreference_field_newsletter_subscriptions' => array(
           'enabled' => '1',
         ),
       ),

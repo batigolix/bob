@@ -10,9 +10,11 @@
  *
  */
 function single_profile_tools_menu() {
-  $menu = array();
 
-  $menu['single_profile_tools/example'] = array(
+
+  $items = array();
+
+  $items['single_profile_tools/example'] = array(
     'title' => 'TIC test stuff',
     'description' => 'Test single_profile_tools stuff and such',
     'page callback' => 'single_profile_tools_test_stuff',
@@ -22,7 +24,26 @@ function single_profile_tools_menu() {
     'weight' => 0,
   );
 
-  return $menu;
+  $items['admin/config/system/single_profile_tools'] = array(
+    'title' => 'Single profile tools',
+    'description' => 'Configuration for Single profile tools',
+    'page callback' => 'system_admin_menu_block_page',
+    'access arguments' => array('administer site configuration'),
+    'file' => 'system.admin.inc',
+    'file path' => drupal_get_path('module', 'system'),
+    'weight' => '0',
+  );
+
+  $items['admin/config/system/single_profile_tools/settings'] = array(
+    'title' => 'Single profile tools configuration settings',
+    'description' => 'Settings for single profile tools',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('single_profile_tools_settings'),
+    'access arguments' => array('administer site configuration'),
+    'file' => 'single_profile_tools.forms.inc',
+  );
+
+  return $items;
 }
 
 /**
@@ -67,6 +88,27 @@ function single_profile_tools_services_resources() {
         ),
       ),
     ),
+    'updated_users' => array(
+      'operations' => array(
+        'retrieve' => array(
+          'help' => 'Retrieves updated profiles since',
+          'callback' => '_single_profile_tools_updates_retrieve',
+          'access callback' => 'user_access',
+          'access arguments' => array('access user profiles'),
+          'access arguments append' => FALSE,
+          'args' => array(
+            array(
+              'name' => 'since',
+              'type' => 'int',
+              'description' => 'Since timestamp',
+              'source' => array('param' => 'since'),
+              'optional' => TRUE,
+              'default' => '0',
+            ),
+          ),
+        ),
+      ),
+    ),
   );
 
   return $api;
@@ -75,39 +117,71 @@ function single_profile_tools_services_resources() {
 /**
  * Callback function for blog retrieve
  */
-function _single_profile_tools_blog_retrieve($fn, $nitems, $timestamp) {
+function _single_profile_tools_blog_retrieve($timestamp) {
   // Check for mad values
-  $nitems = intval($nitems);
+//  $nitems = intval($nitems);
   $timestamp = intval($timestamp);
+//  dd('zxczxczxc');
 
-  return single_profile_tools_find_blog_items($nitems, $timestamp);
+  return single_profile_tools_find_blog_items($timestamp);
 }
 
 /**
  * Gets blog posts
  */
-function single_profile_tools_find_blog_items($nitems, $timestamp) {
-  // Compose query
-  $query = db_select('node', 'n');
-  $query->join('node_revision', 'v', '(n.nid = v.nid) AND (n.vid = v.vid)');
-  $query->join('users', 'u', 'n.uid = u.uid');
-  $query->join('field_data_body', 'b', '((b.entity_type = \'node\') AND (b.entity_id = n.nid) AND (b.revision_id = n.vid))');
-  $query->fields('v', array('timestamp', 'title'));
-  $query->addField('u', 'name', 'author');
-  $query->addField('b', 'body_value', 'content');
-  $query->condition('n.type', 'arsingle_profile_toolsle', '=');
-  // How many days ago?
-  if ($timestamp) {
-    $query->condition('v.timestamp', time() - ($timestamp * 60 * 60 * 24), '>');
-  }
-  $query->orderBy('v.timestamp', 'DESC');
-  // Limited by items?
-  if ($nitems) {
-    $query->range(0, $nitems);
-  }
-  $items = $query->execute()->fetchAll();
+function single_profile_tools_find_blog_items($timestamp) {
 
-  return $items;
+
+
+
+//  dd('kkkkkk');
+
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'user');
+  $result = $query->execute();
+  if (!empty($result['user'])) {
+    // Output the node teasers.
+    $users = entity_load('user', array_keys($result['user']));
+    //$uids = user_load_multiple(array_keys($result['user']));
+  }
+//  dd($users);
+
+//
+//
+//  $query = new EntityFieldQuery();
+//  $query
+//      ->entityCondition('entity_type', 'user');
+////      ->propertyCondition('status', 0)
+//  // Safety first, exclude low user IDs (can deleted through the UI).
+////      ->propertyCondition('uid', 10, '>')
+////      ->propertyOrderBy('uid', 'ASC')
+////      ->range(0, $amount);
+//
+//  $result = $query->execute();
+//  $uids = array_keys($result['user']);
+//  return $uids;
+//  dd($uids);
+//  dd($items);
+  // Compose query
+//  $query = db_select('user', 'u');
+//  $query->join('node_revision', 'v', '(n.nid = v.nid) AND (n.vid = v.vid)');
+//  $query->join('users', 'u', 'n.uid = u.uid');
+//  $query->join('field_data_body', 'b', '((b.entity_type = \'node\') AND (b.entity_id = n.nid) AND (b.revision_id = n.vid))');
+//  $query->fields('u', array('uid', 'name'));
+//  $query->addField('u', 'name', 'author');
+//  $query->addField('b', 'body_value', 'content');
+//  $query->condition('n.type', 'arsingle_profile_toolsle', '=');
+  // How many days ago?
+//  if ($timestamp) {
+//    $query->condition('v.timestamp', time() - ($timestamp * 60 * 60 * 24), '>');
+//  }
+//  $query->orderBy('v.timestamp', 'DESC');
+//  // Limited by items?
+//  if ($nitems) {
+//    $query->range(0, $nitems);
+//  }
+//  $items = $query->execute()->fetchAll();
+  return $users;
 }
 
 function single_profile_tools_services_request_postprocess_alter($controller, $args, &$result) {
@@ -172,4 +246,77 @@ function single_profile_tools_entity_id_from_field_value($entity_type, $bundle, 
   else {
     watchdog('error', 'cannot look up entity id because of missing parameters');
   }
+}
+
+/**
+ * Callback function for blog retrieve
+ */
+function _single_profile_tools_updates_retrieve($timestamp) {
+
+//  dd('erwerqwr');
+  // Check for mad values
+  $timestamp = intval($timestamp);
+
+  return single_profile_tools_find_updated_items($timestamp);
+}
+
+/**
+ * Gets blog posts
+ */
+function single_profile_tools_find_updated_items($timestamp) {
+  // Compose query
+  $query = db_select('node', 'n');
+//  $query->join('node_revision', 'v', '(n.nid = v.nid) AND (n.vid = v.vid)');
+//  $query->join('users', 'u', 'n.uid = u.uid');
+//  $query->join('field_data_body', 'b', '((b.entity_type = \'node\') AND (b.entity_id = n.nid) AND (b.revision_id = n.vid))');
+//  $query->fields('v', array('timestamp', 'title'));
+//  $query->addField('u', 'name', 'author');
+//  $query->addField('b', 'body_value', 'content');
+  $query->condition('n.status', '1', '=');
+  // How many days ago?
+//  if ($timestamp) {
+//    $query->condition('v.timestamp', time() - ($timestamp * 60 * 60 * 24), '>');
+//  }
+//  $query->orderBy('v.timestamp', 'DESC');
+  // Limited by items?
+  if ($nitems) {
+    $query->range(0, $nitems);
+  }
+  $items = $query->execute()->fetchAll();
+
+  return $items;
+}
+
+function single_profile_tools_entity_insert($entity, $type) {
+  single_profile_tools_notify_clients($entity->mail);
+
+//  dd($entity);
+//    dd($type);
+//  
+}
+
+function single_profile_tools_entity_update($entity, $type) {
+  single_profile_tools_notify_clients($entity->mail);
+//  dd($entity);
+//    dd($type);
+}
+
+function single_profile_tools_notify_clients($mail) {
+//  dd($mail);
+
+  $clients = variable_get('clients');
+//  dd($clients);
+
+  foreach ($clients as $client) {
+    if (!empty($client['uri'])) {
+      $full_url = url($client['uri'] . '/central-profile-notification/' . $mail);
+      $request = drupal_http_request($full_url);
+//      dd($request);
+      if ($request->code !== '200') {
+        watchdog('error', 'Error "!error" occurred while notifying !client about profile !mail', array('!client'=>$client['uri'], '!mail'=>$mail, '!error'=>$request->code . ' ' . $request->error));
+      }
+    }
+  }
+
+  // notify the clients that did not make the update
 }
