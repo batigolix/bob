@@ -13,6 +13,7 @@ dependencies[] = taxonomy
 dependencies[] = options
 dependencies[] = list
 dependencies[] = views
+dependencies[] = user
 files[] = migrate/newsletters.inc
 files[] = migrate/countries.inc
 

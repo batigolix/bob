@@ -1,17 +1,14 @@
+name = Single profile service
+description = Service configuration for the single profile server
 core = 7.x
 package = Custom
 version = 7.x-1.0
 project = single_profile_service
 dependencies[] = ctools
+dependencies[] = rest_server
 dependencies[] = services
 dependencies[] = services_entity
 dependencies[] = services_entityreference
-dependencies[] = rest_server
-
 features[ctools][] = services:services:3
-;features[features_api][] = api:1
-;TODO FIGURE OUT WHICH FEAT VERSION
 features[features_api][] = api:2
 features[services_endpoint][] = single_profile
-name = Single profile service
-description = Service configuration for the single profile server

@@ -40,6 +40,7 @@ function single_profile_service_default_services_endpoint() {
   );
   $endpoint->resources = array(
     'entity_taxonomy_term' => array(
+      'alias' => 'user',
       'operations' => array(
         'create' => array(
           'enabled' => '1',
@@ -63,10 +64,10 @@ function single_profile_service_default_services_endpoint() {
         ),
       ),
       'relationships' => array(
-        'users_field_newsletter_subscriptions' => array(
+        'users_field_country' => array(
           'enabled' => '1',
         ),
-        'users_field_country' => array(
+        'users_field_newsletter_subscriptions' => array(
           'enabled' => '1',
         ),
       ),
@@ -104,10 +105,10 @@ function single_profile_service_default_services_endpoint() {
         ),
       ),
       'relationships' => array(
-        'entityreference_field_newsletter_subscriptions' => array(
+        'entityreference_field_country' => array(
           'enabled' => '1',
         ),
-        'entityreference_field_country' => array(
+        'entityreference_field_newsletter_subscriptions' => array(
           'enabled' => '1',
         ),
       ),

@@ -37,6 +37,8 @@ projects[stage_file_proxy][subdir] = "development"
 projects[simplehtmldom][type] = "module"
 projects[simplehtmldom][subdir] = "development"
 
+projects[examples][type] = "module"
+projects[examples][subdir] = "development"
 
 ; Themes
 ; --------

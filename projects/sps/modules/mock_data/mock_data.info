@@ -14,7 +14,6 @@ files[] = mock_data.module
 
 dependencies[] = taxonomy
 dependencies[] = image
-dependencies[] = comment
 dependencies[] = migrate
 dependencies[] = list
 dependencies[] = number
