@@ -1,0 +1,94 @@
+<?php
+/**
+ * @file profile_client.module
+ * TODO: Enter file description here.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function profile_client_menu() {
+  $items['profile_client/example'] = array(
+    'title' => 'Example interaction with service',
+    'page callback' => 'profile_client_example',
+    'access arguments' => array('access content'),
+    'type' => MENU_SUGGESTED_ITEM,
+  );
+
+  $items['admin/config/system/profile_client'] = array(
+    'title' => 'Profile client',
+    'description' => 'Configuration for profile client',
+    'page callback' => 'system_admin_menu_block_page',
+    'access arguments' => array('administer site configuration'),
+    'file' => 'system.admin.inc',
+    'file path' => drupal_get_path('module', 'system'),
+    'weight' => '0',
+  );
+
+  $items['admin/config/system/profile_client/settings'] = array(
+    'title' => 'Profile client configuration settings',
+    'description' => 'Settings for profile client',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('profile_client_settings'),
+    'access arguments' => array('administer site configuration'),
+    'file' => 'profile_client.forms.inc',
+  );
+
+    $items['central-profile-notification/%'] = array(
+    'title' => 'Central profile notification',
+    'page callback' => 'profile_client_central_profile_notification',
+      'page arguments' => array(1),
+    'access arguments' => array('access content'),
+//    'type' => MENU_SUGGESTED_ITEM,
+  );
+
+  
+  return $items;
+}
+
+/**
+ * Returns profile client test page.
+ */
+function profile_client_example() {
+//  $profile_node = new ProfileNode();
+//
+//  $node = $profile_node->fetch(4);
+//  dsm($node);
+
+    $user = new CentralProfileUser();
+    $fetched_user = $user->fetch();
+    dpm($fetched_user);
+  
+  $central_profile = new CentralProfile();
+
+//  $user = $central_profile->user('uid', 1);
+//  dpm($user);
+//  $users = $central_profile->users();
+//  dpm(json_decode($users->data));
+
+      $user_create = $user->create();
+dpm($user_create);
+    dpm(json_decode($user_create->data));
+
+  
+//  $updated_users = $central_profile->updated_users('1234567');
+//  dpm(json_decode($updated_users->data));
+
+  $articles = $central_profile->articles();
+  dpm(json_decode($articles->data));
+
+  $build = array();
+  $build['test']['#markup'] = 'test';
+  return $build;
+}
+
+function profile_client_central_profile_notification($mail) {
+  dd($mail);
+  
+  $central_profile = new CentralProfile();
+
+  $user = $central_profile->user('mail',$mail);
+  dd($user);
+  
+  
+}
