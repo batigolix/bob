@@ -35,5 +35,6 @@ projects[views][subdir] = "contrib"
 
 projects[user_revision][subdir] = "contrib"
 projects[user_revision][version] = "1.7"
+projects[user_revision][patch][] = "https://www.drupal.org/files/issues/user_revision-wrong-username-2141157-4.patch"
 
 ; +++++ Libraries +++++
