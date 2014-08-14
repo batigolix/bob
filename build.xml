@@ -386,10 +386,4 @@
     </drush>
   </target>
 
-  <target name="run-testxxxx" depends="load-project-properties, setup-phing-drush">
-    <drush command="test-run">
-      <param>${migration}</param>
-    </drush>
-  </target>
-
 </project>
