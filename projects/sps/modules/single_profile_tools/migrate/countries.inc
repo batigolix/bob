@@ -2,15 +2,14 @@
 
 /**
  * @file
- * This module provides common features for all the migrations. It's always
- * good to have a common base class to structure repeatable elements.
+ * Imports countries from a csv file.
  */
+
 class CountriesMigration extends Migration {
 
   public function __construct() {
     parent::__construct();
     $this->description = t('csv file of countries');
-    //https://commondatastorage.googleapis.com/ckannet-storage/2011-11-25T132653/iso_3166_2_countries.csv
     $this->map = new MigrateSQLMap($this->machineName, array(
       'number' => array(
         'type' => 'int',
@@ -27,6 +26,9 @@ class CountriesMigration extends Migration {
       12 => array('number', 'ISO 3166-1 Number'),
     );
     $this->source = new MigrateSourceCSV(
+        // Source of the csv is
+        // https://commondatastorage.googleapis.com/ckannet-storage/2011-11-25T132653/iso_3166_2_countries.csv
+        // todo: fetch this file from the web instead of storing it locally.    
         drupal_get_path('module', 'single_profile_tools') . '/migrate/iso_3166_2_countries.csv', $columns, $this->sourceFileOptions()
     );
     $this->destination = new MigrateDestinationTerm('countries');

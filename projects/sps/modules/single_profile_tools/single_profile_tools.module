@@ -2,27 +2,15 @@
 
 /**
  * @file
- * Main bootstrap file of the single_profile_tools module.
+ * Main file of the single_profile_tools module. Contains mainly hooks.
  */
 
 /**
  * Implements hook_menu().
- *
  */
 function single_profile_tools_menu() {
 
-
   $items = array();
-
-  $items['single_profile_tools/example'] = array(
-    'title' => 'TIC test stuff',
-    'description' => 'Test single_profile_tools stuff and such',
-    'page callback' => 'single_profile_tools_test_stuff',
-    'access arguments' => array('access administration pages'),
-    'file' => 'single_profile_tools.pages.inc',
-    'type' => MENU_LOCAL_TASK,
-    'weight' => 0,
-  );
 
   $items['admin/config/system/single_profile_tools'] = array(
     'title' => 'Single profile tools',
@@ -47,47 +35,11 @@ function single_profile_tools_menu() {
 }
 
 /**
- * Implements of hook_services_resources().
+ * Implements of hook_services_resources(). 
+ * Defines a service that shows updated users.
  */
 function single_profile_tools_services_resources() {
   $api = array(
-    'blog' => array(
-      'operations' => array(
-        'retrieve' => array(
-          'help' => 'Retrieves posted blogs',
-          'callback' => '_single_profile_tools_blog_retrieve',
-          'access callback' => 'user_access',
-          'access arguments' => array('access content'),
-          'access arguments append' => FALSE,
-          'args' => array(
-            array(
-              'name' => 'fn',
-              'type' => 'string',
-              'description' => 'Function to perform',
-              'source' => array('path' => '0'),
-              'optional' => TRUE,
-              'default' => '0',
-            ),
-            array(
-              'name' => 'nitems',
-              'type' => 'int',
-              'description' => 'Number of latest items to get',
-              'source' => array('param' => 'nitems'),
-              'optional' => TRUE,
-              'default' => '0',
-            ),
-            array(
-              'name' => 'since',
-              'type' => 'int',
-              'description' => 'Posts from the last number of days',
-              'source' => array('param' => 'since'),
-              'optional' => TRUE,
-              'default' => '0',
-            ),
-          ),
-        ),
-      ),
-    ),
     'updated_users' => array(
       'operations' => array(
         'retrieve' => array(
@@ -115,79 +67,16 @@ function single_profile_tools_services_resources() {
 }
 
 /**
- * Callback function for blog retrieve
+ * Implements hook_services_request_postprocess_alter().
+ * Can be used to remove information from a result from a service request.
  */
-function _single_profile_tools_blog_retrieve($timestamp) {
-  // Check for mad values
-//  $nitems = intval($nitems);
-  $timestamp = intval($timestamp);
-//  dd('zxczxczxc');
-
-  return single_profile_tools_find_blog_items($timestamp);
+function single_profile_tools_services_request_postprocess_alter($controller, $args, &$result) {
+  //  unset($result['some_kind_of_field']);
 }
 
 /**
- * Gets blog posts
+ * Deletes terms in a vocabulary.
  */
-function single_profile_tools_find_blog_items($timestamp) {
-
-
-
-
-//  dd('kkkkkk');
-
-  $query = new EntityFieldQuery();
-  $query->entityCondition('entity_type', 'user');
-  $result = $query->execute();
-  if (!empty($result['user'])) {
-    // Output the node teasers.
-    $users = entity_load('user', array_keys($result['user']));
-    //$uids = user_load_multiple(array_keys($result['user']));
-  }
-//  dd($users);
-
-//
-//
-//  $query = new EntityFieldQuery();
-//  $query
-//      ->entityCondition('entity_type', 'user');
-////      ->propertyCondition('status', 0)
-//  // Safety first, exclude low user IDs (can deleted through the UI).
-////      ->propertyCondition('uid', 10, '>')
-////      ->propertyOrderBy('uid', 'ASC')
-////      ->range(0, $amount);
-//
-//  $result = $query->execute();
-//  $uids = array_keys($result['user']);
-//  return $uids;
-//  dd($uids);
-//  dd($items);
-  // Compose query
-//  $query = db_select('user', 'u');
-//  $query->join('node_revision', 'v', '(n.nid = v.nid) AND (n.vid = v.vid)');
-//  $query->join('users', 'u', 'n.uid = u.uid');
-//  $query->join('field_data_body', 'b', '((b.entity_type = \'node\') AND (b.entity_id = n.nid) AND (b.revision_id = n.vid))');
-//  $query->fields('u', array('uid', 'name'));
-//  $query->addField('u', 'name', 'author');
-//  $query->addField('b', 'body_value', 'content');
-//  $query->condition('n.type', 'arsingle_profile_toolsle', '=');
-  // How many days ago?
-//  if ($timestamp) {
-//    $query->condition('v.timestamp', time() - ($timestamp * 60 * 60 * 24), '>');
-//  }
-//  $query->orderBy('v.timestamp', 'DESC');
-//  // Limited by items?
-//  if ($nitems) {
-//    $query->range(0, $nitems);
-//  }
-//  $items = $query->execute()->fetchAll();
-  return $users;
-}
-
-function single_profile_tools_services_request_postprocess_alter($controller, $args, &$result) {
-//  unset($result['some_kind_of_field']);
-}
-
 function single_profile_taxonomy_terms_delete($vocab_machine_name) {
   $vocab = taxonomy_vocabulary_machine_name_load($vocab_machine_name);
   if ($vocab) {
@@ -220,12 +109,7 @@ function single_profile_tools_migrate_api() {
  * Returns Drupal entity ID by matching a custom field value.
  * 
  * Usefull to fetch drupal ID from entity that was imported from external
- * source and that carries the external source ID
- * 
- * @param string $entity_type
- * @param string $bundle
- * @param string $field_name
- * @param string $value
+ * source and that carries the external source ID.
  */
 function single_profile_tools_entity_id_from_field_value($entity_type, $bundle, $field_name, $value) {
   if (isset($entity_type, $bundle, $field_name, $value)) {
@@ -249,74 +133,59 @@ function single_profile_tools_entity_id_from_field_value($entity_type, $bundle, 
 }
 
 /**
- * Callback function for blog retrieve
+ * Callback function for retrieve updated users.
  */
 function _single_profile_tools_updates_retrieve($timestamp) {
-
-//  dd('erwerqwr');
-  // Check for mad values
   $timestamp = intval($timestamp);
-
   return single_profile_tools_find_updated_items($timestamp);
 }
 
 /**
- * Gets blog posts
+ * Retrieves updates users.
  */
 function single_profile_tools_find_updated_items($timestamp) {
-  // Compose query
   $query = db_select('node', 'n');
-//  $query->join('node_revision', 'v', '(n.nid = v.nid) AND (n.vid = v.vid)');
-//  $query->join('users', 'u', 'n.uid = u.uid');
-//  $query->join('field_data_body', 'b', '((b.entity_type = \'node\') AND (b.entity_id = n.nid) AND (b.revision_id = n.vid))');
-//  $query->fields('v', array('timestamp', 'title'));
-//  $query->addField('u', 'name', 'author');
-//  $query->addField('b', 'body_value', 'content');
   $query->condition('n.status', '1', '=');
-  // How many days ago?
-//  if ($timestamp) {
-//    $query->condition('v.timestamp', time() - ($timestamp * 60 * 60 * 24), '>');
-//  }
-//  $query->orderBy('v.timestamp', 'DESC');
-  // Limited by items?
   if ($nitems) {
     $query->range(0, $nitems);
   }
   $items = $query->execute()->fetchAll();
-
   return $items;
 }
 
-function single_profile_tools_entity_insert($entity, $type) {
-  single_profile_tools_notify_clients($entity->mail);
-
-//  dd($entity);
-//    dd($type);
-//  
+/**
+ * Implements hook_user insert().
+ * Notifies clients about a change.
+ */
+function single_profile_tools_user_insert(&$edit, $account, $category) {
+  single_profile_tools_notify_clients($account->mail);
+}
+/**
+ * Implements hook_user insert().
+ * Notifies clients about a change.
+ */
+function single_profile_tools_user_update(&$edit, $account, $category) {
+  unset($account->is_new);                                                   
+  unset($account->original);                                                 
+  // Clear the static loading cache.                                      
+  entity_get_controller('user')->resetCache(array($account->uid));  
+  single_profile_tools_notify_clients($account->mail);
 }
 
-function single_profile_tools_entity_update($entity, $type) {
-  single_profile_tools_notify_clients($entity->mail);
-//  dd($entity);
-//    dd($type);
-}
-
+/**
+ * Notifies clients about a change by polling a url using the email.
+ */
 function single_profile_tools_notify_clients($mail) {
-//  dd($mail);
-
   $clients = variable_get('clients');
-//  dd($clients);
-
-  foreach ($clients as $client) {
-    if (!empty($client['uri'])) {
-      $full_url = url($client['uri'] . '/central-profile-notification/' . $mail);
-      $request = drupal_http_request($full_url);
-//      dd($request);
-      if ($request->code !== '200') {
-        watchdog('error', 'Error "!error" occurred while notifying !client about profile !mail', array('!client'=>$client['uri'], '!mail'=>$mail, '!error'=>$request->code . ' ' . $request->error));
+  if ($clients) {
+    foreach ($clients['client'] as $client) {
+      if (!empty($client['uri'])) {
+        $full_url = url($client['uri'] . '/central-profile-notification/' . $mail);
+        $request = drupal_http_request($full_url);
+        if ($request->code !== '200') {
+          watchdog('error', 'Error "!error" occurred while notifying !client about profile !mail', array('!client' => $client['uri'], '!mail' => $mail, '!error' => $request->code . ' ' . $request->error));
+        }
       }
     }
   }
-
-  // notify the clients that did not make the update
 }

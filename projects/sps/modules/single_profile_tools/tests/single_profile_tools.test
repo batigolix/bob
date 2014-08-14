@@ -1,0 +1,75 @@
+<?php
+
+/**
+ * @file
+ * Tests Single profile tools modules.
+ */
+
+class SingleProfileToolsTestCase extends DrupalWebTestCase {
+
+  // $adminUser is a user with permission to administer blocks.
+  protected $adminUser;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function getInfo() {
+    return array(
+      'name' => 'Single profile tools: services, user profile',
+      'description' => 'Test the country vocabulary and check that content is assigned properly to them',
+      'group' => 'Single profile tools',
+    );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setUp() {
+    parent::setUp(array(
+      'single_profile_user',
+      'single_profile_service',
+    ));
+    module_enable(array('single_profile_tools'));
+    $this->adminUser = $this->drupalCreateUser(array(
+      'access content',
+      'administer nodes',
+      'administer taxonomy',
+      'administer users',
+      'search content',
+      'access contextual links',
+      'view user revisions',
+      'revert user revisions',
+      'delete user revisions',
+      'choose user revisions',
+      'view own user revisions',
+      'revert own user revisions',
+      'delete own user revisions',
+      'edit terms in 1',
+      'edit terms in 2',
+      'delete terms in 1',
+      'delete terms in 2',
+      'administer features',
+      'manage features',
+      'generate features',
+    ));
+  }
+
+  /**
+   * Tests the functionality of the Single profile tools.
+   */
+  public function createCountries() {
+    // Create a country term Mesopotamia.
+    $this->drupalLogin($this->adminUser);
+    $edit = array(
+      'name' => 'Mesopotamia',
+      'field_code[und][0][value]' => 'xz',
+      'field_code3[und][0][value]' => 'xyz',
+      'field_number[und][0][value]' => '123',
+    );
+    $this->drupalPost('admin/structure/taxonomy/countries/add', $edit, t('Save'));
+    $this->assertText('Created new term Mesopotamia.');
+
+  }
+
+
+}

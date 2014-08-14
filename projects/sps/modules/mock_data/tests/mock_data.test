@@ -2,14 +2,14 @@
 
 /**
  * @file
- * Tests for SITE_STARTERKIT.module.
+ * Tests for Mock Data.module.
  * ECWeb MULTISITE QA
  */
 
 /**
- * Defines a base class for testing the "SITE_STARTERKIT" module.
+ * Defines a base class for testing the "Mock Data" module.
  */
-class SiteStarterkitWebTestCase extends DrupalWebTestCase {
+class MockDataWebTestCase extends DrupalWebTestCase {
 
   /**
    * Returns test information.
@@ -19,9 +19,9 @@ class SiteStarterkitWebTestCase extends DrupalWebTestCase {
    */
   public static function getInfo() {
     return array(
-      'name' => 'SITE_STARTERKIT tests',
-      'description' => 'Test the SITE_STARTERKIT config module.',
-      'group' => 'site_starterkit',
+      'name' => 'Mock Data tests',
+      'description' => 'Test the Mock Data config module.',
+      'group' => 'Mock Data',
     );
   }
 

@@ -1,5 +1,5 @@
 name = Single profile tools
-description = General single profile functionalities
+description = Provides functionalities for the single profile server
 core = 7.x
 version = 7.x-1.0
 package = Custom
@@ -14,6 +14,7 @@ dependencies[] = options
 dependencies[] = list
 dependencies[] = views
 dependencies[] = user
+
 files[] = migrate/newsletters.inc
 files[] = migrate/countries.inc
-
+files[] = tests/single_profile_tools.test

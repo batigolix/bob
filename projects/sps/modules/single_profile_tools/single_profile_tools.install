@@ -2,21 +2,35 @@
 
 /**
  * @file
- * This file contains the connect_country install functions
+ * This file contains the single_profile_tools install functions
  */
 
 /**
  * Implements hook_install().
- * 
- * Creates vocabulary, terms, fields
  */
 function single_profile_tools_install() {
+  drupal_set_message(t('Single profile tools: Single profile tools was installed on your site.'));
 }
 
 /**
- * Implements hook_uninstall().
- * 
- * Deletes terms.
+ * Implements hook_enable().
+ */
+function single_profile_tools_enable() {
+  drupal_set_message(t('Single profile tools: Country pages are enabled on your site.'));
+}
+
+/**
+ * Implements hook_disable().
+ */
+function single_profile_tools_disable() {
+  drupal_set_message(t('Single profile tools: Country pages are disabled on your site.'));
+}
+
+/**
+ * Implements hook_uninstall().  
+ * Removes variables set by module.
  */
 function single_profile_tools_uninstall() {
+  variable_del('clients');
+  drupal_set_message(t('Single profile tools: Single profile tools was uninstalled from your site.'));
 }
