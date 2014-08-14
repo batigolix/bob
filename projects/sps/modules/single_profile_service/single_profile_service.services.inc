@@ -39,55 +39,6 @@ function single_profile_service_default_services_endpoint() {
     ),
   );
   $endpoint->resources = array(
-    'blog' => array(
-      'alias' => 'blogs',
-      'operations' => array(
-        'retrieve' => array(
-          'enabled' => '1',
-        ),
-      ),
-    ),
-    'entity_node' => array(
-      'alias' => 'node',
-      'operations' => array(
-        'create' => array(
-          'enabled' => '1',
-        ),
-        'retrieve' => array(
-          'enabled' => '1',
-        ),
-        'update' => array(
-          'enabled' => '1',
-        ),
-        'delete' => array(
-          'enabled' => '1',
-        ),
-        'index' => array(
-          'enabled' => '1',
-        ),
-      ),
-      'relationships' => array(
-        'files' => array(
-          'enabled' => '1',
-        ),
-        'comments' => array(
-          'enabled' => '1',
-        ),
-      ),
-      'targeted_actions' => array(
-        'attach_file' => array(
-          'enabled' => '1',
-        ),
-      ),
-    ),
-    'updated_users' => array(
-      'alias' => 'updated_users',
-      'operations' => array(
-        'retrieve' => array(
-          'enabled' => '1',
-        ),
-      ),
-    ),
     'entity_user' => array(
       'alias' => 'user',
       'operations' => array(
@@ -115,6 +66,9 @@ function single_profile_service_default_services_endpoint() {
           'enabled' => '1',
         ),
         'token' => array(
+          'enabled' => '1',
+        ),
+        'register' => array(
           'enabled' => '1',
         ),
       ),
