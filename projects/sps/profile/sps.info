@@ -30,6 +30,7 @@ dependencies[] = single_profile_tools
 
 ; Fields
 dependencies[] = entityreference
+dependencies[] = date
 ; Other
 dependencies[] = entity
 dependencies[] = libraries

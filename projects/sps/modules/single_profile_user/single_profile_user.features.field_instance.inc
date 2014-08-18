@@ -152,6 +152,87 @@ function single_profile_user_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'user-user-field_biography'
+  $field_instances['user-user-field_biography'] = array(
+    'bundle' => 'user',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 7,
+      ),
+    ),
+    'entity_type' => 'user',
+    'field_name' => 'field_biography',
+    'label' => 'Biography',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => 0,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 12,
+    ),
+  );
+
+  // Exported field_instance: 'user-user-field_birthyear'
+  $field_instances['user-user-field_birthyear'] = array(
+    'bundle' => 'user',
+    'deleted' => 0,
+    'description' => 'year',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'date',
+        'settings' => array(
+          'format_type' => 'long',
+          'fromto' => 'both',
+          'multiple_from' => '',
+          'multiple_number' => '',
+          'multiple_to' => '',
+        ),
+        'type' => 'date_default',
+        'weight' => 8,
+      ),
+    ),
+    'entity_type' => 'user',
+    'field_name' => 'field_birthyear',
+    'label' => 'Birthyear',
+    'required' => 0,
+    'settings' => array(
+      'default_value' => 'now',
+      'default_value2' => 'same',
+      'default_value_code' => '',
+      'default_value_code2' => '',
+      'user_register_form' => 0,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'date',
+      'settings' => array(
+        'increment' => 15,
+        'input_format' => 'm/d/Y - H:i:s',
+        'input_format_custom' => '',
+        'label_position' => 'above',
+        'text_parts' => array(),
+        'year_range' => '-3:+3',
+      ),
+      'type' => 'date_text',
+      'weight' => 13,
+    ),
+  );
+
   // Exported field_instance: 'user-user-field_country'
   $field_instances['user-user-field_country'] = array(
     'bundle' => 'user',
@@ -317,6 +398,8 @@ function single_profile_user_field_default_field_instances() {
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('Biography');
+  t('Birthyear');
   t('Country');
   t('First name');
   t('Gender');
@@ -326,6 +409,7 @@ function single_profile_user_field_default_field_instances() {
   t('ISO 3166-1 alpha-2 code');
   t('Last name');
   t('Newsletter subscriptions');
+  t('year');
 
   return $field_instances;
 }
