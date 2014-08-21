@@ -16,7 +16,7 @@ class SingleProfileToolsTestCase extends DrupalWebTestCase {
   public static function getInfo() {
     return array(
       'name' => 'Single profile tools: services, user profile',
-      'description' => 'Test the country vocabulary and check that content is assigned properly to them',
+      'description' => 'Test the  vocabulary and check that content is assigned properly to them',
       'group' => 'Single profile tools',
     );
   }
@@ -54,22 +54,6 @@ class SingleProfileToolsTestCase extends DrupalWebTestCase {
     ));
   }
 
-  /**
-   * Tests the functionality of the Single profile tools.
-   */
-  public function createCountries() {
-    // Create a country term Mesopotamia.
-    $this->drupalLogin($this->adminUser);
-    $edit = array(
-      'name' => 'Mesopotamia',
-      'field_code[und][0][value]' => 'xz',
-      'field_code3[und][0][value]' => 'xyz',
-      'field_number[und][0][value]' => '123',
-    );
-    $this->drupalPost('admin/structure/taxonomy/countries/add', $edit, t('Save'));
-    $this->assertText('Created new term Mesopotamia.');
-
-  }
 
 
 }

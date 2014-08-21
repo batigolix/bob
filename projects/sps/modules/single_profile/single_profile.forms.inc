@@ -78,11 +78,11 @@ function single_profile_settings_validate($form, $form_state) {
   $users_values = array();
 
   foreach ($form_state['values']['clients']['client'] as $client) {
-    if (isset($client['user'])) {
+    if (!empty($client['user'])) {
       $users_values[] = $client['user'];
     }
   }
-
+dpm($users_values);
   if (_array_has_dupes($users_values)) {
     form_set_error('clients', t('A user can only be associated with one client. Please change the user'));
   }

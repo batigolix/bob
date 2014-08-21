@@ -73,9 +73,6 @@ function single_profile_default_services_endpoint() {
         ),
       ),
       'relationships' => array(
-        'entityreference_field_country' => array(
-          'enabled' => '1',
-        ),
         'entityreference_field_newsletter_subscriptions' => array(
           'enabled' => '1',
         ),

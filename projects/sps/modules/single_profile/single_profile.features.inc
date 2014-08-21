@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * single_profile_service.features.inc
+ * single_profile.features.inc
  */
 
 /**
