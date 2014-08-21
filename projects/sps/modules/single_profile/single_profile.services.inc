@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * single_profile_service.services.inc
+ * single_profile.services.inc
  */
 
 /**

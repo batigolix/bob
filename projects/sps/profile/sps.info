@@ -26,7 +26,6 @@ dependencies[] = update
 dependencies[] = user
 dependencies[] = migrate
 dependencies[] = mock_data
-dependencies[] = single_profile_tools
 
 ; Fields
 dependencies[] = entityreference
@@ -42,6 +41,5 @@ dependencies[] = services_entityreference
 dependencies[] = rest_server
 ; Features
 dependencies[] = features
-dependencies[] = single_profile_service
-dependencies[] = single_profile_user
+dependencies[] = single_profile
 
