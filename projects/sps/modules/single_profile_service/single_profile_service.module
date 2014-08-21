@@ -1,7 +1,0 @@
-<?php
-/**
- * @file
- * Code for the single profile service feature.
- */
-
-include_once 'single_profile_service.features.inc';

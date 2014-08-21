@@ -1,8 +1,10 @@
-name = Single profile tools
+name = Single profile
 description = Provides functionalities for the single profile server
 core = 7.x
 version = 7.x-1.0
 package = Custom
+project = single_profile
+
 dependencies[] = services
 dependencies[] = ctools
 dependencies[] = entity
@@ -14,7 +16,13 @@ dependencies[] = options
 dependencies[] = list
 dependencies[] = views
 dependencies[] = user
+dependencies[] = rest_server
+dependencies[] = services_entityreference
 
 files[] = migrate/newsletters.inc
 files[] = migrate/countries.inc
-files[] = tests/single_profile_tools.test
+files[] = tests/single_profile.test
+
+features[ctools][] = services:services:3
+features[features_api][] = api:2
+features[services_endpoint][] = single_profile

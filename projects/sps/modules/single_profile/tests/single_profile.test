@@ -26,10 +26,10 @@ class SingleProfileToolsTestCase extends DrupalWebTestCase {
    */
   public function setUp() {
     parent::setUp(array(
-      'single_profile_user',
+      'single_profile',
       'single_profile_service',
     ));
-    module_enable(array('single_profile_tools'));
+    module_enable(array('single_profile'));
     $this->adminUser = $this->drupalCreateUser(array(
       'access content',
       'administer nodes',

@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * single_profile_user.features.user_permission.inc
+ * single_profile.features.user_permission.inc
  */
 
 /**
  * Implements hook_user_default_permissions().
  */
-function single_profile_user_user_default_permissions() {
+function single_profile_user_default_permissions() {
   $permissions = array();
 
   // Exported permission: 'access user profiles'.

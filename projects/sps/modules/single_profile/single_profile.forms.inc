@@ -8,7 +8,7 @@
 /**
  * Constructs settings form.
  */
-function single_profile_tools_settings($form, &$form_state) {
+function single_profile_settings($form, &$form_state) {
   $form = array();
   
   $values = variable_get('clients');
@@ -70,10 +70,10 @@ function single_profile_tools_settings($form, &$form_state) {
 }
 
 /**
- * Validates single_profile_tools_settings form.
+ * Validates single_profile_settings form.
  * Checks is a user is assigned to multiple account which is an issue.
  */
-function single_profile_tools_settings_validate($form, $form_state) {
+function single_profile_settings_validate($form, $form_state) {
   dpm($form_state['values']);
   $users_values = array();
 

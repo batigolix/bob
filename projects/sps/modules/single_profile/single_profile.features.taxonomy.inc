@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * single_profile_user.features.taxonomy.inc
+ * single_profile.features.taxonomy.inc
  */
 
 /**
  * Implements hook_taxonomy_default_vocabularies().
  */
-function single_profile_user_taxonomy_default_vocabularies() {
+function single_profile_taxonomy_default_vocabularies() {
   return array(
     'countries' => array(
       'name' => 'Countries',

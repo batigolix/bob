@@ -7,7 +7,7 @@
 /**
  * Implements hook_default_services_endpoint().
  */
-function single_profile_service_default_services_endpoint() {
+function single_profile_default_services_endpoint() {
   $export = array();
 
   $endpoint = new stdClass();

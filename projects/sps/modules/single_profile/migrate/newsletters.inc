@@ -24,7 +24,7 @@ class NewslettersMigration extends XMLMigration {
     // Original rss feed can be found on 
     // http://ec.europa.eu/information_society/newsroom/cf/dae/rss-service.cfm
     // Todo: find way fetching this online, without storing locally first.
-    $items_url = DRUPAL_ROOT . '/' . drupal_get_path('module', 'single_profile_tools') . '/migrate/rss-service.cfm';
+    $items_url = DRUPAL_ROOT . '/' . drupal_get_path('module', 'single_profile') . '/migrate/rss-service.cfm';
     $item_xpath = '/rss/channel/item';
     $item_ID_xpath = 'infsonewsroom:BasicSvId';
     $items_class = new MigrateItemsXML($items_url, $item_xpath, $item_ID_xpath);

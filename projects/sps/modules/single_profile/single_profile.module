@@ -2,17 +2,19 @@
 
 /**
  * @file
- * Main file of the single_profile_tools module. Contains mainly hooks.
+ * Main file of the single_profile module.
  */
+
+include_once 'single_profile.features.inc';
 
 /**
  * Implements hook_menu().
  */
-function single_profile_tools_menu() {
+function single_profile_menu() {
 
   $items = array();
 
-  $items['admin/config/system/single_profile_tools'] = array(
+  $items['admin/config/system/single_profile'] = array(
     'title' => 'Single profile tools',
     'description' => 'Configuration for Single profile tools',
     'page callback' => 'system_admin_menu_block_page',
@@ -22,13 +24,13 @@ function single_profile_tools_menu() {
     'weight' => '0',
   );
 
-  $items['admin/config/system/single_profile_tools/settings'] = array(
+  $items['admin/config/system/single_profile/settings'] = array(
     'title' => 'Single profile tools configuration settings',
     'description' => 'Settings for single profile tools',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('single_profile_tools_settings'),
+    'page arguments' => array('single_profile_settings'),
     'access arguments' => array('administer site configuration'),
-    'file' => 'single_profile_tools.forms.inc',
+    'file' => 'single_profile.forms.inc',
   );
 
   return $items;
@@ -38,13 +40,13 @@ function single_profile_tools_menu() {
  * Implements of hook_services_resources(). 
  * Defines a service that shows updated users.
  */
-function single_profile_tools_services_resources() {
+function single_profile_services_resources() {
   $api = array(
     'updated_users' => array(
       'operations' => array(
         'retrieve' => array(
           'help' => 'Retrieves updated profiles since',
-          'callback' => '_single_profile_tools_updates_retrieve',
+          'callback' => '_single_profile_updates_retrieve',
           'access callback' => 'user_access',
           'access arguments' => array('access user profiles'),
           'access arguments append' => FALSE,
@@ -70,7 +72,7 @@ function single_profile_tools_services_resources() {
  * Implements hook_services_request_postprocess_alter().
  * Can be used to remove information from a result from a service request.
  */
-function single_profile_tools_services_request_postprocess_alter($controller, $args, &$result) {
+function single_profile_services_request_postprocess_alter($controller, $args, &$result) {
   //  unset($result['some_kind_of_field']);
 }
 
@@ -94,7 +96,7 @@ function single_profile_taxonomy_terms_delete($vocab_machine_name) {
 /**
  * Implements hook_migrate_api().
  */
-function single_profile_tools_migrate_api() {
+function single_profile_migrate_api() {
   $api = array(
     'api' => 2,
     'migrations' => array(
@@ -111,7 +113,7 @@ function single_profile_tools_migrate_api() {
  * Usefull to fetch drupal ID from entity that was imported from external
  * source and that carries the external source ID.
  */
-function single_profile_tools_entity_id_from_field_value($entity_type, $bundle, $field_name, $value) {
+function single_profile_entity_id_from_field_value($entity_type, $bundle, $field_name, $value) {
   if (isset($entity_type, $bundle, $field_name, $value)) {
     $query = new EntityFieldQuery();
     $query->entityCondition('entity_type', $entity_type)
@@ -135,15 +137,15 @@ function single_profile_tools_entity_id_from_field_value($entity_type, $bundle, 
 /**
  * Callback function for retrieve updated users.
  */
-function _single_profile_tools_updates_retrieve($timestamp) {
+function _single_profile_updates_retrieve($timestamp) {
   $timestamp = intval($timestamp);
-  return single_profile_tools_find_updated_items($timestamp);
+  return single_profile_find_updated_items($timestamp);
 }
 
 /**
  * Retrieves updates users.
  */
-function single_profile_tools_find_updated_items($timestamp) {
+function single_profile_find_updated_items($timestamp) {
   $query = db_select('node', 'n');
   $query->condition('n.status', '1', '=');
   if ($nitems) {
@@ -157,29 +159,40 @@ function single_profile_tools_find_updated_items($timestamp) {
  * Implements hook_user insert().
  * Notifies clients about a change.
  */
-function single_profile_tools_user_insert(&$edit, $account, $category) {
-  single_profile_tools_notify_clients($account->mail);
+function single_profile_insert(&$edit, $account, $category) {
+  single_profile_notify_clients($account->mail);
 }
+
 /**
  * Implements hook_user insert().
  * Notifies clients about a change.
  */
-function single_profile_tools_user_update(&$edit, $account, $category) {
-  unset($account->is_new);                                                   
-  unset($account->original);                                                 
+function single_profile_update(&$edit, $account, $category) {
+  unset($account->is_new);
+  unset($account->original);
   // Clear the static loading cache.                                      
-  entity_get_controller('user')->resetCache(array($account->uid));  
-  single_profile_tools_notify_clients($account->mail);
+  entity_get_controller('user')->resetCache(array($account->uid));
+
+  // Notifies clients (passing the ID of the author of the change).
+  single_profile_notify_clients($account->mail, $edit['authorid']);
 }
 
 /**
  * Notifies clients about a change by polling a url using the email.
  */
-function single_profile_tools_notify_clients($mail) {
+function single_profile_notify_clients($mail, $authorid) {
   $clients = variable_get('clients');
+
+  // Fetches the username using the user ID
+  $authorname = db_query('SELECT name FROM {users} WHERE uid = :uid', array(':uid' => $authorid))->fetchField();
+
   if ($clients) {
     foreach ($clients['client'] as $client) {
-      if (!empty($client['uri'])) {
+      
+      // Notifies clients if a) uri is known & b) the changes does not
+      // originate from that client (compares username of change author and 
+      // username of client.
+      if (!empty($client['uri']) && $client['user'] != $authorname) {
         $full_url = url($client['uri'] . '/central-profile-notification/' . $mail);
         $request = drupal_http_request($full_url);
         if ($request->code !== '200') {
@@ -188,4 +201,11 @@ function single_profile_tools_notify_clients($mail) {
       }
     }
   }
+}
+
+/**
+ * Implements hook_rest_server_request_parsed_alter().
+ */
+function single_profile_rest_server_request_parsed_alter(&$data, $controller) {
+  //  dd($data);
 }

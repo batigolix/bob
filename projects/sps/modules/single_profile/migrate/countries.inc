@@ -29,7 +29,7 @@ class CountriesMigration extends Migration {
         // Source of the csv is
         // https://commondatastorage.googleapis.com/ckannet-storage/2011-11-25T132653/iso_3166_2_countries.csv
         // todo: fetch this file from the web instead of storing it locally.    
-        drupal_get_path('module', 'single_profile_tools') . '/migrate/iso_3166_2_countries.csv', $columns, $this->sourceFileOptions()
+        drupal_get_path('module', 'single_profile') . '/migrate/iso_3166_2_countries.csv', $columns, $this->sourceFileOptions()
     );
     $this->destination = new MigrateDestinationTerm('countries');
     $this->addFieldMapping('name', 'name');
