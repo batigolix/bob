@@ -6,7 +6,7 @@
  * Perform actions to set up the site for this profile.
  */
 function sps_install() {
-  $default_theme = 'bartik';
+  $default_theme = 'stark';
   $admin_theme = 'seven';
   // disable all themes
   db_update('system')

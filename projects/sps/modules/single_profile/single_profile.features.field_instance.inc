@@ -81,21 +81,16 @@ function single_profile_field_default_field_instances() {
   // Exported field_instance: 'user-user-field_birthyear'
   $field_instances['user-user-field_birthyear'] = array(
     'bundle' => 'user',
+    'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'year',
+    'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'date',
-        'settings' => array(
-          'format_type' => 'long',
-          'fromto' => 'both',
-          'multiple_from' => '',
-          'multiple_number' => '',
-          'multiple_to' => '',
-        ),
-        'type' => 'date_default',
-        'weight' => 8,
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 17,
       ),
     ),
     'entity_type' => 'user',
@@ -103,25 +98,17 @@ function single_profile_field_default_field_instances() {
     'label' => 'Birthyear',
     'required' => 0,
     'settings' => array(
-      'default_value' => 'now',
-      'default_value2' => 'same',
-      'default_value_code' => '',
-      'default_value_code2' => '',
+      'text_processing' => 0,
       'user_register_form' => 0,
     ),
     'widget' => array(
       'active' => 1,
-      'module' => 'date',
+      'module' => 'text',
       'settings' => array(
-        'increment' => 15,
-        'input_format' => 'm/d/Y - H:i:s',
-        'input_format_custom' => '',
-        'label_position' => 'above',
-        'text_parts' => array(),
-        'year_range' => '-3:+3',
+        'size' => 60,
       ),
-      'type' => 'date_text',
-      'weight' => 13,
+      'type' => 'text_textfield',
+      'weight' => 22,
     ),
   );
 
@@ -159,8 +146,8 @@ function single_profile_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'user-user-field_first_name'
-  $field_instances['user-user-field_first_name'] = array(
+  // Exported field_instance: 'user-user-field_department'
+  $field_instances['user-user-field_department'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
     'deleted' => 0,
@@ -171,12 +158,12 @@ function single_profile_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 0,
+        'weight' => 13,
       ),
     ),
     'entity_type' => 'user',
-    'field_name' => 'field_first_name',
-    'label' => 'First name',
+    'field_name' => 'field_department',
+    'label' => 'Department',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -189,7 +176,7 @@ function single_profile_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 7,
+      'weight' => 18,
     ),
   );
 
@@ -202,29 +189,33 @@ function single_profile_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
+        'module' => 'text',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 4,
+        'type' => 'text_default',
+        'weight' => 16,
       ),
     ),
     'entity_type' => 'user',
     'field_name' => 'field_gender',
     'label' => 'Gender',
-    'required' => FALSE,
+    'required' => 0,
     'settings' => array(
-      'user_register_form' => FALSE,
+      'text_processing' => 0,
+      'user_register_form' => 0,
     ),
     'widget' => array(
-      'module' => 'options',
-      'settings' => array(),
-      'type' => 'options_select',
-      'weight' => 9,
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 21,
     ),
   );
 
-  // Exported field_instance: 'user-user-field_last_name'
-  $field_instances['user-user-field_last_name'] = array(
+  // Exported field_instance: 'user-user-field_groups'
+  $field_instances['user-user-field_groups'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
     'deleted' => 0,
@@ -235,29 +226,30 @@ function single_profile_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 3,
+        'weight' => 19,
       ),
     ),
     'entity_type' => 'user',
-    'field_name' => 'field_last_name',
-    'label' => 'Last name',
-    'required' => FALSE,
+    'field_name' => 'field_groups',
+    'label' => 'Groups',
+    'required' => 0,
     'settings' => array(
       'text_processing' => 0,
-      'user_register_form' => FALSE,
+      'user_register_form' => 0,
     ),
     'widget' => array(
+      'active' => 1,
       'module' => 'text',
       'settings' => array(
-        'size' => 60,
+        'rows' => 5,
       ),
-      'type' => 'text_textfield',
-      'weight' => 8,
+      'type' => 'text_textarea',
+      'weight' => 24,
     ),
   );
 
-  // Exported field_instance: 'user-user-field_newsletter_subscriptions'
-  $field_instances['user-user-field_newsletter_subscriptions'] = array(
+  // Exported field_instance: 'user-user-field_job_title'
+  $field_instances['user-user-field_job_title'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
     'deleted' => 0,
@@ -265,27 +257,198 @@ function single_profile_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'entityreference',
-        'settings' => array(
-          'link' => FALSE,
-        ),
-        'type' => 'entityreference_label',
-        'weight' => 5,
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 12,
       ),
     ),
     'entity_type' => 'user',
-    'field_name' => 'field_newsletter_subscriptions',
-    'label' => 'Newsletter subscriptions',
+    'field_name' => 'field_job_title',
+    'label' => 'Job title',
     'required' => 0,
     'settings' => array(
+      'text_processing' => 0,
       'user_register_form' => 0,
     ),
     'widget' => array(
       'active' => 1,
-      'module' => 'options',
-      'settings' => array(),
-      'type' => 'options_buttons',
-      'weight' => 10,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 17,
+    ),
+  );
+
+  // Exported field_instance: 'user-user-field_language'
+  $field_instances['user-user-field_language'] = array(
+    'bundle' => 'user',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 14,
+      ),
+    ),
+    'entity_type' => 'user',
+    'field_name' => 'field_language',
+    'label' => 'Language',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => 0,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 19,
+    ),
+  );
+
+  // Exported field_instance: 'user-user-field_newsletters'
+  $field_instances['user-user-field_newsletters'] = array(
+    'bundle' => 'user',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 20,
+      ),
+    ),
+    'entity_type' => 'user',
+    'field_name' => 'field_newsletters',
+    'label' => 'Newsletters',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => 0,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 25,
+    ),
+  );
+
+  // Exported field_instance: 'user-user-field_organisation'
+  $field_instances['user-user-field_organisation'] = array(
+    'bundle' => 'user',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 11,
+      ),
+    ),
+    'entity_type' => 'user',
+    'field_name' => 'field_organisation',
+    'label' => 'Organisation',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => 0,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 16,
+    ),
+  );
+
+  // Exported field_instance: 'user-user-field_vision'
+  $field_instances['user-user-field_vision'] = array(
+    'bundle' => 'user',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 15,
+      ),
+    ),
+    'entity_type' => 'user',
+    'field_name' => 'field_vision',
+    'label' => 'Vision',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => 0,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 20,
+    ),
+  );
+
+  // Exported field_instance: 'user-user-field_website'
+  $field_instances['user-user-field_website'] = array(
+    'bundle' => 'user',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 10,
+      ),
+    ),
+    'entity_type' => 'user',
+    'field_name' => 'field_website',
+    'label' => 'Website',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => 0,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 15,
     ),
   );
 
@@ -294,13 +457,17 @@ function single_profile_field_default_field_instances() {
   t('Biography');
   t('Birthyear');
   t('Country');
-  t('First name');
+  t('Department');
   t('Gender');
+  t('Groups');
   t('ID');
   t('ISO 3166-1 2 Letter Code');
-  t('Last name');
-  t('Newsletter subscriptions');
-  t('year');
+  t('Job title');
+  t('Language');
+  t('Newsletters');
+  t('Organisation');
+  t('Vision');
+  t('Website');
 
   return $field_instances;
 }

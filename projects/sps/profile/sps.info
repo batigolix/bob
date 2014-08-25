@@ -16,6 +16,7 @@ dependencies[] = field_sql_storage
 dependencies[] = field_ui
 dependencies[] = filter
 dependencies[] = list
+dependencies[] = link
 dependencies[] = menu
 dependencies[] = node
 dependencies[] = options

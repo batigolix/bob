@@ -34,6 +34,9 @@ projects[services_entity][subdir] = "contrib"
 projects[services][version] = "3.7"
 projects[services][subdir] = "contrib"
 
+projects[link][version] = "1.2"
+projects[link][subdir] = "contrib"
+
 projects[migrate][version] = "2.5"
 projects[migrate][subdir] = "contrib"
 

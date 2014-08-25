@@ -110,7 +110,7 @@ function single_profile_migrate_api() {
 /**
  * Returns Drupal entity ID by matching a custom field value.
  * 
- * Usefull to fetch drupal ID from entity that was imported from external
+ * Useful to fetch drupal ID from entity that was imported from external
  * source and that carries the external source ID.
  */
 function single_profile_entity_id_from_field_value($entity_type, $bundle, $field_name, $value) {
@@ -156,18 +156,20 @@ function single_profile_find_updated_items($timestamp) {
 }
 
 /**
- * Implements hook_user insert().
+ * Implements hook_user_update().
  * Notifies clients about a change.
  */
-function single_profile_insert(&$edit, $account, $category) {
+function single_profile_user_insert(&$edit, $account, $category) {
   single_profile_notify_clients($account->mail);
 }
 
 /**
- * Implements hook_user insert().
+ * Implements hook_user_update().
  * Notifies clients about a change.
  */
-function single_profile_update(&$edit, $account, $category) {
+function single_profile_user_update(&$edit, $account, $category) {
+  //dd('hitz');
+  
   unset($account->is_new);
   unset($account->original);
   // Clear the static loading cache.                                      
@@ -193,8 +195,11 @@ function single_profile_notify_clients($mail, $authorid) {
       // originate from that client (compares username of change author and 
       // username of client.
       if (!empty($client['uri']) && $client['user'] != $authorname) {
-        $full_url = url($client['uri'] . '/central-profile-notification/' . $mail);
+  //      dd('hityyy');
+//        dd($client);
+        $full_url = url("${client['uri']}/central-profile-notification/${mail}");
         $request = drupal_http_request($full_url);
+    //    dd($request);
         if ($request->code !== '200') {
           watchdog('error', 'Error "!error" occurred while notifying !client about profile !mail', array('!client' => $client['uri'], '!mail' => $mail, '!error' => $request->code . ' ' . $request->error));
         }

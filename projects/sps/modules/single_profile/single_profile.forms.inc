@@ -74,7 +74,6 @@ function single_profile_settings($form, &$form_state) {
  * Checks is a user is assigned to multiple account which is an issue.
  */
 function single_profile_settings_validate($form, $form_state) {
-  dpm($form_state['values']);
   $users_values = array();
 
   foreach ($form_state['values']['clients']['client'] as $client) {
@@ -82,7 +81,6 @@ function single_profile_settings_validate($form, $form_state) {
       $users_values[] = $client['user'];
     }
   }
-dpm($users_values);
   if (_array_has_dupes($users_values)) {
     form_set_error('clients', t('A user can only be associated with one client. Please change the user'));
   }
