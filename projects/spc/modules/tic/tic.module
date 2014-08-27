@@ -11,11 +11,52 @@
 function tic_menu() {
   $items['tic/example'] = array(
     'title' => 'Example interaction with service',
+    'page callback' => 'tic_example',
+    'access arguments' => array('access content'),
+    'type' => MENU_SUGGESTED_ITEM,
+  );
+
+  $items['tic/test1'] = array(
+    'title' => 'test MsDynamicsPHP',
     'page callback' => 'tic_test1',
     'access arguments' => array('access content'),
     'type' => MENU_SUGGESTED_ITEM,
   );
 
+  $items['tic/test2'] = array(
+    'title' => 'test CRMOnlinefromPHP',
+    'page callback' => 'tic_test2',
+    'access arguments' => array('access content'),
+    'type' => MENU_SUGGESTED_ITEM,
+  );
+
+  $items['tic/test3'] = array(
+    'title' => 'test 6dg Dynamics CRM PHP Connector',
+    'page callback' => 'tic_test3',
+    'access arguments' => array('access content'),
+    'type' => MENU_SUGGESTED_ITEM,
+  );
+
+  $items['tic/test4'] = array(
+    'title' => 'test Dynamics CRM 2011 Connector for PHP',
+    'page callback' => 'tic_test4',
+    'access arguments' => array('access content'),
+    'type' => MENU_SUGGESTED_ITEM,
+  );
+
+  $items['tic/test5'] = array(
+    'title' => 'test PHP Dynamics Online CRM 2011 SOAP Class',
+    'page callback' => 'tic_test5',
+    'access arguments' => array('access content'),
+    'type' => MENU_SUGGESTED_ITEM,
+  );
+
+  $items['tic/test6'] = array(
+    'title' => 'test MS lab',
+    'page callback' => 'tic_test6',
+    'access arguments' => array('access content'),
+    'type' => MENU_SUGGESTED_ITEM,
+  );
 
   $items['admin/config/system/profile_client'] = array(
     'title' => 'Profile client',
@@ -39,387 +80,76 @@ function tic_menu() {
   return $items;
 }
 
+
 /**
- * Create a token for non-safe REST calls.
- * */
-function tic_get_csrf_header() {
-  $curl_get = curl_init();
-  curl_setopt_array($curl_get, array(
-    CURLOPT_RETURNTRANSFER => 1,
-    CURLOPT_URL => variable_get('endpoint') . '/user/token',
-  ));
-  $csrf_token = curl_exec($curl_get);
-  curl_close($curl_get);
-  return 'X-CSRF-Token: ' . $csrf_token;
-}
-
+ * test MSDynamicsPHP. 
+ * http://mscrmtools.blogspot.com/2012/08/php-to-crm-online-easy-way-to-do.html?showComment=1377215219071#c4499748507793030702
+ * @return string
+ */
 function tic_test1() {
+  require_once('MSDynamicsPHP/index.php');
+  return 'testing MSDynamicsPHP';
+}
 
-  $result = tic_get_updates();
-  dpm($result);
-  $data = json_decode($result->data);
-  dpm($data);
+/** 
+ * example page
+ * @return string
+ */
+function tic_example() {
+  return 'crming';
+}
 
-//  /* GET USER */
-//  $get_user_result = tic_get_user(1);
-//  dpm($get_user_result);
-//  $data = json_decode($get_user_result->data);
-//  dpm($data);
-  /* GET USER */
-//  $get_user_result = tic_get_user_by_mail();
-//  dpm($get_user_result);
-//  $data = json_decode($get_user_result->data);
-//  dpm($data);
+/**
+ * test CRMOnlinefromPHP
+ * official MS with modifs from http://mscrmtools.blogspot.com/2012/08/php-to-crm-online-easy-way-to-do.html
+ * @return string
+ */
+function tic_test2() {
+  require_once('CRMOnlinefromPHP/Source/end/PHP2CRMOnline/Main.php');
+  return 'testing CRMOnlinefromPHP';
+}
+
+/**
+ * test 6dg Dynamics CRM PHP Connector
+ * https://bitbucket.org/6dg/dynamics-crm-php-connector
+ * @return string
+ */
+function tic_test3() {
+  require_once('dynamics-crm-php-connector/index.php');
+  return 'test 6dg Dynamics CRM PHP Connector';
+}
+
 //
-//  $get_tt_result = tic_get_taxonomy_term(2);
-//  dpm($get_tt_result);
-//  $data = json_decode($get_tt_result->data);
-//  dpm($data);
-//
-//  /* UPDATE USER */
-//  $get_user_result = tic_update_user(1);
-//  dpm($get_user_result);
-//  $data = json_decode($get_user_result->data);
-//  dpm($data);
-  // /* UPDATE NODE */
-//  $update_node_result = tic_update_node();
-//  dpm($update_node_result);
-//  $data = json_decode($update_node_result->data);
-//  dpm($data);
-//
-//
-//  /* GET NODE */
-//  $get_node_result = tic_get_node(4);
-//  dpm($get_node_result);
-//  $data = json_decode($get_node_result->data);
-//  dpm($data);
-//  $wrpuser = entity_metadata_wrapper('user', $data[0]);
-//  
-//  dsm($wrpuser->field_first_name->value());
-//tic_get_articles
 
-  /* GET BLOGS */
-  $get_blogs_result = tic_get_articles();
-  dpm($get_blogs_result);
-  $data = json_decode($get_blogs_result->data);
-  dpm($data);
+/**
+ * test Dynamics CRM 2011 Connector for PHP
+ * https://bitbucket.org/6dg/dynamics-crm-php-connector
+ * @return string
+ */
+function tic_test4() {
+  require_once('php-dynamics-crm-2011/DynamicsCRM2011.demo.php');
+  return 'test Dynamics CRM 2011 Connector for PHP';
+}
+/**
+ * PHP Dynamics Online CRM 2011 SOAP Class
+ * https://github.com/Ben-Speakman/PHP-Dynamics-Online-CRM-2011-SOAP-Class
+ * @return string
+ */
 
-  $build = array();
-  $build['test']['#markup'] = 'test';
-  return $build;
+function tic_test5() {
+  require_once('PHP-Dynamics-Online-CRM-2011-SOAP-Class/index.php');
+  return 'test PHP Dynamics Online CRM 2011 SOAP Class';
 }
 
-/* RETRIVE node with http GET method */
+/**
+ * MS Lab from docs
+ * @return string
+ */
 
-function tic_get_node($nid) {
-  $url = variable_get('endpoint') . '/node/' . $nid;
-//  $parameters = '?parameters[nid]=2';
-//  $url .= $parameters;
-  return drupal_http_request($url);
+function tic_test6() {
+  require_once('PHP2CRMOnline/Main.php');
+
+
+return 'test lab from docs';
 }
 
-function tic_get_taxonomy_term($tid) {
-  if (isset($tid)) {
-    $url = variable_get('endpoint') . '/entity_taxonomy_term/' . $tid;
-    $login_data = tic_login();
-    $taxonomy_term_options = array(
-      'headers' => array(
-        'Content-Type' => 'application/json',
-        'Cookie' => $login_data['cookie'],
-        'X-CSRF-Token' => $login_data['token'],
-      ),
-      'method' => 'GET',
-        // 'data' => $taxonomy_term_data,
-    );
-    return drupal_http_request($url, $taxonomy_term_options);
-  }
-  else {
-    dsm('needs a tid');
-  }
-}
-
-/* RETRIVE user with http GET method */
-
-function tic_get_user($uid) {
-  $url = variable_get('endpoint') . '/user/' . $uid;
-//  $url = variable_get('endpoint') . '/user/' . $uid;
-  //dontletthesungodownonmeyeah
-//  $parameters = '?parameters[uid]=3'; // TODO figure out how/if to use parameters
-//  $url .= $parameters;
-
-  $login_data = tic_login();
-
-  //dpm($login_data);
-
-  $user_options = array(
-    'headers' => array(
-      'Content-Type' => 'application/json',
-      'Cookie' => $login_data['cookie'],
-      'X-CSRF-Token' => $login_data['token'],
-    ),
-    'method' => 'GET',
-//		'data' => $node_data,
-  );
-  return drupal_http_request($url, $user_options);
-}
-
-function tic_get_user_by_mail($mail = NULL) {
-  $url = variable_get('endpoint') . '/user/';
-  //dontletthesungodownonmeyeah
-  $parameters = '?parameters[mail]=buccaneer10@gangplank.pi'; // TODO figure out how/if to use parameters
-  $url .= $parameters;
-
-  $login_data = tic_login();
-
-  //dpm($login_data);
-
-  $user_options = array(
-    'headers' => array(
-      'Content-Type' => 'application/json',
-      'Cookie' => $login_data['cookie'],
-      'X-CSRF-Token' => $login_data['token'],
-    ),
-    'method' => 'GET',
-//		'data' => $node_data,
-  );
-  return drupal_http_request($url, $user_options);
-}
-
-/* RETRIVE user with http GET method */
-
-function tic_get_articles() {
-  $url = variable_get('endpoint') . '/blogs/retrieve';
-  $parameters = '?nitems=3&since=10';
-  $url .= $parameters;
-
-  $login_data = tic_login();
-
-  //dpm($login_data);
-
-  $user_options = array(
-    'headers' => array(
-      'Content-Type' => 'application/json',
-      'Cookie' => $login_data['cookie'],
-      'X-CSRF-Token' => $login_data['token'],
-    ),
-    'method' => 'GET',
-//		'data' => $node_data,
-  );
-  return drupal_http_request($url, $user_options);
-}
-
-/* CREATE node with http POST method */
-
-function tic_create_node() {
-  $url = variable_get('endpoint') . '/node';
-
-  $node_type = 'article';
-  $node_title = 'Node updated: ' . date('c');
-  $node_body = 'Node body';
-  $node_format = 'filtered_html';
-
-  $node_data = '{
-		"type" : "' . $node_type . '",
-		"title" : "' . $node_title . '",
-		"body" : {
-			"und" : {
-				"0" : {
-					"value" : "' . $node_body . '",
-					"format" : "' . $node_format . '"
-				}
-			}
-		}
-	}';
-
-
-  $login_data = tic_login();
-
-  //dpm($login_data);
-
-  $node_options = array(
-    'headers' => array(
-      'Content-Type' => 'application/json',
-      'Cookie' => $login_data['cookie'],
-      'X-CSRF-Token' => $login_data['token'],
-    ),
-    'method' => 'POST',
-    'data' => $node_data,
-  );
-
-
-  return drupal_http_request($url, $node_options);
-}
-
-/* UPDATE node with http PUT method */
-
-function tic_update_node() {
-
-  $node_nid = 2;
-  $url = variable_get('endpoint') . '/node/' . $node_nid;
-
-  $node_data = array(
-    'type' => 'article',
-    'title' => 'Nodezz updated: ' . date('c'),
-    'body' => array(
-      'value' => 'test bod',
-      'format' => 'plain_text',
-    )
-  );
-
-
-  $snode_data = '{
-		"type" : "article",
-		"title" : "test",
-		"body" :  {
-					"value" : "test bod",
-					"format" : "text"
-			
-		}
-	}';
-
-  $login_data = tic_login();
-
-  $node_options = array(
-    'headers' => array(
-      'Content-Type' => 'application/json',
-      'Cookie' => $login_data['cookie'],
-      'X-CSRF-Token' => $login_data['token'],
-    ),
-    'method' => 'PUT',
-    //'data' => $node_data,
-    'data' => json_encode($node_data),
-  );
-
-
-  return drupal_http_request($url, $node_options);
-}
-
-/* UPDATE node with http PUT method */
-
-function tic_update_user($uid) {
-  if (isset($uid)) {
-    $url = variable_get('endpoint') . '/user/' . $uid;
-
-    $user_data = array(
-//    'name' => 'john2',
-      'mail' => 'admin@cnect.eu',
-      'first_name' => 'Jacky',
-    );
-
-    $login_data = tic_login();
-
-    $user_options = array(
-      'headers' => array(
-        'Content-Type' => 'application/json',
-        'Cookie' => $login_data['cookie'],
-        'X-CSRF-Token' => $login_data['token'],
-      ),
-      'method' => 'PUT',
-      'data' => json_encode($user_data),
-    );
-
-    return drupal_http_request($url, $user_options);
-  }
-  else {
-    dsm('need uid');
-  }
-}
-
-/* DELETE node with http DELETE method */
-
-function tic_delete_node() {
-
-  $node_nid = 3;
-  $url = variable_get('endpoint') . '/' . $node_nid;
-
-  $login_data = tic_login('admin', 'admin');
-
-  $node_options = array(
-    'headers' => array(
-      'Content-Type' => 'application/json',
-      'Cookie' => $login_data['cookie'],
-      'X-CSRF-Token' => $login_data['token'],
-    ),
-    'method' => 'DELETE'
-  );
-
-
-  return drupal_http_request($url, $node_options);
-}
-
-/* LOGIN with POST method */
-
-function tic_login() {
-
-  if (variable_get('kill_cookie')) {
-    unset($_COOKIE);
-    dsm('cookie kill');
-  }
-
-  if (isset($_COOKIE['drupal_session_name']) && isset($_COOKIE['drupal_session_id']) && isset($_COOKIE['drupal_session_token'])) {
-    $cookie = '' . $_COOKIE['drupal_session_name'] . '=' . $_COOKIE['drupal_session_id'] . '';
-    return array('cookie' => $cookie, 'token' => $_COOKIE['drupal_session_token']);
-  }
-  else {
-    $login_url = variable_get('endpoint') . '/user/login';
-
-    $user_data = array(
-      'username' => variable_get('user'),
-      'password' => variable_get('password'),
-    );
-
-    $user_options = array(
-      'headers' => array(
-        'Content-Type' => 'application/json'),
-      'method' => 'POST',
-      'data' => json_encode($user_data),
-    );
-  };
-
-  $result = drupal_http_request($login_url, $user_options);
-
-  if ($result->code == 200) {
-    $user_data = json_decode($result->data);
-
-    setcookie('drupal_session_name', $user_data->session_name);
-    setcookie('drupal_session_id', $user_data->sessid);
-
-    $cookie = '' . $user_data->session_name . '=' . $user_data->sessid . '';
-
-    $token_options = array(
-      'headers' => array(
-        'Cookie' => $cookie,
-      ),
-      'method' => 'GET',
-    );
-
-    $token = drupal_http_request(variable_get('endpoint') . '/user/token', $token_options);
-    setcookie('drupal_session_token', $token->data);
-    return array('cookie' => $cookie, 'token' => $token->data);
-  }
-  else
-    return FALSE;
-}
-
-/* RETRIVE user with http GET method */
-
-function tic_get_updates() {
-  $url = variable_get('endpoint') . '/updates/retrieve';
-  $parameters = '?nitems=3&since=10';
-  $url .= $parameters;
-
-  $login_data = tic_login();
-
-  //dpm($login_data);
-
-  $user_options = array(
-    'headers' => array(
-      'Content-Type' => 'application/json',
-      'Cookie' => $login_data['cookie'],
-      'X-CSRF-Token' => $login_data['token'],
-    ),
-    'method' => 'GET',
-//		'data' => $node_data,
-  );
-  return drupal_http_request($url, $user_options);
-}
