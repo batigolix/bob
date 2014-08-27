@@ -11,11 +11,45 @@
 function tic_menu() {
   $items['tic/example'] = array(
     'title' => 'Example interaction with service',
+    'page callback' => 'tic_example',
+    'access arguments' => array('access content'),
+    'type' => MENU_SUGGESTED_ITEM,
+  );
+
+  $items['tic/test1'] = array(
+    'title' => 'test MsDynamicsPHP',
     'page callback' => 'tic_test1',
     'access arguments' => array('access content'),
     'type' => MENU_SUGGESTED_ITEM,
   );
 
+  $items['tic/test2'] = array(
+    'title' => 'test CRMOnlinefromPHP',
+    'page callback' => 'tic_test2',
+    'access arguments' => array('access content'),
+    'type' => MENU_SUGGESTED_ITEM,
+  );
+
+  $items['tic/test3'] = array(
+    'title' => 'test 6dg Dynamics CRM PHP Connector',
+    'page callback' => 'tic_test3',
+    'access arguments' => array('access content'),
+    'type' => MENU_SUGGESTED_ITEM,
+  );
+
+  $items['tic/test4'] = array(
+    'title' => 'test Dynamics CRM 2011 Connector for PHP',
+    'page callback' => 'tic_test4',
+    'access arguments' => array('access content'),
+    'type' => MENU_SUGGESTED_ITEM,
+  );
+
+  $items['tic/test5'] = array(
+    'title' => 'test PHP Dynamics Online CRM 2011 SOAP Class',
+    'page callback' => 'tic_test5',
+    'access arguments' => array('access content'),
+    'type' => MENU_SUGGESTED_ITEM,
+  );
 
   $items['admin/config/system/profile_client'] = array(
     'title' => 'Profile client',
@@ -39,27 +73,118 @@ function tic_menu() {
   return $items;
 }
 
+
 /**
- * Create a token for non-safe REST calls.
- * */
-function tic_get_csrf_header() {
-  $curl_get = curl_init();
-  curl_setopt_array($curl_get, array(
-    CURLOPT_RETURNTRANSFER => 1,
-    CURLOPT_URL => variable_get('endpoint') . '/user/token',
-  ));
-  $csrf_token = curl_exec($curl_get);
-  curl_close($curl_get);
-  return 'X-CSRF-Token: ' . $csrf_token;
+ * test MSDynamicsPHP. 
+ * http://mscrmtools.blogspot.com/2012/08/php-to-crm-online-easy-way-to-do.html?showComment=1377215219071#c4499748507793030702
+ * @return string
+ */
+function tic_test1() {
+  require_once('MSDynamicsPHP/index.php');
+  return 'testing MSDynamicsPHP';
 }
 
-function tic_test1() {
+/** 
+ * example page
+ * @return string
+ */
+function tic_example() {
+  return 'crming';
+}
 
-  $result = tic_get_updates();
-  dpm($result);
-  $data = json_decode($result->data);
-  dpm($data);
+/**
+ * test CRMOnlinefromPHP
+ * official MS with modifs from http://mscrmtools.blogspot.com/2012/08/php-to-crm-online-easy-way-to-do.html
+ * @return string
+ */
+function tic_test2() {
+  require_once('CRMOnlinefromPHP/Source/end/PHP2CRMOnline/Main.php');
+  return 'testing CRMOnlinefromPHP';
+}
 
+/**
+ * test 6dg Dynamics CRM PHP Connector
+ * https://bitbucket.org/6dg/dynamics-crm-php-connector
+ * @return string
+ */
+function tic_test3() {
+  require_once('dynamics-crm-php-connector/index.php');
+  return 'test 6dg Dynamics CRM PHP Connector';
+}
+
+//
+
+/**
+ * test Dynamics CRM 2011 Connector for PHP
+ * https://bitbucket.org/6dg/dynamics-crm-php-connector
+ * @return string
+ */
+function tic_test4() {
+  require_once('php-dynamics-crm-2011/DynamicsCRM2011.demo.php');
+  return 'test Dynamics CRM 2011 Connector for PHP';
+}
+/**
+ * PHP Dynamics Online CRM 2011 SOAP Class
+ * https://github.com/Ben-Speakman/PHP-Dynamics-Online-CRM-2011-SOAP-Class
+ * @return string
+ */
+
+function tic_test5() {
+  require_once('PHP-Dynamics-Online-CRM-2011-SOAP-Class/index.php');
+  return 'test PHP Dynamics Online CRM 2011 SOAP Class';
+}
+
+function xtic_test1() {
+  require_once('dynamicsclient.php');
+
+//  
+//  re credentials of a user you can use for your tests:
+//https://dgconnectdemo.crm4.dynamics.com/main.aspx#
+//Albert@dgconnectdemo.onmicrosoft.com
+//Zupo4754
+
+  $dynamicsClient = new dynamicsClient('Albert@dgconnectdemo.onmicrosoft.com', 'Zupo4754', 'dgconnectdemo.crm4.dynamics.com', 1);
+
+  $request = '
+	<RetrieveMultiple xmlns="http://schemas.microsoft.com/xrm/2011/Contracts/Services">
+		<query i:type="b:QueryExpression" xmlns:b="http://schemas.microsoft.com/xrm/2011/Contracts" xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+		<b:ColumnSet>
+			<b:AllColumns>false</b:AllColumns>
+			<b:Columns xmlns:c="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+				<c:string>accountid</c:string>
+				<c:string>name</c:string>
+			</b:Columns>
+		</b:ColumnSet>
+		<b:Criteria>
+			<b:Conditions />
+			<b:FilterOperator>And</b:FilterOperator>
+			<b:Filters />
+		</b:Criteria>
+		<b:Distinct>false</b:Distinct>
+		<b:EntityName>account</b:EntityName>
+		<b:LinkEntities />
+		<b:Orders />
+		<b:PageInfo>
+			<b:Count>0</b:Count>
+			<b:PageNumber>0</b:PageNumber>
+			<b:PagingCookie i:nil="true" />
+			<b:ReturnTotalRecordCount>false</b:ReturnTotalRecordCount>
+		</b:PageInfo>
+		</query>
+	</RetrieveMultiple>';
+
+  echo $dynamicsClient->sendQuery($request);
+
+//    $query = $connection->getRemoteEntityQuery();
+//  require_once('dynamicsclient.php');
+//$dynamicsClient = new dynamicsClient(0);
+// 
+////prints the Parent Account name of the specified Contact
+//echo $dynamicsClient->sampleFunction("<CONTACTID>");
+//  $result = tic_get_updates();
+//  dpm($result);
+//  $data = json_decode($result->data);
+//  dpm($data);
 //  /* GET USER */
 //  $get_user_result = tic_get_user(1);
 //  dpm($get_user_result);
@@ -99,10 +224,10 @@ function tic_test1() {
 //tic_get_articles
 
   /* GET BLOGS */
-  $get_blogs_result = tic_get_articles();
-  dpm($get_blogs_result);
-  $data = json_decode($get_blogs_result->data);
-  dpm($data);
+//  $get_blogs_result = tic_get_articles();
+//  dpm($get_blogs_result);
+//  $data = json_decode($get_blogs_result->data);
+//  dpm($data);
 
   $build = array();
   $build['test']['#markup'] = 'test';
@@ -422,4 +547,110 @@ function tic_get_updates() {
 //		'data' => $node_data,
   );
   return drupal_http_request($url, $user_options);
+}
+
+
+
+/**
+ * Create a token for non-safe REST calls.
+ * */
+function tic_get_csrf_header() {
+  $curl_get = curl_init();
+  curl_setopt_array($curl_get, array(
+    CURLOPT_RETURNTRANSFER => 1,
+    CURLOPT_URL => variable_get('endpoint') . '/user/token',
+  ));
+  $csrf_token = curl_exec($curl_get);
+  curl_close($curl_get);
+  return 'X-CSRF-Token: ' . $csrf_token;
+}
+
+function cxtic_test1() {
+
+  require_once 'php-dynamics-crm-2011/DynamicsCRM2011.php';
+
+
+  /* Make life easier for developers: Make a copy of the Config file locally, and
+   * name it DynamicsCRM2011.config.local.php - if found, it will be used in preference
+   * to the normal configuration details in the DynamicsCRM2011.config.php file 
+   */
+  if (file_exists('php-dynamics-crm-2011/DynamicsCRM2011.config.local.php'))
+    include 'php-dynamics-crm-2011/DynamicsCRM2011.config.local.php';
+  else
+    include 'php-dynamics-crm-2011/DynamicsCRM2011.config.php';
+
+  /* Choose which demos to execute by commenting out values here */
+  define('SKIP_DEMO1', TRUE);
+  define('SKIP_DEMO2', TRUE);
+  define('SKIP_DEMO3', TRUE);
+  define('SKIP_DEMO4', TRUE);
+  define('SKIP_DEMO5', TRUE);
+  define('SKIP_DEMO6', TRUE);
+  define('SKIP_DEMO7', TRUE);
+  define('SKIP_DEMO8', TRUE);
+  define('SKIP_DEMO9', TRUE);
+  define('SKIP_DEMO10', TRUE);
+  define('SKIP_DEMO11', TRUE);
+
+  /*   * **************************************************************************
+    There are two ways to connect to the Microsoft Dynamics 2011 CRM server.
+    The first option is ideal for scripts and cron jobs, where the username &
+    password are known and probably hard-coded in the script.
+    Call the DynamicsCRM2011Connector constructor and provide all four parameters
+    - the Discovery Service URI
+    - the Organization Unique Name
+    - the Username
+    - the Password
+    The Object will automatically connect to the Discovery Service using the
+    login details provided, and find the correct URI to use for the Organization
+    service for the Organization you have specified.
+    This can take around 10 seconds, as large amounts of XML must be fetched and
+    then parsed to determine the correct way to login, and the addresses to use
+   * *************************************************************************** */
+  /* Connect to the Dynamics CRM 2011 server */
+  echo date('Y-m-d H:i:s') . "\tConnecting to the CRM... ";
+  $crmConnector = new DynamicsCRM2011_Connector($discoveryServiceURI, $organizationUniqueName, $loginUsername, $loginPassword);
+  dpm($crmConnector);
+  echo 'Done at ' . date('Y-m-d H:i:s') . PHP_EOL;
+
+  /*   * **************************************************************************
+    The second option is more focussed on interactive systems, i.e. web-based
+    reporting systems etc. where response times are critical, and the username
+    and password might not be known in advance.
+    This requires slightly more code, but splits the work into two separate stages
+    and provides an opportunity to verify the login details.
+
+    In the first stage, call the DynamicsCRM2011Connector constructor with just
+    - the Discovery Service URI
+    - the Organization Unique Name
+    The Object will query the Discovery Service to determine the login method
+    to use, but will not be able to progress any further, as the login details
+    are not know.
+
+    Then, call the setDiscoveryFederationSecurity method with the appropriate
+    login details.  The Object will then use these details to find the correct
+    URI to use for the Organization service for the Organization you have
+    specified in the constructor.
+
+    Each step takes around 5 seconds - so you could call the Constructor before
+    displaying the Login page, and then use the setDiscoveryFederationSecurity
+    after receiving Login details (assuming the Object is kept for the entire
+    session)
+   * *************************************************************************** */
+  if (!defined('SKIP_DEMO1')) {
+    /* Connect to the Dynamics CRM 2011 server */
+    echo date('Y-m-d H:i:s') . "\tConnecting to the CRM... ";
+    $crmConnector = new DynamicsCRM2011_Connector($discoveryServiceURI, $organizationUniqueName);
+    echo 'Done' . PHP_EOL;
+    /* Here, you could ask the user for the login details... */
+    echo date('Y-m-d H:i:s') . "\tVerifying Security Details... ";
+    $loginOkay = $crmConnector->setDiscoveryFederationSecurity($loginUsername, $loginPassword);
+    if ($loginOkay)
+      echo 'Login Okay!' . PHP_EOL;
+    else
+      echo 'Login Failed!' . PHP_EOL;
+  }
+
+
+  return 'test';
 }
