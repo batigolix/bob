@@ -1,0 +1,216 @@
+<?php
+
+/**
+ * @file
+ * Main file of the single_profile module.
+ */
+
+include_once 'single_profile.features.inc';
+
+/**
+ * Implements hook_menu().
+ */
+function single_profile_menu() {
+
+  $items = array();
+
+  $items['admin/config/system/single_profile'] = array(
+    'title' => 'Single profile tools',
+    'description' => 'Configuration for Single profile tools',
+    'page callback' => 'system_admin_menu_block_page',
+    'access arguments' => array('administer site configuration'),
+    'file' => 'system.admin.inc',
+    'file path' => drupal_get_path('module', 'system'),
+    'weight' => '0',
+  );
+
+  $items['admin/config/system/single_profile/settings'] = array(
+    'title' => 'Single profile tools configuration settings',
+    'description' => 'Settings for single profile tools',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('single_profile_settings'),
+    'access arguments' => array('administer site configuration'),
+    'file' => 'single_profile.forms.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Implements of hook_services_resources(). 
+ * Defines a service that shows updated users.
+ */
+function single_profile_services_resources() {
+  $api = array(
+    'updated_users' => array(
+      'operations' => array(
+        'retrieve' => array(
+          'help' => 'Retrieves updated profiles since',
+          'callback' => '_single_profile_updates_retrieve',
+          'access callback' => 'user_access',
+          'access arguments' => array('access user profiles'),
+          'access arguments append' => FALSE,
+          'args' => array(
+            array(
+              'name' => 'since',
+              'type' => 'int',
+              'description' => 'Since timestamp',
+              'source' => array('param' => 'since'),
+              'optional' => TRUE,
+              'default' => '0',
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+
+  return $api;
+}
+
+/**
+ * Implements hook_services_request_postprocess_alter().
+ * Can be used to remove information from a result from a service request.
+ */
+function single_profile_services_request_postprocess_alter($controller, $args, &$result) {
+  //  unset($result['some_kind_of_field']);
+}
+
+/**
+ * Deletes terms in a vocabulary.
+ */
+function single_profile_taxonomy_terms_delete($vocab_machine_name) {
+  $vocab = taxonomy_vocabulary_machine_name_load($vocab_machine_name);
+  if ($vocab) {
+    $query = new EntityFieldQuery();
+    $result = $query
+        ->entityCondition('entity_type', 'taxonomy_term')
+        ->propertyCondition('vid', $vocab->vid)
+        ->execute();
+    foreach ($result['taxonomy_term'] as $term) {
+      taxonomy_term_delete($term->tid);
+    }
+  }
+}
+
+/**
+ * Implements hook_migrate_api().
+ */
+function single_profile_migrate_api() {
+  $api = array(
+    'api' => 2,
+    'migrations' => array(
+      'Newsletters' => array('class_name' => 'NewslettersMigration'),
+      'Countries' => array('class_name' => 'CountriesMigration'),
+    ),
+  );
+  return $api;
+}
+
+/**
+ * Returns Drupal entity ID by matching a custom field value.
+ * 
+ * Useful to fetch drupal ID from entity that was imported from external
+ * source and that carries the external source ID.
+ */
+function single_profile_entity_id_from_field_value($entity_type, $bundle, $field_name, $value) {
+  if (isset($entity_type, $bundle, $field_name, $value)) {
+    $query = new EntityFieldQuery();
+    $query->entityCondition('entity_type', $entity_type)
+        ->entityCondition('bundle', $bundle)
+        ->fieldCondition($field_name, 'value', $value); // TODO only works with text fields?
+    $result = $query->execute();
+    if (isset($result[$entity_type])) {
+      $entity_ids = array_keys($result[$entity_type]);
+      $entity_id = reset($entity_ids);   // TODO better way dealing with multiple ids
+      return $entity_id;
+    }
+    else {
+      watchdog('notice', 'no entity found that matches the field value');
+    }
+  }
+  else {
+    watchdog('error', 'cannot look up entity id because of missing parameters');
+  }
+}
+
+/**
+ * Callback function for retrieve updated users.
+ */
+function _single_profile_updates_retrieve($timestamp) {
+  $timestamp = intval($timestamp);
+  return single_profile_find_updated_items($timestamp);
+}
+
+/**
+ * Retrieves updates users.
+ */
+function single_profile_find_updated_items($timestamp) {
+  $query = db_select('node', 'n');
+  $query->condition('n.status', '1', '=');
+  if ($nitems) {
+    $query->range(0, $nitems);
+  }
+  $items = $query->execute()->fetchAll();
+  return $items;
+}
+
+/**
+ * Implements hook_user_update().
+ * Notifies clients about a change.
+ */
+function single_profile_user_insert(&$edit, $account, $category) {
+  single_profile_notify_clients($account->mail);
+}
+
+/**
+ * Implements hook_user_update().
+ * Notifies clients about a change.
+ */
+function single_profile_user_update(&$edit, $account, $category) {
+  //dd('hitz');
+  
+  unset($account->is_new);
+  unset($account->original);
+  // Clear the static loading cache.                                      
+  entity_get_controller('user')->resetCache(array($account->uid));
+
+  // Notifies clients (passing the ID of the author of the change).
+  single_profile_notify_clients($account->mail, $edit['authorid']);
+}
+
+/**
+ * Notifies clients about a change by polling a url using the email.
+ */
+function single_profile_notify_clients($mail, $authorid) {
+  $clients = variable_get('clients');
+
+  // Fetches the username using the user ID
+  $authorname = db_query('SELECT name FROM {users} WHERE uid = :uid', array(':uid' => $authorid))->fetchField();
+
+  if ($clients) {
+    foreach ($clients['client'] as $client) {
+      
+      // Notifies clients if a) uri is known & b) the changes does not
+      // originate from that client (compares username of change author and 
+      // username of client.
+      if (!empty($client['uri']) && $client['user'] != $authorname) {
+  //      dd('hityyy');
+//        dd($client);
+        $full_url = url("${client['uri']}/central-profile-notification/${mail}");
+        $request = drupal_http_request($full_url);
+    //    dd($request);
+        if ($request->code !== '200') {
+          watchdog('error', 'Error "!error" occurred while notifying !client about profile !mail', array('!client' => $client['uri'], '!mail' => $mail, '!error' => $request->code . ' ' . $request->error));
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_rest_server_request_parsed_alter().
+ */
+function single_profile_rest_server_request_parsed_alter(&$data, $controller) {
+  //  dd($data);
+}

@@ -1,95 +1,38 @@
 <?php
+
 /**
  * Implements hook_install().
  *
  * Perform actions to set up the site for this profile.
  */
 function sps_install() {
-  // Enable some sps blocks.
-  $default_theme = 'bartik';
+  $default_theme = 'stark';
   $admin_theme = 'seven';
   // disable all themes
   db_update('system')
-    ->fields(array('status' => 0))
-    ->condition('type', 'theme')
-    ->execute();
+      ->fields(array('status' => 0))
+      ->condition('type', 'theme')
+      ->execute();
   // enable $default_theme
   db_update('system')
-    ->fields(array('status' => 1))
-    ->condition('type', 'theme')
-    ->condition('name', $default_theme)
-    ->execute();
+      ->fields(array('status' => 1))
+      ->condition('type', 'theme')
+      ->condition('name', $default_theme)
+      ->execute();
   // enable $admin_theme
   db_update('system')
-    ->fields(array('status' => 1))
-    ->condition('type', 'theme')
-    ->condition('name', $admin_theme)
-    ->execute();
+      ->fields(array('status' => 1))
+      ->condition('type', 'theme')
+      ->condition('name', $admin_theme)
+      ->execute();
   variable_set('theme_default', $default_theme);
   variable_set('admin_theme', $admin_theme);
   // activate admin theme when editing a node
   variable_set('node_admin_theme', '1');
-  $blocks = array(
-    array(
-      'module' => 'system',
-      'delta' => 'main',
-      'theme' => $default_theme,
-      'status' => 1,
-      'weight' => 0,
-      'region' => 'content',
-      'pages' => '',
-      'cache' => -1,
-    ),
-    array(
-      'module' => 'user',
-      'delta' => 'login',
-      'theme' => $default_theme,
-      'status' => 1,
-      'weight' => 0,
-      'region' => 'sidebar_first',
-      'pages' => '',
-      'cache' => -1,
-    ),
-    array(
-      'module' => 'system',
-      'delta' => 'help',
-      'theme' => $default_theme,
-      'status' => 1,
-      'weight' => -10,
-      'region' => 'content',
-      'pages' => '',
-      'cache' => -1,
-    ),
-    array(
-      'module' => 'system',
-      'delta' => 'main',
-      'theme' => $admin_theme,
-      'status' => 1,
-      'weight' => 0,
-      'region' => 'content',
-      'pages' => '',
-      'cache' => -1,
-    ),
-    array(
-      'module' => 'system',
-      'delta' => 'help',
-      'theme' => $admin_theme,
-      'status' => 1,
-      'weight' => 0,
-      'region' => 'help',
-      'pages' => '',
-      'cache' => -1,
-    ),
-  );
-  // drop system / user blocks to ensure correct building
-  db_delete('block')->condition('module', 'system')->execute();
-  db_delete('block')->condition('module', 'user')->execute();
-  // add in our blocks defined above
-  $query = db_insert('block')->fields(array('module', 'delta', 'theme', 'status', 'weight', 'region', 'pages', 'cache'));
-  foreach ($blocks as $block) {
-    $query->values($block);
-  }
-  $query->execute();
+
+  // Disable user registration
+  variable_set('user_register', '0');
+
   // Create a default role for site administrators, with all available permissions assigned.
   $admin_role = new stdClass();
   $admin_role->name = 'administrator';
@@ -103,8 +46,8 @@ function sps_install() {
 
   // Assign user 1 the "administrator" role.
   db_insert('users_roles')
-    ->fields(array('uid' => 1, 'rid' => $admin_role->rid))
-    ->execute();
+      ->fields(array('uid' => 1, 'rid' => $admin_role->rid))
+      ->execute();
   // Update the menu router information.
   menu_rebuild();
   // revert features to ensure they are all installed

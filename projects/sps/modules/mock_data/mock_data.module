@@ -2,7 +2,7 @@
 
 /**
  * @file
- * This module provides a field for storing dates and values
+ * This module provides general functionality for the mock data module.
  */
 
 /**

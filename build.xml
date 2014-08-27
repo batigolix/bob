@@ -284,6 +284,9 @@
       <param>environment_indicator</param>
       <param>stage_file_proxy</param>
       <param>toolbar</param>
+      <param>simpletest</param>
+      <param>dblog</param>
+      <param>syslog</param>
       <option name="uri">${project.uri}</option>
       <option name="root">${project.root}/${environment.root}</option>
     </drush>
@@ -356,8 +359,7 @@
   
   <!-- migrate data -->
   <target name="migrate-data" depends="load-project-properties">
-        <phingcall target="cc" />
-
+    <phingcall target="cc" />
     <foreach list="${project.migrations}" param="migration" target="migrate-import" />
   </target>
 
@@ -365,9 +367,23 @@
     <drush command="migrate-import">
       <param>${migration}</param>
       <option name="update"/>
-       <option name="uri">${project.uri}</option>
+      <option name="uri">${project.uri}</option>
       <option name="root">${project.root}/${environment.root}</option>
-   </drush>
+    </drush>
+  </target>
+
+  <!-- run tests -->
+  <target name="run-tests" depends="load-project-properties">
+    <phingcall target="cc" />
+    <foreach list="${project.test.groups}" param="test_group" target="run-test" />
+  </target>
+
+  <target name="run-test" depends="load-project-properties, setup-phing-drush">
+    <drush command="test-run" assume="yes" uri="${project}" haltonerror="no">
+      <param>${test_group}</param>
+      <option name="uri">${project.uri}</option>
+      <option name="root">${project.root}/${environment.root}</option>
+    </drush>
   </target>
 
 </project>

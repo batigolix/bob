@@ -1,11 +1,11 @@
 name = Mock data
-description = Mock data (nodes, users, etc.) for development
+description = Imports Mock data (nodes, users, etc.) for test & development
 core = 7.x
 version = 7.x-1.0
 php = 5.2.4
 package = Custom
-files[] = tests/mock_data.test
 
+files[] = tests/mock_data.test
 files[] = migrate/base.inc
 files[] = mock_data.migrate.inc
 files[] = migrate/articles.inc

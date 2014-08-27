@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * single_profile_service.services.inc
+ * single_profile.services.inc
  */
 
 /**
  * Implements hook_default_services_endpoint().
  */
-function single_profile_service_default_services_endpoint() {
+function single_profile_default_services_endpoint() {
   $export = array();
 
   $endpoint = new stdClass();
@@ -39,40 +39,8 @@ function single_profile_service_default_services_endpoint() {
     ),
   );
   $endpoint->resources = array(
-    'entity_taxonomy_term' => array(
-      'alias' => 'user',
-      'operations' => array(
-        'create' => array(
-          'enabled' => '1',
-        ),
-        'retrieve' => array(
-          'enabled' => '1',
-        ),
-        'update' => array(
-          'enabled' => '1',
-        ),
-        'delete' => array(
-          'enabled' => '1',
-        ),
-        'index' => array(
-          'enabled' => '1',
-        ),
-      ),
-      'actions' => array(
-        'selectNodes' => array(
-          'enabled' => '1',
-        ),
-      ),
-      'relationships' => array(
-        'users_field_country' => array(
-          'enabled' => '1',
-        ),
-        'users_field_newsletter_subscriptions' => array(
-          'enabled' => '1',
-        ),
-      ),
-    ),
     'entity_user' => array(
+      'alias' => 'user',
       'operations' => array(
         'create' => array(
           'enabled' => '1',
@@ -105,9 +73,6 @@ function single_profile_service_default_services_endpoint() {
         ),
       ),
       'relationships' => array(
-        'entityreference_field_country' => array(
-          'enabled' => '1',
-        ),
         'entityreference_field_newsletter_subscriptions' => array(
           'enabled' => '1',
         ),
