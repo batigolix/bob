@@ -10,7 +10,7 @@
  */
 function single_profile_settings($form, &$form_state) {
   $form = array();
-  
+
   $values = variable_get('clients');
   $num_clients = !empty($values['num_clients']) ? $values['num_clients'] : 3;
 
@@ -21,7 +21,7 @@ function single_profile_settings($form, &$form_state) {
   );
 
   // Allows defining the amount of clients. Very poor mans implementation of
-  // adding dynamically multiple fieldsets
+  // adding dynamically multiple fieldsets.
   $form['clients']['num_clients'] = array(
     '#type' => 'textfield',
     '#title' => 'Number of clients',
@@ -59,7 +59,7 @@ function single_profile_settings($form, &$form_state) {
       '#autocomplete_path' => 'user/autocomplete',
       '#default_value' => !empty($values['client'][$i]['user']) ? $values['client'][$i]['user'] : NULL,
     );
-    
+
     // Aah the beauty of old skool HTML elements.
     $form['clients']['client'][$i]['footer'] = array(
       '#markup' => '<hr />',
@@ -71,6 +71,7 @@ function single_profile_settings($form, &$form_state) {
 
 /**
  * Validates single_profile_settings form.
+ *
  * Checks is a user is assigned to multiple account which is an issue.
  */
 function single_profile_settings_validate($form, $form_state) {
