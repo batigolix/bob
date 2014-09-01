@@ -210,7 +210,7 @@ function single_profile_notify_clients($mail, $authorid) {
             '!client' => $client['uri'],
             '!mail' => $mail,
             '!error' => $request->code . ' ' . $request->error,
-            ),
+            )
           );
         }
       }
