@@ -58,3 +58,5 @@ build.properties
 user.anonymous.json
 
 /nbproject/private/
+
+.idea
