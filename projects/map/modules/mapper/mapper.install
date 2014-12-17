@@ -1,0 +1,315 @@
+<?php
+
+/**
+ * Create vocab
+ */
+
+
+function tic_update_7007() {
+
+  $array_fields = array(
+    'nuts_level' => array(
+      'field_name' => 'nuts_level',
+      'type' => 'list_integer',
+      'settings' => array(
+        'allowed_values' => array(
+          1 => 2,
+          2 => 3,
+          3 => 4,
+        ),
+      ),
+      'module' => 'list',
+      'active' => '1',
+      'cardinality' => '1',
+    ),
+    'nuts_id' => array(
+      'field_name' => 'nuts_id',
+      'type' => 'number_integer',
+      'module' => 'number',
+      'active' => '1',
+      'cardinality' => '1',
+    ),
+    'nuts_code' => array(
+      'field_name' => 'nuts_code',
+      'type' => 'text',
+      'module' => 'text',
+      'active' => '1',
+      'cardinality' => '1',
+    ),
+    'nuts_description' => array(
+      'field_name' => 'nuts_description',
+      'type' => 'text',
+      'module' => 'text',
+      'active' => '1',
+      'cardinality' => '1',
+    ),
+    'nuts_remark' => array(
+      'field_name' => 'nuts_remark',
+      'type' => 'text',
+      'module' => 'text',
+      'active' => '1',
+      'cardinality' => '1',
+    ),
+  );
+
+
+  $t = get_t();
+  $array_instances = array(
+    'nuts_level' => array(
+      'label' => $t('Level'),
+      'field_name' => 'nuts_level',
+      'entity_type' => 'taxonomy_term',
+      'bundle' => 'nuts_regions',
+      'description' => 'Select the NUTS level.',
+      'required' => TRUE,
+      'widget' => array(
+        'type' => 'options_select',
+        'weight' => 0,
+      ),
+      'display' => array(),
+    ),
+    'nuts_id' => array(
+      'label' => $t('Code (ID)'),
+      'field_name' => 'nuts_id',
+      'required' => TRUE,
+      'widget' => array(
+        'type' => 'number',
+      ),
+      'entity_type' => 'taxonomy_term',
+      'bundle' => 'nuts_regions',
+    ),
+    'nuts_code' => array(
+      'label' => $t('NUTS-Code'),
+      'field_name' => 'nuts_code',
+      'required' => TRUE,
+      'widget' => array(
+        'type' => 'text_textfield',
+      ),
+      'entity_type' => 'taxonomy_term',
+      'bundle' => 'nuts_regions',
+    ),
+    'nuts_description' => array(
+      'label' => $t('Description'),
+      'field_name' => 'nuts_description',
+      'required' => TRUE,
+      'widget' => array(
+        'type' => 'text_textfield',
+      ),
+      'entity_type' => 'taxonomy_term',
+      'bundle' => 'nuts_regions',
+    ),
+    'nuts_remark' => array(
+      'label' => $t('Remark'),
+      'field_name' => 'nuts_remark',
+      'widget' => array(
+        'type' => 'text_textfield',
+      ),
+      'entity_type' => 'taxonomy_term',
+      'bundle' => 'nuts_regions',
+    ),
+  );
+
+  $obj = (object) array();
+  $obj->name = $t("NUTS regions");
+  $obj->description = $t("Eurostat's NUTS regions (Nomenclature of territorial units for statistics)");
+  $obj->machine_name = "nuts_regions";
+  $obj->hierarchy = 2;
+  $obj->module = "taxonomy";
+  taxonomy_vocabulary_save($obj);
+
+// http://api.drupal.org/api/function/field_create_field/7
+  foreach ($array_fields as $field) {
+    field_create_field($field);
+  }
+
+// Create all the instances for our fields.
+// http://api.drupal.org/api/function/field_create_instance/7
+  foreach ($array_instances as $instance) {
+    field_create_instance($instance);
+  }
+
+
+}
+
+function tic_update_7008() {
+
+
+  $array_fields = array(
+    'nuts_region' => array(
+      'field_name' => 'nuts_region',
+      'cardinality' => 1,
+      'foreign keys' => array(
+        'tid' => array(
+          'columns' => array(
+            'tid' => 'tid',
+          ),
+          'table' => 'taxonomy_term_data',
+        ),
+      ),
+      'indexes' => array(
+        'tid' => array(
+          0 => 'tid',
+        ),
+      ),
+      'settings' => array(
+        'allowed_values' => array(
+          0 => array(
+            'vocabulary' => 'nuts_regions',
+            'parent' => '0',
+          ),
+        ),
+      ),
+      'type' => 'taxonomy_term_reference',
+    ),
+  );
+
+  $t = get_t();
+  $array_instances = array(
+    'nuts_region' => array(
+      'field_name' => 'nuts_region',
+      'label' => $t('Nuts region'),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'options',
+        'settings' => array(),
+        'type' => 'options_select',
+      ),
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'taxonomy',
+          'settings' => array(),
+          'type' => 'taxonomy_term_reference_link',
+        ),
+      ),
+      'entity_type' => 'node',
+      'bundle' => 'store',
+    ),
+  );
+// http://api.drupal.org/api/function/field_create_field/7
+  foreach ($array_fields as $field) {
+    field_create_field($field);
+  }
+
+// Create all the instances for our fields.
+// http://api.drupal.org/api/function/field_create_instance/7
+  foreach ($array_instances as $instance) {
+    field_create_instance($instance);
+  }
+}
+
+
+function tic_update_7009() {
+
+  $t = get_t();
+  $base_node_type = array(
+    'type' => 'map',
+    'name' => $t('Map'),
+    'base' => 'node_content',
+    'description' => $t('This is an map node type with a few fields.'),
+    'body_label' => $t('Description')
+  );
+  $node_type = node_type_set_defaults($base_node_type);
+  node_add_body_field($node_type);
+
+// Check if we create content type or update.
+  $status = node_type_save($node_type);
+
+// Replacement rule for the messages.
+  $t_args = array('%name' => $node_type->name);
+  if ($status == SAVED_UPDATED) { // update case
+    drupal_set_message($t('The content type %name has been updated.', $t_args));
+  }
+  elseif ($status == SAVED_NEW) { // create case
+    drupal_set_message($t('The content type %name has been added.', $t_args));
+    watchdog('node', 'Added content type %name.', $t_args, WATCHDOG_NOTICE, l($t('view'), 'admin/structure/types'));
+  }
+
+}
+
+
+
+function tic_update_7014() {
+
+  $array_fields = array(
+    'map_node_type' => array(
+      'field_name' => 'map_node_type',
+      'type' => 'list_text',
+      'settings' => array(
+        'allowed_values_function' => 'tic_content_types_map'
+      ),
+      'module' => 'list',
+      'active' => '1',
+      'cardinality' => '1',
+    ),
+  );
+
+  $t = get_t();
+  $array_instances = array(
+    'map_node_type' => array(
+      'label' => $t('Content type'),
+      'field_name' => 'map_node_type',
+      'entity_type' => 'node',
+      'bundle' => 'map',
+      'description' => t('Select the Content type. If there are no options than <a href="!url">configure map content types</a>', array('!url'=>'admin/mapper/settings')),
+      'required' => TRUE,
+      'widget' => array(
+        'type' => 'options_select',
+        'weight' => 0,
+      ),
+      'display' => array(),
+    ),
+  );
+
+
+// http://api.drupal.org/api/function/field_create_field/7
+  foreach ($array_fields as $field) {
+    field_create_field($field);
+  }
+
+// Create all the instances for our fields.
+// http://api.drupal.org/api/function/field_create_instance/7
+  foreach ($array_instances as $instance) {
+    field_create_instance($instance);
+  }
+
+
+}
+
+
+function tic_update_7000() {
+
+  $t = get_t();
+  $array_instances = array(
+    'nuts_region' => array(
+      'field_name' => 'nuts_region',
+      'label' => $t('Nuts region'),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'options',
+        'settings' => array(),
+        'type' => 'options_select',
+      ),
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'taxonomy',
+          'settings' => array(),
+          'type' => 'taxonomy_term_reference_link',
+        ),
+      ),
+      'entity_type' => 'node',
+      'bundle' => 'store',
+    ),
+  );
+
+
+// Create all the instances for our fields.
+// http://api.drupal.org/api/function/field_create_instance/7
+  foreach ($array_instances as $instance) {
+    field_create_instance($instance);
+  }
+
+
+
+}

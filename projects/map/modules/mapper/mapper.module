@@ -1,0 +1,968 @@
+<?php
+
+
+define('CESSAREA_FOLDER', 'public://cessarea');
+define('CESSAREA_URI', 'public://cessarea/cessarea.css');
+
+
+/**
+ * @file mapper.module
+ * TODO: Enter file description here.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function tic_menu() {
+  $items['example'] = array(
+    'title' => 'Example Page',
+    'page callback' => 'example_page',
+    'access arguments' => array('access content'),
+    'type' => MENU_SUGGESTED_ITEM,
+  );
+  $items['example/feed'] = array(
+    'title' => 'Example RSS feed',
+    'page callback' => 'example_feed',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+  $items['tester/%'] = array(
+    'title' => 'Test',
+    'page callback' => 'tic_tester',
+    'page arguments' => array(1),
+    'access arguments' => array('access content'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['xexample/%'] = array(
+    'title' => 'Example Page',
+    'page callback' => 'tic_tester',
+    'page arguments' => array(1),
+    'access arguments' => array('access content'),
+    'type' => MENU_SUGGESTED_ITEM,
+  );
+  $items['property/%'] = array(
+    'title' => 'Property',
+    'description' => 'View property detail page',
+    'page callback' => 'legrand_tools_property_detail_page',
+    'page arguments' => array(1),
+    'access arguments' => array('access content'),
+    'file' => 'legrand_tools.pages.inc',
+    'type' => MENU_NORMAL_ITEM,
+    'weight' => 0,
+  );
+  $items['central-profile-notification'] = array(
+    'title' => 'Central profile notification',
+    'page callback' => 'example_page',
+    'access arguments' => array('access content'),
+    // 'type' => MENU_SUGGESTED_ITEM,
+  );
+
+  $items['cessarea'] = array(
+    'title' => 'Cessarea',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('cessarea'),
+    'access arguments' => array('administer site configuration'),
+  );
+
+  $items['map'] = array(
+    'title' => 'Map',
+    'page callback' => 'tic_show_map',
+    'page arguments' => array(),
+    'access arguments' => array('access content'),
+  );
+
+  $items['admin/config/system/mapper'] = array(
+    'title' => 'Tic',
+    'description' => 'Configuration for Tic',
+    'page callback' => 'system_admin_menu_block_page',
+    'access arguments' => array('administer site configuration'),
+    'file' => 'system.admin.inc',
+    'file path' => drupal_get_path('module', 'system'),
+    'weight' => '0',
+  );
+
+  $items['admin/config/system/mapper/settings'] = array(
+    'title' => 'Tic configuration settings',
+    'description' => 'Settings for Tic',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('tic_settings'),
+    'access arguments' => array('administer site configuration'),
+//    'file' => 'single_profile.forms.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_cron().
+ */
+function tic_cron() {
+  // Short-running operation example, not using a queue:
+  // Delete all expired records since the last cron run.
+  $expires = variable_get('mymodule_cron_last_run', REQUEST_TIME);
+  db_delete('mymodule_table')
+    ->condition('expires', $expires, '>=')
+    ->execute();
+  variable_set('mymodule_cron_last_run', REQUEST_TIME);
+
+  // Long-running operation example, leveraging a queue:
+  // Fetch feeds from other sites.
+  $result = db_query('SELECT * FROM {aggregator_feed} WHERE checked + refresh < :time AND refresh <> :never', array(
+    ':time' => REQUEST_TIME,
+    ':never' => AGGREGATOR_CLEAR_NEVER,
+  ));
+  $queue = DrupalQueue::get('aggregator_feeds');
+  foreach ($result as $feed) {
+    $queue->createItem($feed);
+  }
+}
+
+
+/**
+ * Implements hook_form_alter().
+ */
+function tic_form_alter(&$form, &$form_state, $form_id) {
+
+//dd($form_id);
+
+
+  if (isset($form['type']) && $form['type']['#value'] . '_node_settings' == $form_id) {
+    $form['workflow']['upload_' . $form['type']['#value']] = array(
+      '#type' => 'radios',
+      '#title' => t('Attachments'),
+      '#default_value' => variable_get('upload_' . $form['type']['#value'], 1),
+      '#options' => array(t('Disabled'), t('Enabled')),
+    );
+  }
+}
+
+function tic_form_map_node_form_alter(&$form, &$form_state, $form_id) {
+//  dd('hei');
+//  dpm($form);
+//  dd();
+
+  $form['body']['en'][0]['summary']['#access'] = FALSE;
+  $form['additional_settings'] = array(
+    '#type' => 'vertical_tabs',
+    '#weight' => 99,
+  );
+  $form['body']['#group'] = 'additional_settings';
+  $form['body']['#after_build'][] = 'tic_remove_tips';
+
+
+}
+
+function tic_remove_tips(&$form) {
+  $form[LANGUAGE_NONE][0]['format']['guidelines']['#access'] = FALSE;
+  return $form;
+}
+
+
+function xexample_page() {
+
+
+  require_once(DRUPAL_ROOT . '/vendor/autoload.php');
+
+
+  $aspectKernel = Sixdg\DynamicsCRMConnector\AspectKernel\ApplicationAspectKernel::getInstance();
+  $aspectKernel->init(
+    [
+      'cacheDir' => NULL, //Place this in a directory if you want aspects cached
+      'includePaths' => [
+        DRUPAL_ROOT . '/vendor/sixdg/'
+      ],
+      'debug' => TRUE
+    ]
+  );
+  dpm($aspectKernel);
+
+  $logger = new Logger('SmpAPI');
+  //$logger = array();
+
+  $config = [
+    'username' => 'crm_user',
+    'password' => 'crm_password',
+    'crm' => 'https://pathtocrmserver:444/',
+    'adfs' => 'https://pathtoadfsserver/',
+    'organization' => 'crmorganizationtoconnectto'
+  ];
+
+  $connector = new \Sixdg\DynamicsCRMConnector\DynamicsCRMConnector($config, $aspectKernel, $logger);
+
+  $controller = $connector->getController();
+
+
+  return 'doh';
+}
+
+function example_pagexx() {
+  $node = node_load(2);
+  $wrapped_node = entity_metadata_wrapper('node', $node);
+  $img = $wrapped_node->field_img->value();
+  dsm($img['uri']);
+
+  dsm($wrapped_node->field_img->file->value()->uri);
+
+
+  $build['#markup'] = theme('image_style', array(
+    'path' => $wrapped_node->field_img->file->value()->uri,
+    'style_name' => 'medium'
+  ));
+
+
+  $build = array();
+
+  $build['#markup'] = theme('image_style', array(
+    'path' => $wrapped_node->field_img->file->value()->uri,
+    'style_name' => 'medium'
+  ));
+  print theme('image_style', array(
+    'path' => $wrapped_node->field_img->file->value()->uri,
+    'style_name' => 'medium'
+  ));
+  return theme('image_style', array(
+    'path' => $wrapped_node->field_img->file->value()->uri,
+    'style_name' => 'medium'
+  ));
+}
+
+function example_page() {
+//  dd($_GET['mail']);
+//  dd($_GET['newsletter_update']);
+  $build['#markup'] = 'doh';
+  return $build;
+}
+
+function xxdddexample_page() {
+  $node = node_load(2);
+  $wrapped_node = entity_metadata_wrapper('node', $node);
+  $img = $wrapped_node->field_img->value();
+  dsm($img['uri']);
+
+  dsm($wrapped_node->field_img->file->value()->uri);
+
+
+//    $build['#markup'] = theme('image_style', array('path'=>$wrapped_node->field_img->file->value()->uri, 'style_name' => 'medium'));
+
+
+  $build = array();
+  $build['#markup'] = 'doh';
+  //$build['#attached'] = array('js'=> drupal_get_path('module', 'mapper').'/js/mapper.js');
+
+
+  $build['#attached'] = array(
+    'js' => array(
+      drupal_get_path('module', 'mapper') . '/js/mapper.js',
+      array(
+        'data' => array(
+          'dd_tools' => array(
+            'block_items' => variable_get('flickr_items', 13),
+          ),
+        ),
+        'type' => 'setting',
+      ),
+    ),
+  );
+
+
+//  $build['#attached']['js']['data'] = drupal_get_path('module', 'mapper') . '/js/mapper.js';
+
+
+//  $build['#markup'] = theme('image_style', array('path'=>$wrapped_node->field_img->file->value()->uri, 'style_name' => 'medium'));
+//   print theme('image_style', array('path'=>$wrapped_node->field_img->file->value()->uri, 'style_name' => 'medium'));
+//  return theme('image_style', array('path'=>$wrapped_node->field_img->file->value()->uri, 'style_name' => 'medium'));
+
+  return $build;
+
+}
+
+
+function tic_tester($nid) {
+  print($nid);
+
+
+  return 'testing  ' . $nid;
+}
+
+
+/**
+ * Constructs settings form.
+ */
+function cessarea($form, &$form_state) {
+  $form = array();
+
+  $form['cessarea'] = array(
+    '#type' => 'textarea',
+    '#title' => 'CSS',
+    '#size' => 3,
+    '#tree' => TRUE,
+    '#rows' => 12,
+    '#cols' => 12,
+    '#default_value' => variable_get('cessarea', '/* cessarae */'),
+  );
+  // Adding css stylesheet for icons.
+  $form['#attached']['js'] = array(
+    drupal_get_path('module', 'mapper') . '/codemirror/lib/codemirror.js',
+    drupal_get_path('module', 'mapper') . '/codemirror/mode/css/css.js',
+  );
+
+//  clear_css_cache
+  $form['clear_css_cache'] = array(
+    '#title' => t('Clear CSS cache'),
+    '#type' => 'checkbox',
+    '#description' => t('Clear the CSS after saving the textarea to the css file'),
+    '#default_value' => variable_get('clear_css_cache', NULL),
+  );
+
+  $form['#attached']['css'] = array(
+    drupal_get_path('module', 'mapper') . '/codemirror/lib/codemirror.css',
+  );
+
+
+//edit-cessarea--2
+  $form['#attached']['js'][] = array(
+    'data' => 'var editor = CodeMirror.fromTextArea(document.getElementById("edit-cessarea--2"), {
+      lineNumbers: true,
+      mode: "text/html",
+      matchBrackets: true
+    });',
+    'type' => 'inline'
+  );
+//
+
+  $form['#submit'][] = 'cessarea_submit';
+
+  return system_settings_form($form);
+}
+
+/**
+ * Validates cessarea form.
+ *
+ * Checks is a user is assigned to multiple account which is an issue.
+ */
+function cessarea_validate($form, $form_state) {
+  $uri = CESSAREA_FOLDER;
+  $directory = drupal_realpath($uri);
+//  dd($directory);
+  if (!file_prepare_directory($directory, FILE_CREATE_DIRECTORY | FILE_MODIFY_PERMISSIONS)) {
+    form_error($form, t('The directory %directory is not writable', array('%directory' => $directory)));
+  }
+}
+
+/**
+ * Submits cessarea form.
+ */
+function cessarea_submit($form, &$form_state) {
+  $uri = CESSAREA_URI;
+  file_unmanaged_save_data($form_state['values']['cessarea'], $uri, FILE_EXISTS_REPLACE);
+  drupal_set_message(t('The CSS was saved to <a href="!uri">!uri</a>', array('!uri' => file_create_url($uri))));
+
+  if ($form_state['values']['clear_css_cache']) {
+    drupal_clear_css_cache();
+  }
+
+}
+
+/**
+ * Implements hook_css_alter().
+ *
+ * Adds a css file to the head of the document. Uses a high weight to be loaded
+ * as last.
+ */
+function xxxxtic_css_alter(&$css) {
+//  dd('hello');
+  $uri = CESSAREA_URI;
+  if (file_exists($uri)) {
+    $css[$uri]['weight'] = 200;
+  }
+//  dd($css);
+
+}
+
+/**
+ * Implements hook_init().
+ * Checks to see whether any CSS files should be added to the current page,
+ * based on rules configured by the site administrator.
+ */
+function tic_init() {
+  $uri = CESSAREA_URI;
+  drupal_add_css($uri, array(
+      'type' => 'file',
+      'group' => CSS_THEME,
+      'media' => 'all',
+      'every_page' => TRUE,
+      'preprocess' => TRUE,
+      'weight' => 200,
+    )
+  );
+}
+
+function sssstic_show_map222($node) {
+
+  $wrnode = entity_metadata_wrapper('node', $node);
+
+  $build = array();
+
+//  $build['#attached']['js'][] = array(
+//    'data' => 'http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js',
+//    'type' => 'external'
+//  );
+//  $build['#attached']['css'][] = array(
+//    'data' => 'http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css',
+//    'type' => 'external'
+//  );
+
+  $nodes = tic_fetch_map_items($wrnode);
+//dd($nodes);
+  $test_array = array();
+  foreach ($nodes as $node) {
+//  $geo = field_view_field('node', $store, 'field_location2');
+    $fields = field_get_items('node', $node, 'field_location2');
+//  dd($fields);
+    $features = leaflet_process_geofield($fields);
+//dd($features);
+//  $geo = field_view_value('node', $store, 'field_location2', $field[0], array('full'));
+//  dd($geo);
+
+    foreach ($features as $feature) {
+      // dd($feature);
+      // dd(leaflet_widget_geojson_feature($feature));
+      $test_array[] = array(
+        'type' => 'Feature',
+        'properties' => array(
+          'name' => 'Doh',
+          'show_on_map' => TRUE,
+        ),
+        'geometry' => array(
+          'type' => $feature['type'],
+          'coordinates' => $feature['points'],
+        ),
+      );
+    }
+  }
+  // dd($test_array);
+  // dd($stores);
+
+  $test_array2 = array(
+    array(
+      'type' => 'Feature',
+      'properties' => array(
+        'name' => 'Doh',
+        'show_on_map' => TRUE,
+      ),
+      'geometry' => array(
+        'type' => 'Point',
+        'coordinates' => array(
+          -0.2,
+          51.56,
+        )
+      ),
+    ),
+  );
+
+  $jsfeat = json_encode($features);
+//dd($jsfeat);
+
+  $js = "var map = L.map('map').setView([51.505, -0.09], 3);
+            L.tileLayer('http://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
+                attribution: 'Map data &copy; <a href=\"http://openstreetmap.org\">OpenStreetMap</a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Open Slayer, Imagery © <a href=\"http://mapbox.com\">Mapbox</a>',
+                maxZoom: 18,
+//                id: 'examples.map-i875mjb7'
+                id: 'batigolix.map-cq8ugl73'
+            }).addTo(map);
+var marker = L.marker([51.5, -0.09]).addTo(map);
+
+var someFeatures = ${jsfeat}
+
+var someFeatures2 = [{
+    'type': 'Feature',
+    'properties': {
+        'name': 'Coors Field',
+        'show_on_map': true
+    },
+    'geometry': {
+        'type': 'Point',
+        'coordinates': [-0.2, 51.5]
+    }
+}, {
+    'type': 'Feature',
+    'properties': {
+        'name': 'Busch Field',
+        'show_on_map': true
+    },
+    'geometry': {
+        'type': 'Point',
+        'coordinates': [-0.3, 51.5]
+    }
+}];
+
+L.geoJson(someFeatures, {
+    filter: function(feature, layer) {
+        return feature.properties.show_on_map;
+    }
+}).addTo(map);
+
+
+
+";
+
+
+  $build['map']['#markup'] = '<div id="map" style="height: 380px; border: 1px solid orange;"></div>';
+  $build['#attached']['js'][] = array(
+    'data' => $js,
+    'type' => 'inline',
+    'scope' => 'footer'
+  );
+
+  $build['doh']['#markup'] = 'map';
+
+  libraries_load('leaflet');
+
+
+  return $build;
+}
+
+
+function tic_libraries_info_alter(&$libraries) {
+//  dd('doh');
+//  dd($libraries);
+//  dd($libraries['leaflet']);
+//  if (isset($libraries['leaflet'])) {
+//dd($libraries['leaflet']['files']['js']);
+//    $libraries['leaflet']['files']['js']['leaflet_root_url']['data'] = 'L_ROOT_URL = "http://cdn.leafletjs.com/leaflet-0.7.3/"';
+//    $libraries['leaflet']['files']['js']['http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js'] = array(
+//      'type' => 'external',
+//    );
+//    $libraries['leaflet']['files']['css']['http://cdn.leafletjs.com/leaflet-0.7.3/leaflet2.css'] = array(
+//      'type' => 'external',
+//    );
+//  }
+//  dd($libraries['leaflet']['files']['js']);
+//  dpm($libraries['leaflet']);
+}
+
+/**
+ * Implements hook_migrate_api().
+ */
+function tic_migrate_api() {
+  $api = array(
+    'api' => 2,
+    'migrations' => array(
+      'Tic' => array(
+        'class_name' => 'TicMigration',
+      ),
+    ),
+  );
+  return $api;
+}
+
+
+//function
+
+//dd(node_type_get_names());
+
+//
+//$my_fields = field_info_instances("node", "store");
+//dd($my_fields);
+
+
+function tic_settings() {
+  $form = array();
+  $form['warning']['#markup'] = t('Warning. A the moment this can only be used to create field on the destination entity.');
+  $content_types = node_type_get_names();
+
+  // Excludes the Map content type to prevent confusion.
+  if (array_key_exists('map', $content_types)) {
+    unset($content_types['map']);
+  }
+
+  $form['content_types_map'] = array(
+    '#type' => 'checkboxes',
+    '#title' => t('Content types'),
+    '#options' => $content_types,
+    '#default_value' => variable_get('content_types_map', array()),
+    '#description' => t('Choose which content types are available for generating maps'),
+  );
+
+//  dd(variable_get('content_types_map', array()));
+
+  // Iterates through chosen content types to find taxo term fields.
+  foreach (variable_get('content_types_map', array()) as $key => $content_type) {
+    if ($content_type !== 0) {
+      $fields = field_info_instances('node', $content_type);
+      foreach ($fields as $field) {
+        if ($field['display']['default']['type'] == 'taxonomy_term_reference_link') {
+          $taxonomy_term_fields_options[$field['field_name']] = $field['label'];
+        }
+      }
+
+    }
+  }
+
+  if ($taxonomy_term_fields_options) {
+    $form['taxonomy_term_fields_map'] = array(
+      '#type' => 'checkboxes',
+      '#title' => t('Taxonomy vocabularies'),
+      '#options' => $taxonomy_term_fields_options,
+      '#default_value' => variable_get('taxonomy_term_fields_map', array()),
+      '#description' => t('Choose which vocabularies are available for generating maps'),
+    );
+  }
+  else {
+    $form['taxonomy_term_fields_map']['#markup'] = t('Select a node type first');
+  }
+  $form['#submit'][] = 'tic_settings_submit';
+  return system_settings_form($form);
+}
+
+
+/**
+ * Provides an array of available vocabularies.
+ *
+ * @return array
+ *   Options list
+ */
+function _tic_taxonomy_term_fields_map() {
+
+  $options = array();
+
+
+  foreach (field_info_fields() as $field) {
+//    dd($field['field_name']);
+
+    if ($field['type'] == 'taxonomy_term_reference' && $field['field_name'] != 'nuts_regions') {
+      $options[$field['field_name']] = $field['field_name'];
+    }
+
+  }
+
+
+//
+//  $taxonomy_vocabularies = taxonomy_get_vocabularies();
+//  foreach ($taxonomy_vocabularies as $vocabulary) {
+//    $options[$vocabulary->machine_name] = $vocabulary->name;
+//  }
+//
+//  // Excludes the NUTS regions vocabulary to prevent confusion.
+//  if (array_key_exists('nuts_regions', $options)) {
+//    unset($options['nuts_regions']);
+//  }
+
+  return $options;
+}
+
+function tic_content_types_map() {
+  $content_types = node_type_get_names();
+  $content_types_map = variable_get('content_types_map');
+  foreach ($content_types_map as $key => $ctm) {
+    if ($ctm) {
+      $content_types_map[$key] = $content_types[$key];
+    }
+    else {
+      unset($content_types_map[$key]);
+    }
+  }
+//  dd($content_types_map);
+  return $content_types_map;
+}
+
+
+function tic_settings_submit($form, &$form_state) {
+
+  // @todo : delete fields.
+  //  dd(variable_get('taxonomy_term_fields_map'));
+  dd($form_state['values']['taxonomy_term_fields_map']);
+  foreach ($form_state['values']['taxonomy_term_fields_map'] as $key => $term) {
+
+    if ($term !== 0) {
+
+//x    $term = explode('__',$term);
+      dd($term);
+
+      $field = field_info_field($term);
+//    dpm($field);
+
+      $field_instance = field_info_instance('node', $term, $field['bundles']['node'][0]);
+//    dpm($field_instance);
+
+      // Skips if instance already exists on map node.
+      if ($instance = field_info_instance('node', $key, 'map')) {
+        continue;
+      }
+
+      if ($term == NULL) {
+        $instance = field_info_instance('node', $key, 'map');
+        field_delete_instance($instance);
+      }
+
+      $t = get_t();
+      $field_instance = array(
+        'field_name' => $key,
+        'label' => $field_instance['label'],
+        'widget' => array(
+          'active' => 1,
+          'module' => 'options',
+          'settings' => array(),
+          'type' => 'options_select',
+        ),
+        'display' => array(
+          'default' => array(
+            'label' => 'above',
+            'module' => 'taxonomy',
+            'settings' => array(),
+            'type' => 'taxonomy_term_reference_link',
+          ),
+        ),
+        'entity_type' => 'node',
+        'bundle' => 'map',
+      );
+
+// Create all the instances for our fields.
+// http://api.drupal.org/api/function/field_create_instance/7
+      field_create_instance($field_instance);
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess().
+ */
+function tic_preprocess_node(&$variables) {
+//  dd($variables);
+  if ($variables['type'] == 'map') {
+//    dd($variables['content']);
+  }
+
+
+}
+
+
+/**
+ * Implements hook_theme().
+ */
+function tic_theme($existing, $type, $theme, $path) {
+  $theme = array();
+
+  $theme['node__map'] = array(
+    'render element' => 'content',
+    'base hook' => 'node',
+    'template' => 'node--map',
+    'path' => drupal_get_path('module', 'mapper') . '/templates',
+  );
+
+  return $theme;
+}
+
+
+/**
+ * Implements hook_field_extra_fields().
+ *
+ */
+function tic_field_extra_fields() {
+  $extra = array();
+  $extra['node']['map']['display']['map'] = array(
+    'label' => t('Map'),
+    'weight' => 5,
+  );
+  return $extra;
+}
+
+/**
+ * Implements hook_entity_view().
+ */
+function tic_node_view($node, $view_mode, $langcode) {
+  $extrafields = field_extra_fields_get_display('node', $node->type, $view_mode);
+  $extrafield_name = 'map';
+  if (isset($extrafields[$extrafield_name])
+    && isset($extrafields[$extrafield_name]['visible'])
+    && $extrafields[$extrafield_name]['visible']
+  ) {
+    $node->content[$extrafield_name] = tic_show_map($node);
+  }
+}
+
+function tic_show_map($node) {
+
+  // Loads the base view.
+  $view = views_get_view('test2');
+  $display = 'page';
+  $view->set_display($display);
+  $view->is_cacheable = FALSE;
+
+  // Loads map node and field instances.
+  $wrnode = entity_metadata_wrapper('node', $node);
+  $field_instances = field_info_instances('node', 'map');
+
+  foreach ($field_instances as $field) {
+
+    // Adds views filters for each taxonomy term field with value on the map node.
+    if ($field['display']['default']['type'] == 'taxonomy_term_reference_link' && _fieldcheck($field['field_name'], $wrnode)) {
+      $field_name = $field['field_name'];
+      $value = $wrnode->$field_name->value()->tid;
+      $filter = array(
+        'id' => $field_name . '_tid',
+        'table' => 'field_data_' . $field_name,
+        'field' => $field_name . '_tid',
+        'relationship' => 'none',
+        'group_type' => 'group',
+        'ui_name' => '',
+        'operator' => 'or',
+        'value' => array($value => $value),
+        'group' => 1,
+        'exposed' => FALSE,
+        'is_grouped' => FALSE,
+      );
+      $view->add_item($view->current_display, 'filter', $filter['table'], $filter['field'], $filter);
+    }
+
+    // Adds views filters for content type field on the map node.
+    if ($field['field_name'] == 'map_node_type' && _fieldcheck($field['field_name'], $wrnode)) {
+      $field_name = $field['field_name'];
+      $value = $wrnode->$field_name->value();
+      $filter = array(
+        'id' => 'type',
+        'table' => 'node',
+        'field' => 'type',
+        'value' => array($value => $value),
+      );
+      $view->add_item($view->current_display, 'filter', $filter['table'], $filter['field'], $filter);
+    }
+
+  }
+
+  $build = array();
+  $view->pre_execute();
+  $view->execute();
+//  dpm($view->filter);
+//  $build['map']['#markup'] = $view->execute_display($display);
+  $build['map']['#markup'] = $view->render($view->current_display);
+//   $view->preview($display);
+  return $build;
+//return 'hej';
+}
+
+function tic_views_pre_execute(&$view) {
+//dd('afasf');
+  dpq($view->build_info['query']);
+}
+
+
+/**
+ * Inspects wrapped entity fields.
+ */
+function _wwrapper_debug($w) {
+  $values = array();
+  foreach ($w->getPropertyInfo() as $key => $val) {
+    $values[$key] = $w->$key->value();
+  }
+  return $values;
+}
+
+
+function tic_fetch_map_items($wrnode) {
+
+  // dpm(_wwrapper_debug($wrnode));
+
+  $vocabularies = variable_get('taxonomy_term_fields_map', array());
+
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', $wrnode->map_node_type->value())
+    ->propertyCondition('status', 1);
+
+//  foreach ($vocabularies as $vocabulary) {
+//    if (_fieldcheck($vocabulary, $wrnode)) {
+//      // dd($vocabulary);
+//      // dd('has value');
+////      dd($wrnode->$vocabulary->value()->tid);
+//      $query->fieldCondition($vocabulary, 'tid', $wrnode->$vocabulary->value()->tid);
+//// @todo figure out how to: names of field can be different on destination node ....
+//    }
+
+//  }
+
+
+//  if ($lang == 'li') {
+//    $query->fieldCondition('field_1st_char_translation', 'value', $letter);
+//    $query->fieldOrderBy('field_translation', 'value', 'ASC');
+//  }
+//  else {
+//    $query->fieldCondition('field_1st_char_head_word', 'value', $letter);
+//    $query->fieldOrderBy('field_head_word', 'value', 'ASC');
+//  }
+  $result = $query->execute();
+  if (isset($result['node'])) {
+    $nids = array_keys($result['node']);
+    $items = entity_load('node', $nids);
+//    dd($nids);
+  }
+  return $items;
+}
+
+/**
+ * Checks if wrapped entity fields have a value.
+ */
+function _fieldcheck($field, $wrentity) {
+  if ($wrentity->__isset($field)) {
+    $fieldvalue = $wrentity->$field->value();
+    if (!empty($fieldvalue)) {
+      return TRUE;
+    }
+  }
+  else {
+    return FALSE;
+  }
+}
+
+
+function tic_views_api() {
+  return array(
+    'api' => 3,
+//    'path' => drupal_get_path('module', 'example') . '/includes/views',
+//    'template path' => drupal_get_path('module', 'example') . '/themes',
+  );
+}
+
+function tic_leaflet_map_info() {
+  return array(
+    'Open Slayer' => array(
+      'label' => 'Open Slayer',
+      'description' => t('Open Slayer default map.'),
+      'settings' => array(
+        'dragging' => TRUE,
+        'touchZoom' => TRUE,
+        'scrollWheelZoom' => TRUE,
+        'doubleClickZoom' => TRUE,
+        'zoomControl' => TRUE,
+        'attributionControl' => TRUE,
+        'trackResize' => TRUE,
+        'fadeAnimation' => TRUE,
+        'zoomAnimation' => TRUE,
+        'closePopupOnClick' => TRUE,
+//        'layerControl' => TRUE,
+        // 'minZoom' => 10,
+        // 'maxZoom' => 15,
+        // 'zoom' => 15, // set the map zoom fixed to 15
+      ),
+      'layers' => array(
+        'earth' => array(
+          'urlTemplate' => 'http://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png',
+          'options' => array(
+            'attribution' => 'Map data &copy; <a href=\"http://openstreetmap.org\">Open Slayer</a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"http://mapbox.com\">Mapbox</a>',
+            'id'=>  'batigolix.map-cq8ugl73',
+          ),
+        ),
+      ),
+      // Uncomment the lines below to use a custom icon
+      // 'icon' => array(
+      //   'iconUrl'       => '/sites/default/files/icon.png',
+         'iconSize'      => array('x' => '20', 'y' => '40'),
+         'iconAnchor'    => array('x' => '20', 'y' => '40'),
+         'popupAnchor'   => array('x' => '-8', 'y' => '-32'),
+      //   'shadowUrl'     => '/sites/default/files/icon-shadow.png',
+      //   'shadowSize'    => array('x' => '25', 'y' => '27'),
+      //   'shadowAnchor'  => array('x' => '0', 'y' => '27'),
+      // ),
+    ),
+  );
+}

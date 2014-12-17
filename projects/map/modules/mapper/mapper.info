@@ -1,0 +1,10 @@
+name = tic
+description = TODO: Description of module
+dependencies[] = taxonomy
+dependencies[] = list
+dependencies[] = number
+dependencies[] = migrate
+dependencies[] = entity
+core = 7.x
+files[] = tests/tic.test
+files[] = tic.migrate.inc
